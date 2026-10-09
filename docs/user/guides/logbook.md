@@ -1,0 +1,165 @@
+# Flight logbook
+
+The logbook is Kite's flight history: every flight it records (or you import) is stored locally, with
+stats, notes, weather and links to the aircraft, batteries and mission used — and you can **replay** any
+of them on the map and instruments. It works for **INAV**, **ArduPilot** and **PX4** alike.
+
+Open it from the **Logbook** tool on the navigation rail.
+
+## Recording happens automatically
+
+While you're connected with **flight logging enabled** (Settings), Kite records telemetry in the
+background and splits it into flights by **arm → disarm**. When a flight ends you get a short
+**post-flight summary** where you can:
+
+- **Save or discard** the flight,
+- enter the **battery** you flew (one or several serials, comma-separated — see **[Batteries](batteries.md)**),
+- add **notes**, and
+- **link the mission** that was loaded.
+
+If the app is closed or the link drops mid-flight, the next start offers to **recover** the interrupted
+recording (save / continue / discard) so the flight isn't lost — note that a recording continued after
+an interruption will have a **gap** for the time the link was down.
+
+![The post-flight summary](../assets/guides/logbook/logbook_postflight.png)
+/// caption
+The post-flight summary — save or discard, link the battery (one or several serials) and the mission, add notes.
+///
+
+## The flight list
+
+Flights are grouped into a collapsible tree you can re-organise with the **sort** selector — by
+**aircraft**, **location** and **date** in the order you prefer — and narrow with the **search** box.
+Each entry shows the essentials (date, aircraft, location, duration, distance); pick one to open its
+details.
+
+## Flight details
+
+The detail panel shows everything about the selected flight:
+
+- **Stats** — duration, max altitude / speed / distance, and more.
+- **Aircraft** — the craft name, soft-linked to its entry in the **[Vehicle library](vehicles.md)**.
+- **Battery** — the linked pack(s), each as its own chip (open it in the Battery Manager, or shown as
+  *not in library*); edit to add or change serials. See **[Batteries](batteries.md)**.
+- **Mission** — the linked mission, openable in the Mission Manager.
+- **Weather**, **notes** and **pilot** — editable.
+- **Source & stored log** — where the flight came from (live recording or an import) and, when an
+  onboard log file was kept, an inline control to export or delete it.
+
+![The flight list and the selected flight's details](../assets/guides/logbook/logbook_detail.png)
+/// caption
+The logbook view: the flight list (left) and the selected flight's details (right).
+///
+
+## Replaying a flight
+
+**Disconnect**, then select a flight and press play: Kite replays the recorded telemetry through the
+**same instruments and map** as a live flight. The player gives you **play / pause**, a **timeline**
+scrubber and **playback speed**, and the flown **track** can be coloured by flight mode, altitude, speed
+or signal. If the flight has a linked mission, it's drawn alongside the track. 3D replay works too — see
+the **[3D map](map-3d.md)**.
+
+![Replaying a flight](../assets/guides/logbook/logbook_replay.png)
+/// caption
+Replaying a recorded flight — the player (play / pause, timeline, speed) drives the same instruments and map.
+///
+
+While playback **runs**, the player folds into a slim strip under the top bar — craft and type,
+elapsed time, progress, total — so it hides as little of the picture as possible. Move the mouse
+into the area the full player occupies (or tap it on a touch screen) and it unfolds; leave the area
+(or tap anywhere else) and it folds again. While playback is **paused** the full player always stays
+open, so changing the speed, the track colouring or scrubbing never fights a folding panel. A map
+drag that ends in that area doesn't unfold it — only releasing the button there does. Clicking or
+tapping anywhere outside the Logbook panel collapses it to its info card, giving the map the room.
+
+### High-resolution replay
+
+Flights are stored at 10 samples per second — plenty for the map, but an onboard log usually
+contains far more. When a flight has its **original log stored** (INAV Blackbox, ArduPilot
+Dataflash or PX4 ULog), the player offers a **HI-RES** switch: Kite re-decodes the stored log at
+its **full rate** into a temporary file and drives the instruments, horizon and stick overlay from
+it — updates then run at your screen's refresh rate instead of 10 Hz. Combined with the
+**slow-motion speeds** (0.25× / 0.5×) this is the way to study a manoeuvre frame by frame.
+
+The first switch to HI-RES shows a short **preparation popup** (re-decoding a big log can take a
+moment on slower machines). The decoded file lives in a `hires-cache` folder next to the flight
+database, is reused while the flight stays open, and is **deleted automatically** when you close
+the flight — nothing accumulates. The map track and timeline stay at 10 Hz by design; high-res
+feeds the live values.
+
+### Opening logs without importing them
+
+You don't have to import a log to look at it. On the desktop, with **no UAV connected**, **drop one
+or more onboard logs onto the map** (INAV Blackbox `.bbl` / `.txt`, ArduPilot `.bin`, PX4 `.ulg`, or
+a `.tlog` / `.rawmsp` telemetry log) — or use the **Open** button in the Logbook toolbar — and Kite
+parses them into a temporary store and replays them exactly like logbook flights: same track, same
+player, HI-RES included. Files dropped later join the same list, and a flash download with several
+logs lists them all. The Logbook panel shows those flights with their details **read-only**; nothing
+is linked, edited or checked for duplicates, the location name is looked up but no weather (weather
+is only fetched for live recordings). A file dropped **onto the Logbook panel itself** is imported
+as before.
+
+Liked what you saw? In the detail view, **Import** runs the normal import of just that flight —
+duplicate check and linking included — and drops it from the temporary list, while **Dismiss**
+simply removes it. **Import Logs** in the toolbar imports every opened file at once, **Close**
+discards them all; both return you to the regular logbook, as does dismissing the last opened
+flight. The temporary store is also cleared when you restart Kite.
+
+## Importing logs
+
+Use **Import** to pull in logs from outside Kite (one file or a batch). Supported formats:
+
+| Format | From |
+|---|---|
+| **INAV Blackbox** (`.bbl`, `.txt`) | INAV onboard flash (`.bbl`) or SD-card (`.txt`) blackbox |
+| **ArduPilot Dataflash** (`.bin`) | ArduPilot onboard logs |
+| **PX4 ULog** (`.ulg`) | PX4 onboard flash / SD-card logs |
+| **MAVLink telemetry** (`.tlog`) | a MAVLink ground-station recording |
+| **MWPTools raw-MSP** (`.rawmsp`) | mwp's raw telemetry capture |
+| **Kite flight** (`.kflight`) | a flight exported from another Kite install |
+
+A progress bar tracks the import. INAV Blackbox needs the **`blackbox_decode`** helper, which Kite
+fetches automatically the first time you import one. A `.bbl` pulled from the flight controller's
+flash usually holds **several flights** — one per arm / disarm cycle. Kite detects that and offers to
+import them all, each as its own logbook entry. Imported telemetry logs (`.tlog` / `.rawmsp`) are
+treated as telemetry recordings and **split into separate flights on the arm / disarm markers** in the
+log, the same way a live recording is.
+
+PX4 ULog note: PX4 doesn't log a throttle *output*, so a replayed `.ulg` flight shows the FC's
+**thrust setpoint** as the throttle value.
+
+## Exporting
+
+- **`.kflight`** — export selected flights (multi-select supported) as Kite's portable flight file, to
+  move them to another install.
+- **Original log file** — re-export the onboard log stored with the flight: an INAV Blackbox
+  (`.bbl` / `.txt`), ArduPilot Dataflash (`.bin`) or PX4 ULog (`.ulg`). For a flight that came out of a multi-flight
+  `.bbl`, this is that flight's own log, not the whole download. Imported `.tlog` / `.rawmsp` telemetry is parsed
+  straight in (not kept as a file), so there's nothing to re-export for those.
+- **Track** — export a flight's path as **KMZ / KML** (Google Earth), **GPX** or **CSV**.
+
+## The database, updates and the automatic backup
+
+All flights live in a single SQLite database (`flights.db`, folder configurable in Settings). When a
+Kite update needs to **upgrade the database format**, Kite first writes a **full backup** next to the
+database file (`flights.pre-migration-backup.db`) — automatically, before anything is changed. Only
+the **latest** backup is kept (with blackbox logs the file can be several GB), and Settings shows it
+with its size and a **Delete** button once it exists. To keep a copy permanently, move the file
+somewhere else yourself.
+
+If you ever **downgrade** Kite after such an upgrade, the older version refuses to touch the newer
+database: the logbook shows a notice (and the database stays untouched) until you either install the
+newer Kite again or restore a matching backup.
+
+## Vehicles & batteries
+
+From the logbook toolbar you can open the two libraries that flights link to:
+
+- **[Vehicles](vehicles.md)** — your aircraft, with build sheets and per-craft flight history.
+- **[Batteries](batteries.md)** — your packs, with cycle / usage tracking and the per-flight links.
+
+## Where to go next
+
+- Set up what gets recorded: **[Settings](../reference/settings.md)**.
+- Replay in 3D: **[3D map](map-3d.md)**.
+- The libraries flights link to: **[Vehicles](vehicles.md)** · **[Batteries](batteries.md)**.

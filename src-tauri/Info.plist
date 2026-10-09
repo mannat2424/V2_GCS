@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Info.plist keys merged into the generated macOS and iOS bundles by tauri (the iOS bundle picks
+  these up too, see gen/apple/kite-gc_iOS/Info.plist).
+  Bluetooth: required so CoreBluetooth (btleplug / native BLE transport) is permitted; without a usage
+  string Apple denies BLE central access. Mirrors the capability Windows/Linux already have.
+  Camera: required for the video panel's "Camera (device)" source (getUserMedia over a USB/UVC capture
+  device, e.g. an HDMI capture card fed from FPV goggles/VRX), the same webcam access desktop has.
+  Local network: covers everything Kite talks to on the LAN — an RTSP video source on a companion
+  computer, MAVLink over UDP/TCP from a Wi-Fi telemetry bridge. macOS 15 gates that behind a consent
+  prompt; without this key the prompt carries a generic system text instead of saying what Kite
+  actually wants the network for. (Loopback, i.e. our own MediaMTX, is exempt from the gate.)
+  Location (when-in-use): required for the GCS marker. On macOS the marker is fed by native
+  CoreLocation (location_macos.rs) rather than the WebView, because WKWebView ships no Geolocation API
+  at all (wry implements the permission prompt only for its Android backend, and
+  tauri-plugin-geolocation's desktop backend is a stub); macOS will not authorise CoreLocation for an
+  app without a usage description. iOS goes through the native plugin and reads the same key. Coarse,
+  city-level accuracy is all the marker needs.
+-->
+<plist version="1.0">
+<dict>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Kite Ground Control uses Bluetooth to connect to your flight controller / telemetry link over BLE.</string>
+    <key>NSBluetoothPeripheralUsageDescription</key>
+    <string>Kite Ground Control uses Bluetooth to connect to your flight controller / telemetry link over BLE.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Kite Ground Control uses the camera to display an FPV video feed from a connected capture device.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Kite Ground Control connects to devices on your local network — a video stream from an onboard companion computer, or telemetry from a flight controller over Wi-Fi.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Kite Ground Control uses your location to place the ground-station marker on the map and as the reference point for the radar.</string>
+</dict>
+</plist>

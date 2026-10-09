@@ -1,0 +1,66 @@
+<!doctype html>
+<!--
+  SPDX-License-Identifier: GPL-3.0-or-later
+  Copyright (C) 2026 Marc Hoffmann (b14ckyy)
+-->
+<html lang="en" style="color-scheme: dark;">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <style>
+      /* The app is a full-screen cockpit, not a scrollable page: never let trackpad/touch gestures
+         scroll-chain or bounce the whole frame (the per-panel scrollers handle their own overflow). */
+      html, body { overscroll-behavior: none; }
+
+      /* Touch: the long-press text selection and the tap flash are mouse-era idioms that only get
+         in the way of dragging a widget or a waypoint. Panning/zooming is deliberately NOT blocked
+         here — the panels scroll themselves and the map handles its own gestures. No effect on a
+         desktop WebView. */
+      body { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; }
+
+      /* Dropdowns: one look on every platform. Without this, WKWebView (macOS) draws every <select>
+         as a native NSPopUpButton — light pill, gradient, up/down chevron — ignoring the dark styling
+         the components set; WebView2 and WebKitGTK render a flat box. The chevron is our own; the
+         !important keeps it in front of components that set a `background:` shorthand (which would
+         otherwise clear the image). Component rules still own colour, border, size and text. */
+      select {
+        appearance: none;
+        -webkit-appearance: none;
+        padding-right: 22px !important;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23949494' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 7px center !important;
+        background-size: 10px 6px !important;
+      }
+      select:disabled { opacity: 0.5; }
+
+      /* Glass blur — two switches, the radii stay at the elements as the var() fallback.
+         Every backdrop-filter in the components reads `var(--glass-blur, blur(6px))` (everything that
+         lies on the map: widget cards, buttons, chips, the widget column's glass, toasts, menus) or
+         `var(--panel-blur, blur(10px))` (the panel shells and the popups of their kind — large,
+         contiguous surfaces where the blur earns its keep for readability). A backdrop-filter is a
+         readback of the framebuffer under the element plus a blur pass, per element and per frame
+         while the map moves — some twenty of them on the phone. A Chromium trace on the Sony
+         (2026-09-12) put them at 13–15 ms of a ~30 ms frame with video, 7 of ~21 without; the radius
+         made no measurable difference, the count does (Dev-Docs CHANGELOG). Hence: no map blur on
+         any mobile device (Android / iOS, phone and tablet UI alike), and the low-power mode
+         (Settings → lowPower3D, `auto` = on battery) switches both off on every platform. */
+      html.is-mobile { --glass-blur: none; }
+
+      /* The pressed / active / hovered fill of the glass buttons on the map (map corner controls,
+         hamburger, the video window's toggles, the widget dock's resize handle): the accent at less
+         than half brightness, nearly opaque. It used to be the accent at 25 % alpha alone — over a
+         blurred dark map a dull blue, over a bright map without the blur barely there (Marc,
+         2026-09-12: the camera toggle disappeared on light terrain). Buttons inside panels keep
+         their own subtler tints; those sit on a dark ground. */
+      :root { --btn-active-bg: rgba(39, 78, 96, 0.92); }
+      html.kite-low-power { --glass-blur: none; --panel-blur: none; }
+    </style>
+    <title>Tauri + SvelteKit + Typescript App</title>
+    %sveltekit.head%
+  </head>
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">%sveltekit.body%</div>
+  </body>
+</html>
