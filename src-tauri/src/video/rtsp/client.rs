@@ -8,7 +8,7 @@
 //! advertises it, OPTIONS otherwise).
 //!
 //! Data: **RTP/UDP** preferred (client_port pair, NAT pinhole punch, minimal RTCP receiver
-//! reports) — over the lossy, high-latency links Kite flies on, TCP retransmits stack
+//! reports) — over the lossy, high-latency links VAYU flies on, TCP retransmits stack
 //! delay exactly when the link degrades. **TCP-interleaved** serves NAT-hostile paths and
 //! is the automatic fallback when no RTP arrives within `first_packet_timeout` after PLAY
 //! (or the server refuses the UDP SETUP outright).
@@ -63,7 +63,7 @@ impl Default for RtspConfig {
             transport: RtspTransport::Auto,
             connect_timeout: Duration::from_secs(5),
             first_packet_timeout: Duration::from_secs(2),
-            user_agent: "Kite-GC".into(),
+            user_agent: "VAYU".into(),
             accept: vec![VideoCodec::Mjpeg, VideoCodec::H264, VideoCodec::H265],
             live: None,
             resync_on_loss: false,

@@ -3,7 +3,7 @@
 
 /**
  * ArduPilot mission command catalog — the single declarative source describing every mission command
- * Kite can edit: its category (picker grouping), whether it carries a map position, and its editable
+ * VAYU can edit: its category (picker grouping), whether it carries a map position, and its editable
  * params (label/units/range/enum/description). Modelled on QGroundControl's MavCmdInfo*.json + the
  * ArduPilot mission-command reference (see docs/active/ARDUPILOT_WAYPOINT_ARCHITECTURE.md).
  *
@@ -14,7 +14,7 @@
  * render raw (labelled params, no friendly editor). Runtime-only camera-protocol commands
  * (SET_CAMERA_*, IMAGE_START_CAPTURE) are not mission items → excluded entirely.
  *
- * Names are kept in English (universal MAVLink / pilot terminology). The friendly Kite name is primary;
+ * Names are kept in English (universal MAVLink / pilot terminology). The friendly VAYU name is primary;
  * the canonical MAV_CMD name (the form Mission Planner shows) is surfaced as a subtle secondary label.
  * Param ranges/defaults still want ArduPilot-operator review (⚠).
  */

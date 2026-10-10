@@ -2,7 +2,7 @@
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
 // Geozone sanity checks — the same constraints the INAV configurator enforces, so a config saved from
-// Kite is valid on the FC. Hard errors block "Save to FC"; CCW winding is auto-fixed at save. See
+// VAYU is valid on the FC. Hard errors block "Save to FC"; CCW winding is auto-fixed at save. See
 // docs/active/GEOZONES.md.
 
 import {

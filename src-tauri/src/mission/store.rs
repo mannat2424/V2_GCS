@@ -92,7 +92,7 @@ pub fn mission_to_xml(mission: &Mission) -> String {
     // Other tools (INAV Configurator) ignore this element and read only <missionitem>.
     if let Some(h) = &mission.home {
         xml.push_str(&format!(
-            "  <mwp save-date=\"{}\" zoom=\"14\" cx=\"{:.7}\" cy=\"{:.7}\" generator=\"Kite-GC\" home-x=\"{:.7}\" home-y=\"{:.7}\"/>\n",
+            "  <mwp save-date=\"{}\" zoom=\"14\" cx=\"{:.7}\" cy=\"{:.7}\" generator=\"VAYU\" home-x=\"{:.7}\" home-y=\"{:.7}\"/>\n",
             chrono::Utc::now().format("%Y-%m-%dT%H:%M:%S"),
             h.lon, h.lat, h.lon, h.lat,
         ));

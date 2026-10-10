@@ -84,26 +84,26 @@
 
 <style>
   .ms { display: flex; flex-direction: column; gap: 5px; }
-  .ms-source { color: #6f6f6f; font-size: 10px; font-style: italic; margin-bottom: 2px; }
+  .ms-source { color: #4b617c; font-size: 10px; font-style: italic; margin-bottom: 2px; }
   .ms-source.live { color: #7ec850; font-style: normal; font-weight: 700; }
   .ms-group {
-    color: #37a8db; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    margin: 6px 0 2px; padding-bottom: 3px; border-bottom: 1px solid rgba(55, 168, 219, 0.25);
+    color: #38bdf8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    margin: 6px 0 2px; padding-bottom: 3px; border-bottom: 1px solid rgba(56, 189, 248, 0.25);
   }
   .ms-row { display: grid; grid-template-columns: 80px 1fr 48px; align-items: center; gap: 8px; }
-  .ms-label { color: #cfcfcf; font-size: 11px; }
-  .ms-val { color: #e0e0e0; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
+  .ms-label { color: #c9d3df; font-size: 11px; }
+  .ms-val { color: #e3eaf3; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
   .ms-bar {
-    position: relative; height: 13px; background: #1f1f1f; border: 1px solid #333;
+    position: relative; height: 13px; background: #0d131b; border: 1px solid #18212d;
     border-radius: 3px; overflow: hidden;
   }
-  .ms-centre { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #4a4a4a; }
-  .ms-fill { position: absolute; top: 0; bottom: 0; background: #37a8db; }
+  .ms-centre { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #2b394c; }
+  .ms-fill { position: absolute; top: 0; bottom: 0; background: #38bdf8; }
   .ms-buttons { display: flex; flex-wrap: wrap; gap: 4px; }
   .ms-btn {
     min-width: 22px; height: 20px; padding: 0 5px; display: inline-flex; align-items: center;
     justify-content: center; font-size: 10px; border-radius: 3px;
-    background: #2a2a2a; color: #777; border: 1px solid #3a3a3a; font-variant-numeric: tabular-nums;
+    background: #111822; color: #68788e; border: 1px solid #1f2a38; font-variant-numeric: tabular-nums;
   }
   .ms-btn.on { background: rgba(89, 170, 41, 0.25); color: #7ec850; border-color: #59aa29; }
 </style>

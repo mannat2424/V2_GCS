@@ -102,7 +102,7 @@ impl TerrainProvider {
         std::fs::create_dir_all(&cache_dir).ok();
         TerrainProvider {
             client: reqwest::Client::builder()
-                .user_agent("KiteGC/terrain")
+                .user_agent("VAYU/terrain")
                 // Bound every DEM fetch: a stalled connection must NOT hang forever while
                 // holding `load_lock` (which serializes all tile loads) — that would freeze
                 // every terrain call (both HUD widgets + mission + geoid) for the whole replay.
@@ -497,7 +497,7 @@ fn resolve_terrain_cache_dir() -> PathBuf {
         }
     }
     // Android: app-private storage — see `android::app_data_dir`. The DEM tile cache is the largest
-    // thing Kite writes, and app-private storage is also what gets cleared by "Clear cache" / uninstall.
+    // thing VAYU writes, and app-private storage is also what gets cleared by "Clear cache" / uninstall.
     #[cfg(target_os = "android")]
     {
         return crate::android::app_data_dir().join("terrain");

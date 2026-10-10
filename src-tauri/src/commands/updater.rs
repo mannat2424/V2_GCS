@@ -2,7 +2,7 @@
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
 //! "Update and Restart" — the install half of the update check. `update_check.rs` decides WHICH release
-//! the user is told about; this module installs the one the user accepted and relaunches Kite.
+//! the user is told about; this module installs the one the user accepted and relaunches VAYU.
 //!
 //! Two install paths, chosen by how the running copy was deployed:
 //!
@@ -22,7 +22,7 @@ use serde::Serialize;
 use tauri::AppHandle;
 
 const PROGRESS_EVENT: &str = "update-progress";
-const REPO: &str = "b14ckyy/Kite-GC";
+const REPO: &str = "mannat2424/V2_GCS";
 
 /// How the running copy can be updated — drives which button the update dialog shows.
 #[derive(Serialize, Clone, Copy, PartialEq)]
@@ -64,7 +64,7 @@ pub fn update_kind() -> UpdateKind {
 }
 
 /// Install release `tag` (version `version`, without the `v`) and relaunch. Does not return on success:
-/// the Tauri updater exits the process itself on Windows (the installer relaunches Kite), everywhere
+/// the Tauri updater exits the process itself on Windows (the installer relaunches VAYU), everywhere
 /// else `AppHandle::restart` takes over once the swap is done. Errors come back as plain text for the
 /// dialog.
 #[tauri::command(async)]
@@ -150,11 +150,11 @@ async fn install_portable(app: &AppHandle, tag: &str, version: &str) -> Result<(
     let exe = std::env::current_exe().map_err(|e| format!("Cannot locate the running executable: {e}"))?;
     let dir = exe.parent().ok_or("Cannot locate the running executable")?.to_path_buf();
 
-    // Same unified name the collect scripts produce (KiteGC_<OS>_<Arch>_<Version>_portable.zip).
-    let asset = format!("KiteGC_{os}_{arch}_{version}_portable.zip");
+    // Same unified name the collect scripts produce (VAYU_<OS>_<Arch>_<Version>_portable.zip).
+    let asset = format!("VAYU_{os}_{arch}_{version}_portable.zip");
     let url = crate::github_release::asset_url(REPO, tag, &asset);
     let client = reqwest::Client::builder()
-        .user_agent(format!("Kite-GC/{} update", app.package_info().version))
+        .user_agent(format!("VAYU/{} update", app.package_info().version))
         .build()
         .map_err(|e| format!("HTTP client error: {e}"))?;
     let mut resp = client

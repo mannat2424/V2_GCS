@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 # ============================================================
-# Kite Ground Control — fetch static macOS ffmpeg for bundling
+# VAYU — fetch static macOS ffmpeg for bundling
 #
 # Downloads static ffmpeg binaries (arm64 + x86_64) and writes them as Tauri
 # sidecars under src-tauri/binaries/ so `just build-macos` / CI bundle ffmpeg

@@ -75,7 +75,7 @@ pub struct RadarConfig {
     pub formation_flight: FormationFlightConfig,
 }
 
-/// FormationFlight (INAV-Radar / ESP32) system config — a single serial module Kite speaks MSP to as an
+/// FormationFlight (INAV-Radar / ESP32) system config — a single serial module VAYU speaks MSP to as an
 /// emulated FC. See docs/active/RADAR_FORMATION_FLIGHT.md.
 #[derive(Debug, Clone, Deserialize, Default)]
 #[serde(rename_all = "camelCase")]

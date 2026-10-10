@@ -43,7 +43,7 @@ fn ardupilot_variant(t: MavType) -> &'static str {
         // A boat is a Rover frame and uses the Rover mode table.
         MavType::MAV_TYPE_GROUND_ROVER | MavType::MAV_TYPE_SURFACE_BOAT => "ArduRover",
         MavType::MAV_TYPE_SUBMARINE => "ArduSub",
-        // Antenna trackers and blimps land here too: own firmware, but Kite has no mode table for
+        // Antenna trackers and blimps land here too: own firmware, but VAYU has no mode table for
         // either, so a distinct variant string would promise support that does not exist.
         _ => "ArduCopter",
     }
@@ -100,7 +100,7 @@ mod tests {
         }
     }
 
-    /// Issue #40 end to end: the reported tiltrotor sat in custom_mode 19 and Kite showed "Avoid ADSB".
+    /// Issue #40 end to end: the reported tiltrotor sat in custom_mode 19 and VAYU showed "Avoid ADSB".
     #[test]
     fn vtol_mode_19_resolves_as_qloiter_not_avoid_adsb() {
         let (variant, _) = identify(

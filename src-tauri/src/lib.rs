@@ -839,7 +839,7 @@ pub fn run() {
             rally_write_all,
         ])
         .build(tauri::generate_context!())
-        .expect("error while running Kite Ground Control")
+        .expect("error while running VAYU")
         .run(|app, event| {
             // Tauri tears the process down without dropping managed state, so the video helpers must
             // be stopped here. A surviving engine (or its ffmpeg publisher) keeps the RTSP session on
@@ -852,7 +852,7 @@ pub fn run() {
                 app.state::<video::rtsp_native::NativeRtsp>().stop();
             }
             // The detached video window keeps the app alive on its own (Tauri exits when the LAST
-            // window closes), so closing Kite would leave a naked video frame on the desktop. It
+            // window closes), so closing VAYU would leave a naked video frame on the desktop. It
             // goes with the main window — and after it, so the main window's JS is already gone and
             // its "the user docked the picture back" handler cannot clear the detached pref.
             // Desktop only: there is no second window on mobile, and `destroy` does not exist there.

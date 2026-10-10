@@ -148,7 +148,7 @@
     filter: blur(2px) brightness(0.8);
     background: transparent;
   }
-  /* Leaflet's container default is a LIGHT grey (#ddd) — on the dark UI any tile
+  /* Leaflet's container default is a LIGHT grey (#d6dee9) — on the dark UI any tile
      load/redraw would flash bright. Transparent lets the app ground show instead. */
   .backdrop-map :global(.leaflet-container) {
     background: transparent;

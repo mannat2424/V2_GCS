@@ -5,7 +5,7 @@
 //
 // An ESP32 INAV-Radar module (LoRa / ESP-NOW) talks MSP to a flight controller: it polls the FC for its
 // own telemetry, broadcasts it to the formation, and relays received peers back into the FC via
-// MSP2_COMMON_SET_RADAR_POS. Kite joins as a GROUND NODE by emulating an INAV FC over this serial link:
+// MSP2_COMMON_SET_RADAR_POS. VAYU joins as a GROUND NODE by emulating an INAV FC over this serial link:
 //   - We answer the module's MSP requests as an armed "INAV" FC at the GCS location (so the module runs
 //     as a full TX node — sidestepping the historical "GCS" listen-only bug, which gated on the host type).
 //   - We parse the peers it pushes (MSP2_COMMON_SET_RADAR_POS) into TrackedVehicles (system=FormationFlight).

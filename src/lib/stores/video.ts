@@ -45,7 +45,7 @@ export type CameraFps = 'auto' | '30' | '60';
  *  capture (V4L2 / DirectShow / AVFoundation → embedded MJPEG server). */
 export type VideoKind = 'camera' | 'rtsp' | 'native';
 /** Which reader served the live RTSP feed: the engine's native client, the ffmpeg fallback, or
- *  Kite's own in-process RTSP client ('kite'). */
+ *  VAYU's own in-process RTSP client ('kite'). */
 export type RtspEngine = 'native' | 'ffmpeg' | 'kite' | null;
 /** RTSP transport for a connection, passed through to the engine's native RTSP client ('auto' lets
  *  it negotiate — and falls back to the ffmpeg reader for servers that refuse every forced transport). */
@@ -104,7 +104,7 @@ export interface VideoState {
   rtspTransport: RtspTransport;
   /** Saved, named RTSP connections the user can recall (explicit save — never auto-added). */
   rtspConnections: RtspConnection[];
-  /** Experimental: use Kite's own in-process RTSP client — no MediaMTX, no ffmpeg (MJPEG
+  /** Experimental: use VAYU's own in-process RTSP client — no MediaMTX, no ffmpeg (MJPEG
    *  sources only until the P2.1 native decode sinks land). Persisted. */
   rtspNativeClient: boolean;
   /** Active RTSP reader once live (native engine client vs ffmpeg fallback); runtime-only. */
@@ -329,7 +329,7 @@ function savePrefs(): void {
 }
 
 const boot = loadPrefs();
-// Android has no MediaMTX/ffmpeg (sidecars don't ship on mobile) — the Kite RTSP client is the
+// Android has no MediaMTX/ffmpeg (sidecars don't ship on mobile) — the VAYU RTSP client is the
 // ONLY route, not a choice. Forced here so every startRtsp() takes the kite path regardless of
 // what an old pref says; the panel hides the toggle there.
 if (isAndroid) boot.rtspNativeClient = true;
@@ -1065,7 +1065,7 @@ function stopKiteStatsMonitor(): void {
   nativeRtspStats.set(null);
 }
 
-/** Bring the feed up on Kite's own in-process RTSP client (MOBILE_RTSP.md): our RTSP/RTP stack
+/** Bring the feed up on VAYU's own in-process RTSP client (MOBILE_RTSP.md): our RTSP/RTP stack
  *  reads the source itself (UDP first, automatic TCP fallback). An MJPEG source is broadcast on
  *  the same local multipart port the ffmpeg path uses — every sink and the reconnect wiring work
  *  unchanged. An H264 source (Windows) decodes natively into the hole-punch sink below the
@@ -1534,7 +1534,7 @@ export async function startRtsp(opts?: { reconnect?: boolean }): Promise<void> {
     rtspHwVetoed = false;
   }
 
-  // In-process native RTSP client (MOBILE_RTSP.md): no engine, no ffmpeg — Kite's own
+  // In-process native RTSP client (MOBILE_RTSP.md): no engine, no ffmpeg — VAYU's own
   // RTSP/RTP stack (MJPEG → multipart, H264/HEVC → hardware decode sink).
   if (st.rtspNativeClient) {
     // Toggled over from the classic path mid-run? The engine would keep pulling the
@@ -2098,7 +2098,7 @@ const LINUX_CAMERA_AUTOSTART_DELAY_MS = 1200;
  *  `webkitRTCPeerConnection` is checked too, so a merely *prefixed* implementation can't masquerade as
  *  "no WebRTC at all". MediaSource/captureStream are logged because they were the third candidate path
  *  (fMP4 into the WebView's own decoder): WebKitGTK has MediaSource but **no** `captureStream`, so an
- *  MSE-driven element cannot be published to Kite's shared multi-sink stream — that is why the path was
+ *  MSE-driven element cannot be published to VAYU's shared multi-sink stream — that is why the path was
  *  built, measured to never once engage on a Pi, and removed again. */
 function logWebViewMediaSupport(): void {
   const has = (name: string) => name in globalThis;

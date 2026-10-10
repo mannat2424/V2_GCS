@@ -14,7 +14,7 @@ GEN_APPLE="src-tauri/gen/apple"
 # `dependencies: - framework: libapp.a`, not from the group. The copy puts the library inside the
 # app bundle, which App Store validation rejects:
 #
-#   Invalid bundle structure. The "Kite Ground Control.app/libapp.a" binary file is not permitted.
+#   Invalid bundle structure. The "VAYU.app/libapp.a" binary file is not permitted.
 #
 # It also carries the library into the ipa for nothing (56 MB before, 19 MB after), and once several
 # copies exist side by side (debug + release, device + simulator) Xcode fails outright with

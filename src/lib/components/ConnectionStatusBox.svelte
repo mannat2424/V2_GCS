@@ -65,7 +65,7 @@
     height: 32px;
     padding: 0 10px;
     background: rgba(0, 0, 0, 0.25);
-    border: 1px solid #272727;
+    border: 1px solid #1c2633;
     border-radius: 6px;
     font-family: 'Segoe UI', Tahoma, sans-serif;
   }
@@ -74,7 +74,7 @@
     height: 9px;
     border-radius: 50%;
     flex: none;
-    background: #949494; /* waiting */
+    background: #8493a8; /* waiting */
     box-shadow: 0 0 0 0 transparent;
     transition: background 0.2s ease;
   }
@@ -94,11 +94,11 @@
   .primary {
     font-size: 12px;
     font-weight: 600;
-    color: #e0e0e0;
+    color: #e3eaf3;
     letter-spacing: 0.02em;
   }
   .secondary {
     font-size: 10px;
-    color: #949494;
+    color: #8493a8;
   }
 </style>

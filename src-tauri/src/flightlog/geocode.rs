@@ -7,7 +7,7 @@
 use serde::Deserialize;
 
 const NOMINATIM_URL: &str = "https://nominatim.openstreetmap.org/reverse";
-const USER_AGENT: &str = "KiteGC/0.3.0 (flight-logging)";
+const USER_AGENT: &str = "VAYU/0.3.0 (flight-logging)";
 
 #[derive(Debug, Deserialize)]
 struct NominatimResponse {

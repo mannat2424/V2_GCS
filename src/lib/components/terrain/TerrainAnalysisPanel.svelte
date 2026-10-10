@@ -920,7 +920,7 @@
     flex-direction: column;
     gap: 6px;
     font-size: 12px;
-    color: #b8b8b8;
+    color: #afbccc;
   }
   /* Compact (wide) mode: label + stepper on one row to save vertical space so the params
      column needs no scrollbar (correction + hint are hidden in compact). */
@@ -945,7 +945,7 @@
     flex-direction: column;
     gap: 6px;
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
   }
   .lg {
     display: flex;
@@ -959,7 +959,7 @@
     flex: 0 0 auto;
   }
   .sw.path {
-    background: #37a8db;
+    background: #38bdf8;
   }
   .sw.terrain {
     height: 10px;
@@ -978,7 +978,7 @@
   .hint {
     margin: 0;
     font-size: 10px;
-    color: #6e6e6e;
+    color: #4b607b;
     line-height: 1.4;
   }
 
@@ -1003,7 +1003,7 @@
   .rf-note {
     margin: 0;
     font-size: 10px;
-    color: #6e6e6e;
+    color: #4b607b;
     line-height: 1.4;
   }
   .rf-warn {
@@ -1023,7 +1023,7 @@
     align-items: center;
     gap: 7px;
     font-size: 12px;
-    color: #b8b8b8;
+    color: #afbccc;
     cursor: pointer;
   }
   .range-row {
@@ -1032,14 +1032,14 @@
     gap: 6px;
   }
   .range-row .dash {
-    color: #6e6e6e;
+    color: #4b607b;
   }
   .corr-stats {
     display: flex;
     flex-direction: column;
     gap: 3px;
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
   }
   .corr-stats b {
     color: #2ecc71;
@@ -1056,9 +1056,9 @@
     gap: 4px;
   }
   .addwp-btn {
-    background: rgba(55, 168, 219, 0.15);
-    border: 1px solid rgba(55, 168, 219, 0.5);
-    color: #37a8db;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    color: #38bdf8;
     border-radius: 6px;
     padding: 6px 10px;
     font-size: 12px;
@@ -1066,7 +1066,7 @@
     transition: background-color 0.15s;
   }
   .addwp-btn:hover:not(:disabled) {
-    background: rgba(55, 168, 219, 0.28);
+    background: rgba(56, 189, 248, 0.28);
   }
   .addwp-btn:disabled {
     opacity: 0.4;
@@ -1074,7 +1074,7 @@
   }
   .addwp-hint {
     font-size: 10px;
-    color: #6e6e6e;
+    color: #4b607b;
     line-height: 1.3;
   }
   .apply-btn {
@@ -1107,7 +1107,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #949494;
+    color: #8493a8;
     font-size: 13px;
   }
   .state.warn {
@@ -1128,10 +1128,10 @@
     gap: 6px;
   }
   .readout .rk {
-    color: #6e6e6e;
+    color: #4b607b;
   }
   .readout .rv {
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-variant-numeric: tabular-nums;
   }
   .readout.warn .rv {

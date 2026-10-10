@@ -121,8 +121,8 @@
   }
 
   .dialog-box {
-    background: #2e2e2e;
-    border: 1px solid rgba(55, 168, 219, 0.45);
+    background: #121a24;
+    border: 1px solid rgba(56, 189, 248, 0.45);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     padding: 20px 24px 16px;
@@ -136,13 +136,13 @@
   .dialog-title {
     font-size: 14px;
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e3eaf3;
     margin-bottom: 10px;
   }
 
   .dialog-message {
     font-size: 12px;
-    color: #bbb;
+    color: #b1b9c7;
     line-height: 1.5;
     margin-bottom: 12px;
   }
@@ -153,8 +153,8 @@
     flex-direction: column;
     gap: 4px;
   }
-  .upd-k { color: #949494; }
-  .upd-v { color: #e0e0e0; font-weight: 600; }
+  .upd-k { color: #8493a8; }
+  .upd-v { color: #e3eaf3; font-weight: 600; }
   .upd-pre { color: #f5a623; font-size: 11px; }
 
   /* ── Release notes ─────────────────────────────────────────────────────── */
@@ -163,7 +163,7 @@
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #949494;
+    color: #8493a8;
     margin-bottom: 6px;
   }
 
@@ -174,59 +174,59 @@
     overflow-y: auto;
     padding: 10px 14px;
     margin-bottom: 14px;
-    border: 1px solid #272727;
+    border: 1px solid #1c2633;
     border-radius: 6px;
-    background: #262626;
+    background: #0f161e;
     font-size: 12px;
     line-height: 1.55;
-    color: #c8c8c8;
+    color: #bec6d4;
     overflow-wrap: anywhere;
   }
   .upd-notes :global(h1), .upd-notes :global(h2), .upd-notes :global(h3), .upd-notes :global(h4) {
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-weight: 700;
     line-height: 1.3;
     margin: 14px 0 6px;
   }
   .upd-notes :global(h1) { font-size: 15px; }
-  .upd-notes :global(h2) { font-size: 14px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+  .upd-notes :global(h2) { font-size: 14px; border-bottom: 1px solid #18212d; padding-bottom: 4px; }
   .upd-notes :global(h3) { font-size: 13px; }
   .upd-notes :global(h4) { font-size: 12px; }
   .upd-notes :global(> :first-child) { margin-top: 0; }
   .upd-notes :global(p) { margin: 0 0 8px; }
   .upd-notes :global(ul), .upd-notes :global(ol) { margin: 0 0 8px; padding-left: 20px; }
   .upd-notes :global(li) { margin: 2px 0; }
-  .upd-notes :global(a) { color: #37a8db; text-decoration: none; }
+  .upd-notes :global(a) { color: #38bdf8; text-decoration: none; }
   .upd-notes :global(a:hover) { text-decoration: underline; }
   .upd-notes :global(code) {
     font-family: Consolas, 'Courier New', monospace;
     font-size: 11px;
-    background: #1f1f1f;
+    background: #0d131b;
     border-radius: 3px;
     padding: 1px 4px;
   }
   .upd-notes :global(pre) {
-    background: #1f1f1f;
+    background: #0d131b;
     border-radius: 4px;
     padding: 8px 10px;
     overflow-x: auto;
   }
   .upd-notes :global(pre code) { background: none; padding: 0; }
   .upd-notes :global(table) { border-collapse: collapse; margin: 0 0 8px; }
-  .upd-notes :global(th), .upd-notes :global(td) { border: 1px solid #3a3a3a; padding: 3px 8px; text-align: left; }
-  .upd-notes :global(th) { color: #e0e0e0; background: #2a2a2a; }
-  .upd-notes :global(hr) { border: 0; border-top: 1px solid #333; margin: 10px 0; }
+  .upd-notes :global(th), .upd-notes :global(td) { border: 1px solid #1f2a38; padding: 3px 8px; text-align: left; }
+  .upd-notes :global(th) { color: #e3eaf3; background: #111822; }
+  .upd-notes :global(hr) { border: 0; border-top: 1px solid #18212d; margin: 10px 0; }
   .upd-notes :global(img) { max-width: 100%; }
   .upd-notes :global(blockquote) {
     margin: 0 0 8px;
     padding: 6px 12px;
-    border-left: 3px solid #555;
-    background: #2a2a2a;
-    color: #bbb;
+    border-left: 3px solid #3a4a5f;
+    background: #111822;
+    color: #b1b9c7;
   }
   .upd-notes :global(blockquote p:last-child) { margin-bottom: 0; }
   /* GitHub alert blockquotes (> [!IMPORTANT] …) — colour by kind, GitHub's palette on our dark ground. */
-  .upd-notes :global(blockquote.alert-note) { border-left-color: #37a8db; }
+  .upd-notes :global(blockquote.alert-note) { border-left-color: #38bdf8; }
   .upd-notes :global(blockquote.alert-tip) { border-left-color: #59aa29; }
   .upd-notes :global(blockquote.alert-important) { border-left-color: #a371f7; }
   .upd-notes :global(blockquote.alert-warning) { border-left-color: #f5a623; }
@@ -239,17 +239,17 @@
     gap: 6px;
     padding: 4px 0 6px;
   }
-  .upd-progress-text { font-size: 12px; color: #e0e0e0; }
+  .upd-progress-text { font-size: 12px; color: #e3eaf3; }
   .upd-bar {
     position: relative;
     height: 6px;
     border-radius: 3px;
-    background: #1f1f1f;
+    background: #0d131b;
     overflow: hidden;
   }
   .upd-bar-fill {
     height: 100%;
-    background: #37a8db;
+    background: #38bdf8;
     border-radius: 3px;
     transition: width 0.15s linear;
   }
@@ -273,7 +273,7 @@
   }
   .upd-hint {
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
     margin-bottom: 10px;
   }
 
@@ -289,19 +289,19 @@
     font-size: 12px;
     font-weight: 600;
     border-radius: 4px;
-    border: 1px solid #555;
-    background: #434343;
-    color: #e0e0e0;
+    border: 1px solid #3a4a5f;
+    background: #253244;
+    color: #e3eaf3;
     cursor: pointer;
     transition: background 0.15s;
   }
-  .dialog-btn:hover { background: #505050; }
-  .dialog-btn-cancel { color: #999; }
+  .dialog-btn:hover { background: #2e3d51; }
+  .dialog-btn-cancel { color: #8796ab; }
 
   .dialog-btn-primary {
-    background: #1a6b94;
-    border-color: #2590c8;
+    background: #0369a1;
+    border-color: #0ea5e9;
     color: #fff;
   }
-  .dialog-btn-primary:hover { background: #237fae; }
+  .dialog-btn-primary:hover { background: #0284c7; }
 </style>

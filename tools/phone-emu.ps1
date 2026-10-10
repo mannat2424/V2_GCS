@@ -66,7 +66,7 @@ function Wait-Boot {
 function Save-Shot {
   param([string]$Path)
   if (-not $Path) { $Path = Join-Path $repo ('phone-shot-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.png') }
-  # NOT `adb screencap`: Kite's window is transparent (native-video hole punch) and the emulator's
+  # NOT `adb screencap`: VAYU's window is transparent (native-video hole punch) and the emulator's
   # screencap returns black for it. The DevTools capture reads the WebView's own pixels.
   node (Join-Path $PSScriptRoot 'phone-devtools.mjs') shot $Path
 }

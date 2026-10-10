@@ -181,11 +181,11 @@
     flex-direction: column;
     width: min(1100px, 95vw);
     max-height: 88vh;
-    background: #2e2e2e;
-    border: 1px solid rgba(55, 168, 219, 0.45);
+    background: #121a24;
+    border: 1px solid rgba(56, 189, 248, 0.45);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    color: #e0e0e0;
+    color: #e3eaf3;
     overflow: hidden;
   }
 
@@ -195,29 +195,29 @@
     justify-content: space-between;
     gap: 12px;
     padding: 12px 14px 8px;
-    border-bottom: 1px solid #272727;
+    border-bottom: 1px solid #1c2633;
   }
 
   .dialog-title {
     font-size: 15px;
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
   }
 
   .hint {
     margin-top: 2px;
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
   }
 
   .close {
     flex-shrink: 0;
     width: 26px;
     height: 26px;
-    border: 1px solid #555;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    background: #434343;
-    color: #cfcfcf;
+    background: #253244;
+    color: #c9d3df;
     cursor: pointer;
     font-size: 12px;
   }
@@ -236,7 +236,7 @@
 
   .group {
     background: rgba(0, 0, 0, 0.25);
-    border: 1px solid #272727;
+    border: 1px solid #1c2633;
     border-radius: 6px;
     padding: 6px 10px 8px;
   }
@@ -247,7 +247,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #949494;
+    color: #8493a8;
   }
 
   .row {
@@ -260,7 +260,7 @@
   }
 
   .name {
-    color: #c0c0c0;
+    color: #b6c2d1;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -275,6 +275,6 @@
 
   .unit {
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
   }
 </style>

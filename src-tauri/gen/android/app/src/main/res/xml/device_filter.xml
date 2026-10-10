@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  Which USB devices offer to open Kite when they are plugged in.
+  Which USB devices offer to open VAYU when they are plugged in.
 
   Matching here is what lets the user grant access from the system's "open with" dialog at attach
   time, which also grants the USB permission — so the in-app permission prompt never has to appear.
-  Keep this in step with the drivers in UsbSerial.kt: offering to open Kite for a device it cannot
+  Keep this in step with the drivers in UsbSerial.kt: offering to open VAYU for a device it cannot
   drive is worse than not offering at all.
 -->
 <resources>

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Kite Ground Control — Development Server
+# VAYU — Development Server
 # Starts the app in development mode with hot-reload
 #
 # Recommended: Use "just dev" instead (see justfile in project root)
@@ -10,7 +10,7 @@ set -e
 
 echo ""
 echo "============================================"
-echo " Kite Ground Control — Development Mode"
+echo " VAYU — Development Mode"
 echo "============================================"
 echo ""
 

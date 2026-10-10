@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-"""Own-UAV models for Kite-GC: plane, quad, tricopter, vtol, arrow.
+"""Own-UAV models for VAYU: plane, quad, tricopter, vtol, arrow.
 Run:  uv run --with trimesh --with numpy --with scipy python generate_uav.py <outdir> [model names...]"""
 import sys, os, numpy as np
 from kitemodels import *

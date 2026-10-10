@@ -36,7 +36,7 @@ use std::time::{Duration, Instant};
 /// an unknown key makes MediaMTX refuse to start, so bump the pin and re-test as one step.
 const VERSION: &str = "v1.20.0";
 const REPO_RELEASES: &str = "https://github.com/bluenviron/mediamtx/releases";
-const HTTP_USER_AGENT: &str = "Kite-GC mediamtx-fetch";
+const HTTP_USER_AGENT: &str = "VAYU mediamtx-fetch";
 
 /// The single stream path name (fixed — one live feed).
 const STREAM_NAME: &str = "kite";
@@ -102,7 +102,7 @@ pub fn status() -> Option<String> {
 
 /// The MediaMTX release asset for this OS+arch, or None if we don't auto-download here (manual
 /// install). Windows = zip; Linux/macOS = tar.gz. armv6/armv7 assets exist upstream but stay
-/// unsupported here — too little RAM/CPU to run Kite + video usefully (same policy as before).
+/// unsupported here — too little RAM/CPU to run VAYU + video usefully (same policy as before).
 fn release_asset_name() -> Option<String> {
     let platform = if cfg!(target_os = "windows") {
         // Upstream ships no windows_arm64 asset; amd64 runs under emulation there.
@@ -576,7 +576,7 @@ fn wait_port(port: u16, budget: Duration) -> bool {
 /// Publishers are identified by their publish target (`rtsp://127.0.0.1:<port>/kite`), which no
 /// other ffmpeg we spawn (MJPEG server, device probes) and no user ffmpeg ever has. The port tells
 /// us **whose** publisher it is: if something is still listening there, the owning engine is alive
-/// — a second Kite instance, or a dev build beside the installed one — and killing its reader would
+/// — a second VAYU instance, or a dev build beside the installed one — and killing its reader would
 /// black out that instance's video. So: enumerate, and only kill publishers whose engine is gone.
 fn kill_stale_publishers() {
     let Some(listing) = list_ffmpeg_processes() else { return };

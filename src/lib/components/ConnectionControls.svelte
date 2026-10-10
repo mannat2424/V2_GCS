@@ -51,7 +51,7 @@
     selectedBaud: number;
     tcpHost: string;
     tcpPort: number;
-    /** False once the pilot has typed a port: Kite then stops moving it with the selection. Lives in
+    /** False once the pilot has typed a port: VAYU then stops moving it with the selection. Lives in
      *  +page so both instances of these controls (toolbar and phone popout) share one answer. */
     portIsAuto?: boolean;
     selectedBleDevice: string;
@@ -108,7 +108,7 @@
   // Whether the port may be moved is tracked in `portIsAuto` rather than guessed from the number.
   // Guessing cannot work: 5760 is ArduPilot SITL's port *and* a perfectly deliberate choice for an
   // MSP bridge, so a pilot who typed it would have had it silently rewritten on the next switch.
-  /** Hand the port back to Kite when the typed value is the standard one for the current selection.
+  /** Hand the port back to VAYU when the typed value is the standard one for the current selection.
    *  Without this there is no way back once anything has been typed, where going by the number at
    *  least had one, and an older profile stored on the previous transport-only default (MAVLink over
    *  TCP on 5761) would lose the re-defaulting for good. */
@@ -191,7 +191,7 @@
       placeholder="Host (z.B. 192.168.1.1)"
     />
     <!-- Typing here makes the port the pilot's and the selectors stop moving it, unless what was
-         typed is the standard port for the current selection, which hands it back to Kite. -->
+         typed is the standard port for the current selection, which hands it back to VAYU. -->
     <input
       class="tb-input port-input"
       type="number"
@@ -274,10 +274,10 @@
     height: 28px;
     box-sizing: border-box;
     padding: 0 8px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
   }
 
@@ -302,18 +302,18 @@
     width: 28px;
     box-sizing: border-box;
     padding: 0;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #cfcfcf;
+    color: #c9d3df;
     font-size: 13px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   }
   .bt-edit:hover {
-    background: rgba(55, 168, 219, 0.18);
-    color: #37a8db;
-    border-color: #37a8db;
+    background: rgba(56, 189, 248, 0.18);
+    color: #38bdf8;
+    border-color: #38bdf8;
   }
 
   /* Drop the native number spinner — the up/down arrows are clutter in the toolbar. */
@@ -328,6 +328,6 @@
   }
 
   .tb-input::placeholder {
-    color: #777;
+    color: #68788e;
   }
 </style>

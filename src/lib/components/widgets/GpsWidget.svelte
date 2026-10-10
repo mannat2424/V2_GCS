@@ -63,7 +63,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: rgba(30, 30, 30, 0.75);
+    background: rgba(12, 17, 24, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--ws) * 0.08);
@@ -74,14 +74,14 @@
   .w-label {
     font-size: calc(var(--ws) * 0.13);
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
   .w-coord {
     font-size: calc(var(--ws) * 0.14);
     font-weight: 600;
-    color: #d8d8d8;
+    color: #ced6e4;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0.02em;
     line-height: 1.2;

@@ -246,7 +246,7 @@
     margin: 0 0 8px 0;
     font-size: 11px;
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -258,7 +258,7 @@
     justify-content: center;
     gap: 8px;
     padding: 32px 24px;
-    color: #555;
+    color: #3a4a5f;
     font-size: 12px;
   }
 
@@ -276,11 +276,11 @@
   }
 
   .fc-label {
-    color: #949494;
+    color: #8493a8;
   }
 
   .fc-value {
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-weight: 600;
   }
 
@@ -294,10 +294,10 @@
   .type-select {
     height: 24px;
     padding: 0 6px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
     font-family: inherit;
     outline: none;
@@ -305,10 +305,10 @@
     color-scheme: dark;
   }
   .type-select:hover {
-    border-color: rgba(55, 168, 219, 0.6);
+    border-color: rgba(56, 189, 248, 0.6);
   }
   .type-select:focus {
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
   .type-select:disabled {
     opacity: 0.6;
@@ -317,23 +317,23 @@
   .type-detected {
     font-size: 10px;
     font-weight: 400;
-    color: #949494;
+    color: #8493a8;
   }
 
   .lib-btn {
     width: 100%;
     padding: 5px 10px;
-    background: rgba(55, 168, 219, 0.12);
-    border: 1px solid rgba(55, 168, 219, 0.5);
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.5);
     border-radius: 4px;
-    color: #37a8db;
+    color: #38bdf8;
     font-size: 11px;
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
   }
   .lib-btn:hover:not(:disabled) {
-    background: rgba(55, 168, 219, 0.22);
+    background: rgba(56, 189, 248, 0.22);
   }
   .lib-btn:disabled {
     opacity: 0.6;
@@ -368,9 +368,9 @@
   }
 
   .feature-badge.unavailable {
-    background: rgba(80, 80, 80, 0.2);
-    color: #555;
-    border: 1px solid #444;
+    background: rgba(54, 70, 90, 0.2);
+    color: #3a4a5f;
+    border: 1px solid #273446;
     text-decoration: line-through;
   }
 </style>

@@ -878,12 +878,12 @@
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: #ccc;
+    color: #c3cedb;
     cursor: pointer;
   }
 
   .toggle-row input[type="checkbox"] {
-    accent-color: #37a8db;
+    accent-color: #38bdf8;
   }
 
   .spacing-wrapper {
@@ -894,7 +894,7 @@
 
   .spacing-info {
     font-size: 11px;
-    color: #888;
+    color: #7a8aa0;
     font-style: italic;
     padding-left: 4px;
   }
@@ -916,12 +916,12 @@
   .section-label {
     font-size: 12px;
     font-weight: 600;
-    color: #888;
+    color: #7a8aa0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-top: 4px;
     width: 100%;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #18212d;
     padding-bottom: 2px;
   }
 
@@ -940,7 +940,7 @@
 
   .ua-col-label {
     font-size: 11px;
-    color: #888;
+    color: #7a8aa0;
     font-weight: 600;
     text-align: center;
   }
@@ -959,13 +959,13 @@
   }
 
   .ua-check-item input[type="checkbox"] {
-    accent-color: #37a8db;
+    accent-color: #38bdf8;
     margin: 0;
   }
 
   .ua-check-item span {
     font-size: 10px;
-    color: #666;
+    color: #4b5b71;
   }
 
   .alt-type-row {
@@ -975,16 +975,16 @@
 
   .alt-type-label {
     font-size: 12px;
-    color: #aaa;
+    color: #9eacbf;
     white-space: nowrap;
   }
 
   .alt-type-select {
     padding: 3px 6px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 3px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
     color-scheme: dark;
     max-width: 120px;
@@ -992,10 +992,10 @@
 
   .survey-header select {
     padding: 2px 6px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 3px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
     color-scheme: dark;
     margin-left: 6px;
@@ -1004,7 +1004,7 @@
   .survey-header h4 {
     margin: 0;
     font-size: 14px;
-    color: #37a8db;
+    color: #38bdf8;
     display: inline;
   }
 
@@ -1031,30 +1031,30 @@
     width: 100%;
     padding: 6px 12px;
     background: #1a3a5c;
-    border: 1px solid #37a8db;
+    border: 1px solid #38bdf8;
     border-radius: 4px;
-    color: #37a8db;
+    color: #38bdf8;
     cursor: pointer;
     font-size: 13px;
     font-weight: 600;
   }
   .btn-primary:hover {
-    background: #37a8db;
+    background: #38bdf8;
     color: #fff;
   }
 
   .btn-ctrl {
     padding: 5px 6px;
-    border: 1px solid #37a8db;
+    border: 1px solid #38bdf8;
     border-radius: 4px;
     background: #1a3a5c;
-    color: #37a8db;
+    color: #38bdf8;
     cursor: pointer;
     font-size: 12px;
     white-space: nowrap;
   }
-  .btn-ctrl:hover:not(:disabled) { background: #37a8db; color: #fff; }
+  .btn-ctrl:hover:not(:disabled) { background: #38bdf8; color: #fff; }
   .btn-ctrl:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-ctrl.btn-file { border-color: #555; background: #2a2a2a; color: #ccc; }
-  .btn-ctrl.btn-file:hover { background: #3a3a3a; }
+  .btn-ctrl.btn-file { border-color: #3a4a5f; background: #111822; color: #c3cedb; }
+  .btn-ctrl.btn-file:hover { background: #1f2a38; }
 </style>

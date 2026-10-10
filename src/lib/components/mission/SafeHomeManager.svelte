@@ -331,19 +331,19 @@
 <style>
   .shm-toolbar { display: flex; align-items: center; gap: 6px; width: 100%; }
   .tb-spacer { flex: 1; }
-  .shm-show { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #cfcfcf; }
+  .shm-show { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #c9d3df; }
 
   .shm-body { display: flex; flex-direction: column; gap: 6px; }
-  .shm-note { font-size: 12px; color: #888; padding: 4px 2px; }
+  .shm-note { font-size: 12px; color: #7a8aa0; padding: 4px 2px; }
   .shm-note.warn { color: #f5a623; }
 
-  .shm-section { margin: 6px 0 2px; font-size: 11px; font-weight: 600; color: #37a8db; text-transform: uppercase; letter-spacing: 0.5px; }
+  .shm-section { margin: 6px 0 2px; font-size: 11px; font-weight: 600; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; }
 
   /* Collapsible header (like the Raw HID monitor box). */
-  .shm-collapse { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: #2a2a2a; border: 1px solid #3a3a3a; border-radius: 4px; color: #cfcfcf; padding: 5px 7px; cursor: pointer; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-  .shm-collapse:hover { border-color: #37a8db; }
-  .cc-caret { color: #9cc6d9; font-size: 11px; }
-  .cc-title { color: #37a8db; }
+  .shm-collapse { display: flex; align-items: center; gap: 6px; width: 100%; text-align: left; background: #111822; border: 1px solid #1f2a38; border-radius: 4px; color: #c9d3df; padding: 5px 7px; cursor: pointer; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .shm-collapse:hover { border-color: #38bdf8; }
+  .cc-caret { color: #9adcf9; font-size: 11px; }
+  .cc-title { color: #38bdf8; }
 
   /* Fixed two-column grid sized to the ~380px compact field. */
   .shm-grid, .sh-approach { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; padding: 6px 2px; }
@@ -353,18 +353,18 @@
   .cell.chk { flex-direction: row; align-items: center; gap: 8px; }
   .cell.hd { flex-direction: row; align-items: center; gap: 8px; }
   .cell.hd .hdl { width: 84px; flex: none; }
-  .excl { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #cfcfcf; }
-  .cl { font-size: 10px; color: #949494; text-transform: uppercase; letter-spacing: 0.04em; }
+  .excl { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #c9d3df; }
+  .cl { font-size: 10px; color: #8493a8; text-transform: uppercase; letter-spacing: 0.04em; }
   .cell.dir { flex-direction: row; align-items: center; gap: 8px; }
-  .dir-opt { font-size: 11px; color: #777; }
-  .dir-opt.active { color: #e0e0e0; font-weight: 600; }
+  .dir-opt { font-size: 11px; color: #68788e; }
+  .dir-opt.active { color: #e3eaf3; font-weight: 600; }
 
-  .sh-row { border: 1px solid #333; border-radius: 4px; background: #242424; padding: 4px 6px; }
+  .sh-row { border: 1px solid #18212d; border-radius: 4px; background: #0e151d; padding: 4px 6px; }
   .sh-row.empty { opacity: 0.55; }
   .sh-head { display: flex; align-items: center; gap: 6px; }
-  .sh-caret { background: none; border: none; color: #9cc6d9; cursor: pointer; font-size: 12px; width: 16px; flex: none; }
-  .sh-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #37a8db; color: #fff; font-size: 10px; font-weight: bold; flex: none; }
-  .sh-coord { width: 84px; flex: 1; min-width: 0; height: 24px; box-sizing: border-box; padding: 0 5px; font-size: 11px; color: #e0e0e0; background: #1f1f1f; border: 1px solid #444; border-radius: 4px; font-variant-numeric: tabular-nums; }
+  .sh-caret { background: none; border: none; color: #9adcf9; cursor: pointer; font-size: 12px; width: 16px; flex: none; }
+  .sh-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #38bdf8; color: #fff; font-size: 10px; font-weight: bold; flex: none; }
+  .sh-coord { width: 84px; flex: 1; min-width: 0; height: 24px; box-sizing: border-box; padding: 0 5px; font-size: 11px; color: #e3eaf3; background: #0d131b; border: 1px solid #273446; border-radius: 4px; font-variant-numeric: tabular-nums; }
 
   .shm-actions { display: flex; gap: 6px; margin-top: 8px; }
   .shm-actions :global(.kbtn) { flex: 1; }

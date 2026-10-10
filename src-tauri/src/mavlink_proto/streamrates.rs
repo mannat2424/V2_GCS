@@ -12,7 +12,7 @@
 // So the two modes are NOT "configure vs. do nothing":
 //   • reduced  → apply_stream_rates(): wanted msgs at the two knobs, ballast disabled (-1)
 //   • full     → reset_stream_rates(): every message we ever touch reset to its SRn default (0),
-//                so a link previously narrowed by Kite returns to the operator's full FC stream.
+//                so a link previously narrowed by VAYU returns to the operator's full FC stream.
 // Applied ONCE on connect (after the handshake, before the handler thread starts), scoped FC-side to
 // our channel — we never touch the persistent SRn_* parameters.
 
@@ -165,7 +165,7 @@ pub fn apply_stream_rates(
 }
 
 /// Reset every managed message back to its FC SRn default (interval = 0) — used for Full-telemetry
-/// mode. Because SET_MESSAGE_INTERVAL is sticky on the FC, a link previously narrowed by Kite would
+/// mode. Because SET_MESSAGE_INTERVAL is sticky on the FC, a link previously narrowed by VAYU would
 /// otherwise stay narrow until the FC reboots; this undoes it so the operator's full stream returns.
 pub fn reset_stream_rates(transport: &mut dyn ByteTransport, fc_sysid: u8, is_px4: bool) {
     let header = codec::gcs_header();

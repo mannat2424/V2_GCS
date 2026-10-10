@@ -3,7 +3,7 @@
   "app": {
     "windows": [
       {
-        "title": "Kite Ground Control",
+        "title": "VAYU",
         "width": 1280,
         "height": 800,
         "dragDropEnabled": true,

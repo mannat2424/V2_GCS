@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-//! Telemetry API — Kite's read-only live-telemetry feed for external programs.
+//! Telemetry API — VAYU's read-only live-telemetry feed for external programs.
 //!
 //! Serves everything the unified telemetry model holds (the Raw Telemetry popup's content) as JSON:
 //! an NDJSON stream over TCP (port 27300), datagrams to UDP subscribers (a client sends any datagram to

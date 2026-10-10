@@ -152,7 +152,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: rgba(30, 30, 30, 0.75);
+    background: rgba(12, 17, 24, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--ws) * 0.08);
@@ -184,7 +184,7 @@
     gap: calc(var(--ws) * 0.03);
     font-size: calc(var(--ws) * 0.13);
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     background: none;
@@ -197,8 +197,8 @@
   .chip {
     font-size: calc(var(--ws) * 0.09);
     font-weight: 700;
-    color: #e0e0e0;
-    background: rgba(55, 168, 219, 0.25);
+    color: #e3eaf3;
+    background: rgba(56, 189, 248, 0.25);
     border-radius: calc(var(--ws) * 0.03);
     padding: 0 calc(var(--ws) * 0.04);
     letter-spacing: 0;
@@ -206,7 +206,7 @@
   .w-value {
     font-size: calc(var(--ws) * 0.24);
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-variant-numeric: tabular-nums;
     line-height: 1.1;
     margin-top: calc(var(--ws) * 0.01);
@@ -223,12 +223,12 @@
     flex: 1;
     text-align: center;
     font-size: calc(var(--ws) * 0.13);
-    color: #ccc;
+    color: #c3cedb;
     font-variant-numeric: tabular-nums;
   }
   .w-tertiary {
     font-size: calc(var(--ws) * 0.11);
-    color: #888;
+    color: #7a8aa0;
     font-variant-numeric: tabular-nums;
   }
 

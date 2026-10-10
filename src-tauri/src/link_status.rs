@@ -182,7 +182,7 @@ pub fn on_gps(d: &GpsData) {
 #[cfg_attr(not(target_os = "android"), allow(dead_code))]
 pub fn notification() -> (String, String) {
     let s = lock();
-    let vehicle = if s.vehicle.is_empty() { "Kite Ground Control".to_string() } else { s.vehicle.clone() };
+    let vehicle = if s.vehicle.is_empty() { "VAYU".to_string() } else { s.vehicle.clone() };
     let title = if s.protocol.is_empty() {
         vehicle
     } else if s.transport.is_empty() {

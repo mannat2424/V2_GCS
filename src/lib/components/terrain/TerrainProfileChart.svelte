@@ -903,11 +903,11 @@
     stroke-width: 1;
   }
   .axis-label {
-    fill: #949494;
+    fill: #8493a8;
     font-size: 13px;
   }
   .axis-unit {
-    fill: #6e6e6e;
+    fill: #4b607b;
     font-size: 13px;
   }
   .rf-fill {
@@ -946,7 +946,7 @@
   }
   .path-line {
     fill: none;
-    stroke: #37a8db;
+    stroke: #38bdf8;
     stroke-width: 2;
     stroke-linejoin: round;
     stroke-linecap: round;
@@ -985,12 +985,12 @@
     stroke-linecap: round;
   }
   .wp-dot {
-    fill: #37a8db;
+    fill: #38bdf8;
     stroke: #fff;
     stroke-width: 1.5;
   }
   .wp-num {
-    fill: #cfe8f5;
+    fill: #d4f0fd;
     font-size: 13px;
     font-weight: 600;
   }
@@ -1000,11 +1000,11 @@
     stroke-dasharray: 2 3;
   }
   .placed-line {
-    stroke: #37a8db;
+    stroke: #38bdf8;
     stroke-width: 1.5;
   }
   .placed-flag {
-    fill: #37a8db;
+    fill: #38bdf8;
   }
   .crosshair {
     stroke: rgba(255, 255, 255, 0.4);

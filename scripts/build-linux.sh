@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Kite Ground Control — Linux Build Script
+# VAYU — Linux Build Script
 # Builds standalone Linux packages (.deb, .AppImage, .rpm)
 #
 # Recommended: Use "just build-linux" or "just build" instead
@@ -17,7 +17,7 @@ set -e
 
 echo ""
 echo "============================================"
-echo " Kite Ground Control — Linux Release Build"
+echo " VAYU — Linux Release Build"
 echo "============================================"
 echo ""
 

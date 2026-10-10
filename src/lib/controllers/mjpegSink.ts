@@ -87,7 +87,7 @@ type OutMessage =
  *  froze the window a few frames after the stream came up. Handing the `ImageBitmap` over and drawing
  *  on the main thread carries all four surfaces at 59 fps with the same worst-case gap.
  *
- *  Kite shows up to four surfaces at once (panel, widget, floating window, map swap), so one canvas
+ *  VAYU shows up to four surfaces at once (panel, widget, floating window, map swap), so one canvas
  *  is not a usable ceiling. What matters is kept either way: the JPEG decode stays off the main
  *  thread, frame lifetime stays explicit, and one reader still feeds every surface. Only the final
  *  `drawImage` moves back. WebView2 keeps the transferred path it already ships. */

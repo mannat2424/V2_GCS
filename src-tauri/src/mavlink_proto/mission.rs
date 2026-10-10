@@ -415,7 +415,7 @@ fn wp_to_item(wp: &ArduWaypoint, seq: u16, target: u8, mission_type: MavMissionT
 
 // Round-trip-faithful int → enum: the MavCmd/MavFrame enums (ardupilotmega dialect) cover every
 // command/frame ArduPilot emits, so we map by their numeric discriminant via FromPrimitive instead
-// of a hand-maintained whitelist. This preserves any command the FC sends — including ones Kite has
+// of a hand-maintained whitelist. This preserves any command the FC sends — including ones VAYU has
 // no dedicated editor for yet — on download→upload, instead of silently rewriting them to a plain
 // waypoint. Truly-unknown values (not in the dialect) fall back to a safe default.
 fn u8_to_frame(v: u8) -> MavFrame {

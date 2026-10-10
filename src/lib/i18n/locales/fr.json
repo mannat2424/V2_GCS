@@ -1,6 +1,6 @@
 {
   "app": {
-    "brand": "KiteGC",
+    "brand": "VAYU",
     "version": "v{version}"
   },
   "statusBox": {
@@ -384,7 +384,7 @@
   },
   "update": {
     "title": "Mise à jour disponible",
-    "body": "Une nouvelle version de Kite Ground Control est disponible.",
+    "body": "Une nouvelle version de VAYU est disponible.",
     "latest": "Dernière :",
     "current": "Installée :",
     "prerelease": "pré-version",
@@ -398,7 +398,7 @@
     "downloading": "Téléchargement… {pct}%",
     "installing": "Installation…",
     "failed": "Échec de la mise à jour : {error}",
-    "portableNote": "Version portable : l'exécutable est remplacé sur place, puis Kite redémarre."
+    "portableNote": "Version portable : l'exécutable est remplacé sur place, puis VAYU redémarre."
   },
   "airspace": {
     "title": "Gestionnaire d'espace aérien",
@@ -599,8 +599,8 @@
     "alertCpaLookAhead": "Anticipation CPA",
     "ffModule": "Module ESP32 (série)",
     "ffNodeName": "Nom du nœud",
-    "ffNodeNamePlaceholder": "KITE-GCS",
-    "ffHint": "Kite émule un FC INAV à la position de la GCS pour que le module la partage et relaie les pairs.",
+    "ffNodeNamePlaceholder": "VAYU-GCS",
+    "ffHint": "VAYU émule un FC INAV à la position de la GCS pour que le module la partage et relaie les pairs.",
     "linkQuality": "Qualité du lien (0–4)",
     "acType": {
       "light": "Avion léger",
@@ -646,7 +646,7 @@
     "auto": "Auto",
     "rtspUrl": "URL RTSP",
     "nativeClient": "Client RTSP natif (expérimental)",
-    "nativeClientHint": "Le client RTSP intégré de Kite — sans MediaMTX ni ffmpeg. Sources MJPEG, H.264 et HEVC (décodage matériel H.264/HEVC sous Windows, Android et Linux) ; connexion d'abord en UDP avec repli TCP automatique.",
+    "nativeClientHint": "Le client RTSP intégré de VAYU — sans MediaMTX ni ffmpeg. Sources MJPEG, H.264 et HEVC (décodage matériel H.264/HEVC sous Windows, Android et Linux) ; connexion d'abord en UDP avec repli TCP automatique.",
     "dockShow": "Afficher la vidéo",
     "dockHide": "Masquer la vidéo",
     "dockMapShow": "Afficher la carte",
@@ -882,9 +882,9 @@
   "logbook": {
     "title": "Carnet de vol",
     "disabled": "La journalisation des vols est désactivée. Activez-la dans les paramètres et reconnectez-vous.",
-    "dbNewer": "Cette base de données de vols provient d'une version de Kite plus récente. Le carnet de vol reste désactivé jusqu'à l'installation d'une version de Kite égale ou plus récente — la base n'est pas modifiée.",
+    "dbNewer": "Cette base de données de vols provient d'une version de VAYU plus récente. Le carnet de vol reste désactivé jusqu'à l'installation d'une version de VAYU égale ou plus récente — la base n'est pas modifiée.",
     "dbNewerTitle": "Base de données d'une version plus récente",
-    "dbNewerPopup": "Cette base de données de vols a été créée par une version de Kite plus récente et ne peut pas être utilisée avec cette version. La base n'est PAS modifiée.\n\nRestaurez une sauvegarde de l'ancienne base (ou pointez le chemin de base vers une copie compatible) — sinon le carnet de vol reste indisponible. Vous pouvez aussi réinstaller la version de Kite plus récente.",
+    "dbNewerPopup": "Cette base de données de vols a été créée par une version de VAYU plus récente et ne peut pas être utilisée avec cette version. La base n'est PAS modifiée.\n\nRestaurez une sauvegarde de l'ancienne base (ou pointez le chemin de base vers une copie compatible) — sinon le carnet de vol reste indisponible. Vous pouvez aussi réinstaller la version de VAYU plus récente.",
     "sortMode": "Mode de tri",
     "sortAircraftLocationDate": "Appareil -> Lieu -> Date",
     "sortLocationDateAircraft": "Lieu -> Date -> Appareil",
@@ -996,7 +996,7 @@
     "decoderMissingMsg": "Les journaux Blackbox INAV nécessitent l'outil externe « blackbox_decode », qui n'est pas installé. Le télécharger automatiquement depuis les releases officielles iNavFlight ?",
     "decoderDownload": "Télécharger",
     "decoderDownloadFailed": "Impossible de télécharger blackbox_decode : {error}",
-    "kflightFileFilter": "Fichiers de vol KiteGC",
+    "kflightFileFilter": "Fichiers de vol VAYU",
     "exportTitle": "Export terminé",
     "exportSuccess": "{count} vol(s) exporté(s) avec succès.",
     "importKflightTitle": "Import terminé",
@@ -1774,7 +1774,7 @@
     "vidNatPresented": "Présentées",
     "vidNatCodec": "Codec",
     "vidNatDroppedHidden": "Ignorées (hors écran)",
-    "vidNatHint": "Le client RTSP propre à Kite. « Images reçues » compte ce que livre le dépaquetiseur (les unités d'accès H.264/HEVC peuvent arriver scindées — « Présentées » est la vraie cadence) ; « Perdues » compte les images entièrement rejetées après perte de paquets. RTP reçus/Perdus/Réordonnés/En retard viennent directement de la boucle de réception. Sur le chemin de décodage matériel, « Présentées » est ce que la couche D3D a réellement affiché."
+    "vidNatHint": "Le client RTSP propre à VAYU. « Images reçues » compte ce que livre le dépaquetiseur (les unités d'accès H.264/HEVC peuvent arriver scindées — « Présentées » est la vraie cadence) ; « Perdues » compte les images entièrement rejetées après perte de paquets. RTP reçus/Perdus/Réordonnés/En retard viennent directement de la boucle de réception. Sur le chemin de décodage matériel, « Présentées » est ce que la couche D3D a réellement affiché."
   },
   "statusBar": {
     "debug": "Débogage"

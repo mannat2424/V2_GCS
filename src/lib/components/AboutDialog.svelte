@@ -10,7 +10,6 @@
   import { openUrl } from '@tauri-apps/plugin-opener';
   import {
     APP_NAME, APP_TAGLINE, APP_VERSION, GIT_COMMIT, BUILD_DATE, COPYRIGHT, LICENSE, REPO_URL, PRIVACY_URL,
-    DISCORD_URL,
   } from '$lib/buildInfo';
   import { THIRD_PARTY_LICENSES, SUPPORTED_FIRMWARE } from '$lib/config/thirdPartyLicenses';
 
@@ -29,7 +28,7 @@
       <button class="about-x" onclick={close} title={$t('about.close')} aria-label={$t('about.close')}>×</button>
 
       <div class="about-head">
-        <img class="about-logo-full" src="/branding/kitegc-logo-full-light.svg" alt={APP_NAME} />
+        <img class="about-logo-full" src="/branding/vayu-logo-full-light.svg" alt={APP_NAME} />
         <div class="about-tagline">{APP_TAGLINE}</div>
       </div>
 
@@ -49,10 +48,6 @@
         <div class="about-row">
           <span class="about-k">{$t('about.privacy')}</span>
           <button class="about-link" onclick={() => openExt(PRIVACY_URL)}>{PRIVACY_URL}</button>
-        </div>
-        <div class="about-row">
-          <span class="about-k">{$t('about.community')}</span>
-          <button class="about-link" onclick={() => openExt(DISCORD_URL)}>{DISCORD_URL}</button>
         </div>
       </div>
 
@@ -99,54 +94,54 @@
   }
   .about-box {
     position: relative;
-    background: #2e2e2e;
-    border: 1px solid rgba(55, 168, 219, 0.45);
+    background: #121a24;
+    border: 1px solid rgba(56, 189, 248, 0.45);
     border-radius: 10px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     padding: 22px 24px 16px;
     width: 460px; max-width: calc(100vw - 32px);
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-family: 'Segoe UI', Tahoma, sans-serif;
   }
   .about-x {
     position: absolute; top: 10px; right: 12px;
-    background: none; border: none; color: #949494;
+    background: none; border: none; color: #8493a8;
     font-size: 22px; line-height: 1; cursor: pointer; padding: 2px 6px; border-radius: 4px;
   }
-  .about-x:hover { color: #e0e0e0; background: rgba(255, 255, 255, 0.06); }
+  .about-x:hover { color: #e3eaf3; background: rgba(255, 255, 255, 0.06); }
 
   .about-head { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 16px; }
   .about-logo-full { width: 340px; max-width: 100%; height: auto; display: block; }
-  .about-tagline { font-size: 12px; color: #949494; }
+  .about-tagline { font-size: 12px; color: #8493a8; }
 
-  .about-rows { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid #272727; }
+  .about-rows { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid #1c2633; }
   .about-row { display: grid; grid-template-columns: 84px 1fr; align-items: baseline; gap: 10px; font-size: 12px; }
-  .about-k { color: #949494; }
-  .about-v { color: #e0e0e0; }
-  .about-mono { font-family: 'Consolas', monospace; color: #37a8db; }
-  .about-link { background: none; border: none; padding: 0; color: #37a8db; cursor: pointer; font: inherit; text-align: left; }
+  .about-k { color: #8493a8; }
+  .about-v { color: #e3eaf3; }
+  .about-mono { font-family: 'Consolas', monospace; color: #38bdf8; }
+  .about-link { background: none; border: none; padding: 0; color: #38bdf8; cursor: pointer; font: inherit; text-align: left; }
   .about-link:hover { text-decoration: underline; }
 
   .about-fw { margin-top: 14px; }
-  .about-fw-head { font-size: 11px; font-weight: 700; color: #37a8db; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .about-fw-head { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
   .about-fw-list { display: flex; flex-direction: column; gap: 3px; }
   .about-fw-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: baseline; font-size: 12px; }
-  .about-fw-lic { color: #949494; white-space: nowrap; }
+  .about-fw-lic { color: #8493a8; white-space: nowrap; }
 
   .about-tp { margin-top: 14px; }
-  .about-tp-head { font-size: 11px; font-weight: 700; color: #37a8db; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-  .about-tp-scroll { max-height: 200px; overflow-y: auto; border: 1px solid #272727; border-radius: 6px; padding: 4px 8px; background: #262626; }
-  .about-tp-group { font-size: 10.5px; font-weight: 700; color: #949494; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 0 2px; }
+  .about-tp-head { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .about-tp-scroll { max-height: 200px; overflow-y: auto; border: 1px solid #1c2633; border-radius: 6px; padding: 4px 8px; background: #0f161e; }
+  .about-tp-group { font-size: 10.5px; font-weight: 700; color: #8493a8; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 0 2px; }
   .about-tp-group:first-child { margin-top: 2px; }
   .about-tp-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 2px 0; font-size: 11.5px; }
-  .about-tp-name { color: #e0e0e0; }
-  .about-tp-lic { color: #949494; white-space: nowrap; }
-  .about-tp-note { font-size: 10.5px; color: #6f6f6f; margin-top: 6px; line-height: 1.4; }
+  .about-tp-name { color: #e3eaf3; }
+  .about-tp-lic { color: #8493a8; white-space: nowrap; }
+  .about-tp-note { font-size: 10.5px; color: #4b617c; margin-top: 6px; line-height: 1.4; }
 
   .about-foot { display: flex; justify-content: flex-end; margin-top: 16px; }
   .about-close {
     padding: 6px 16px; font-size: 12px; font-weight: 600; border-radius: 4px;
-    border: 1px solid #37a8db; background: #37a8db; color: #fff; cursor: pointer;
+    border: 1px solid #38bdf8; background: #38bdf8; color: #fff; cursor: pointer;
   }
   .about-close:hover { background: #2e96c5; }
 </style>

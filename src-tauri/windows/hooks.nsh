@@ -1,4 +1,4 @@
-; Kite Ground Control — NSIS Installer Hooks
+; VAYU — NSIS Installer Hooks
 ; Handles AppData cleanup on uninstall (user choice)
 
 !macro NSIS_HOOK_POSTUNINSTALL

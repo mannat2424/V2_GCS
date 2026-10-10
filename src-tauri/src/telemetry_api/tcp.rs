@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-//! NDJSON stream server — Kite listens, consumers connect and receive one JSON frame per line.
+//! NDJSON stream server — VAYU listens, consumers connect and receive one JSON frame per line.
 //!
 //! Same shape as the relay's `TcpSink` (accept loop on its own thread, broadcast to every client,
 //! bounded writes that drop a client which stopped reading), plus two things the API needs: a `hello`

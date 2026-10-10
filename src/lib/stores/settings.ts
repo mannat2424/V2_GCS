@@ -101,7 +101,7 @@ export interface RadarSettings {
   sim: boolean;
 }
 
-/** FormationFlight (INAV-Radar / ESP32): one serial module Kite speaks MSP to as an emulated FC.
+/** FormationFlight (INAV-Radar / ESP32): one serial module VAYU speaks MSP to as an emulated FC.
  *  See docs/active/RADAR_FORMATION_FLIGHT.md. */
 export interface RadarFormationFlightSettings {
   enabled: boolean;
@@ -326,7 +326,7 @@ export interface AppSettings {
   lastTransport: string;
   lastHost: string;
   lastTcpPort: number;
-  /** Was `lastTcpPort` filled in by Kite (so the protocol / transport selectors may move it), or
+  /** Was `lastTcpPort` filled in by VAYU (so the protocol / transport selectors may move it), or
    *  typed by the pilot? Optional on purpose: absent means a profile written before this existed,
    *  and startup infers it from the stored port instead of assuming. */
   lastPortIsAuto?: boolean;

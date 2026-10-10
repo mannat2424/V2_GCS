@@ -1,9 +1,9 @@
-"""Flight controller simulator for testing Kite Ground Control without hardware.
+"""Flight controller simulator for testing VAYU without hardware.
 
 One process, three combinations. `--firmware ardupilot` is an ArduPilot board speaking MAVLink over
 UDP; `--firmware inav` is an INAV board speaking MSP over TCP or UDP; `--firmware inav --protocol
 mavlink` is the same INAV board on its own MAVLink port, which supports far less than ArduPilot's.
-Everything Kite consumes is covered end to end: the handshake, live telemetry, arming, flight modes,
+Everything VAYU consumes is covered end to end: the handshake, live telemetry, arming, flight modes,
 guided reposition, missions, parameters or settings, and direct RC stick control. No third-party
 packages.
 
@@ -15,10 +15,10 @@ MAVLink message layouts, CRC_EXTRA seeds and enum values are all derived at runt
 MAVLink dialect XML, so nothing here can drift from the dialect the app links. MSP layouts follow
 INAV's own fc_msp.c field order, including the ones whose width is easy to get wrong.
 
-  Kite side, ArduPilot: connection type UDP, host 127.0.0.1, port 14550.
-    The sim binds 14550 first, so Kite's own bind falls back to an ephemeral port and its GCS
+  VAYU side, ArduPilot: connection type UDP, host 127.0.0.1, port 14550.
+    The sim binds 14550 first, so VAYU's own bind falls back to an ephemeral port and its GCS
     HEARTBEAT teaches the sim where to stream (transport/udp.rs peer learning).
-  Kite side, INAV: protocol MSP, transport TCP, host 127.0.0.1, port 5761.
+  VAYU side, INAV: protocol MSP, transport TCP, host 127.0.0.1, port 5761.
 
 Usage: python3 tools/fc_sim.py [--firmware ardupilot|inav] [--protocol mavlink|msp]
        [--vehicle plane|copter] [--transport udp|tcp] [--port N] [--lat LAT --lon LON]
@@ -81,7 +81,7 @@ GENERIC (its default), but then a GCS has no mode table to apply, while INAV kee
 ArduPlane mode numbers anyway because inavToArduPlaneMap runs regardless of that setting.
 
 INAV has no mode-change or arm command: the real firmware takes both from RC channels, so the sim
-does too, and Kite's RC page drives them through MSP_SET_RAW_RC:
+does too, and VAYU's RC page drives them through MSP_SET_RAW_RC:
   CH5  arm switch:  < 1300 disarmed, > 1700 armed
   CH6  mode switch: < 1300 MANUAL, 1300..1700 POSHOLD, > 1700 WAYPOINT MISSION
   CH1..4 roll / pitch / throttle / yaw in the stick modes
@@ -234,7 +234,7 @@ class Dialect:
 
 
 def find_dialect():
-    """Locate ardupilotmega.xml inside the vendored `mavlink` crate (the dialect Kite links)."""
+    """Locate ardupilotmega.xml inside the vendored `mavlink` crate (the dialect VAYU links)."""
     pattern = os.path.expanduser(
         '~/.cargo/registry/src/*/mavlink-*/mavlink/message_definitions/v1.0/ardupilotmega.xml')
     hits = sorted(glob.glob(pattern))
@@ -348,7 +348,7 @@ def offset_m(lat, lon, north, east):
 
 # ── Airframe profiles ────────────────────────────────────────────────────────
 
-# ArduPilot custom_mode numbering is per-firmware and Kite maps the label from MAV_TYPE +
+# ArduPilot custom_mode numbering is per-firmware and VAYU maps the label from MAV_TYPE +
 # custom_mode (flightmode/mod.rs), so these tables have to match that file or the UI names the
 # wrong mode. Only the modes this sim can actually fly are listed; a DO_SET_MODE for anything
 # else is answered DENIED rather than silently accepted.
@@ -356,7 +356,7 @@ PLANE_MODES = {0: 'manual', 1: 'circle', 2: 'stabilize', 5: 'fbwa', 6: 'fbwb', 7
                10: 'auto', 11: 'rtl', 12: 'loiter', 13: 'takeoff', 15: 'guided'}
 # The rest of ArduPlane's Mode::Number (ArduPlane/mode.h). Named but not flown: a DO_SET_MODE for
 # one of these is a mode a real board would accept, so answering DENIED is the honest reply and
-# quietly renumbering it would be worse. Kite's own plane table is missing AUTOLAND = 26.
+# quietly renumbering it would be worse. VAYU's own plane table is missing AUTOLAND = 26.
 PLANE_MODES_UNSIMULATED = {3: 'training', 4: 'acro', 8: 'autotune',
                            14: 'avoid_adsb', 16: 'initialising', 17: 'qstabilize', 18: 'qhover',
                            19: 'qloiter', 20: 'qland', 21: 'qrtl', 22: 'qautotune', 23: 'qacro',
@@ -537,7 +537,7 @@ class Vehicle:
             self.loiter = (self.lat, self.lon, self.rel_alt)
         if name == 'auto' and self.mission.nav_items() > 1:
             self.mission.current = max(1, self.mission.current)
-        self.notify(f'Kite SIM: mode {name.upper()}')
+        self.notify(f'VAYU SIM: mode {name.upper()}')
         return True
 
     # ── inputs ──────────────────────────────────────────────────────────────
@@ -743,7 +743,7 @@ class Vehicle:
             m.current = 1
         it = m.item(m.current)
         if it is None:
-            self.notify('Kite SIM: mission complete', 'notice')
+            self.notify('VAYU SIM: mission complete', 'notice')
             self.set_mode(self.p['modes'][self.p['loiter_mode']])
             return
 
@@ -798,7 +798,7 @@ class Vehicle:
             m.current = nxt if 1 <= nxt < m.nav_items() else m.current + 1
         else:
             # Unhandled item: skip it and say so, rather than stalling on it silently.
-            self.notify(f'Kite SIM: skipping unsupported mission cmd {cmd} at seq {m.current}',
+            self.notify(f'VAYU SIM: skipping unsupported mission cmd {cmd} at seq {m.current}',
                         'warning')
             m.current += 1
 
@@ -826,7 +826,7 @@ class Vehicle:
             self.on_ground = True
             self.armed = False
             self.speed = 0.0
-            self.notify('Kite SIM: landed and disarmed', 'notice')
+            self.notify('VAYU SIM: landed and disarmed', 'notice')
 
     def update(self):
         now = time.time()
@@ -857,7 +857,7 @@ class Vehicle:
             self._hold_alt(dt, target)
             self._hold_speed(dt, self.cruise_speed)
             if self.rel_alt >= target - 2.0:
-                self.notify('Kite SIM: takeoff complete')
+                self.notify('VAYU SIM: takeoff complete')
                 nxt = 'auto' if self.mission.nav_items() > 1 else \
                     self.p['modes'][self.p['loiter_mode']]
                 self.set_mode(nxt)
@@ -912,7 +912,7 @@ class Vehicle:
 
 # ── Parameters ───────────────────────────────────────────────────────────────
 
-# Kite reads AHRS_EKF_TYPE and Q_ENABLE by name (params.rs). The rest exist so PARAM_REQUEST_LIST
+# VAYU reads AHRS_EKF_TYPE and Q_ENABLE by name (params.rs). The rest exist so PARAM_REQUEST_LIST
 # returns something realistic to page through, and so a PARAM_SET round-trip can be tested against
 # values that plausibly affect flight. Q_ENABLE stays 0: this sim is not a VTOL and refuses
 # MAV_CMD_DO_VTOL_TRANSITION accordingly.
@@ -947,7 +947,7 @@ def default_params(profile, v=None):
         'FLTMODE1': 0.0, 'FLTMODE6': 11.0,
     }
     # Report what the vehicle is actually flying, not the airframe default: a GCS reads these to
-    # seed its own fields (Kite pulls WP_LOITER_RAD for the Fly-Here radius and the loiter ring), so
+    # seed its own fields (VAYU pulls WP_LOITER_RAD for the Fly-Here radius and the loiter ring), so
     # a profile default here would put 300 in the box while the aircraft circles at 250.
     radius = v.radius if v else profile['radius']
     speed = v.cruise_speed if v else profile['speed']
@@ -990,7 +990,7 @@ INAV_MAVLINK_TX = {
 # What INAV's receive switch dispatches on. Anything else falls through `default: return false`,
 # which means silently dropped with no ACK of any kind. COMMAND_LONG is in the source as a
 # commented-out TODO, so it is on this list of things a real board ignores, not of things it
-# handles: every Kite command that travels as COMMAND_LONG (arm, disarm, mode, takeoff, land, RTL,
+# handles: every VAYU command that travels as COMMAND_LONG (arm, disarm, mode, takeoff, land, RTL,
 # change speed, set home) vanishes without a trace.
 INAV_MAVLINK_RX = {
     'HEARTBEAT', 'PARAM_REQUEST_LIST', 'MISSION_CLEAR_ALL', 'MISSION_COUNT', 'MISSION_ITEM',
@@ -1098,7 +1098,7 @@ def run_mavlink(args):
 
     sensors_present = sensor_bits(*sensor_names)
     # With no fix the GPS is present but unhealthy, and so is the prearm check, which is what
-    # drives Kite's prearm warning. Present stays full: the hardware exists, it just is not happy.
+    # drives VAYU's prearm warning. Present stays full: the hardware exists, it just is not happy.
     unhealthy = ('MAV_SYS_STATUS_SENSOR_GPS', 'MAV_SYS_STATUS_PREARM_CHECK') if args.no_fix else ()
     sensors_healthy = sensor_bits(*[n for n in sensor_names if n not in unhealthy])
 
@@ -1109,7 +1109,7 @@ def run_mavlink(args):
                   approach_x=0.0, approach_y=0.0, approach_z=0.0, time_usec=int(time.time() * 1e6))
 
     def send_autopilot_version():
-        # flight_sw_version packs as major<<24 | minor<<16 | patch<<8 | type, and Kite decodes exactly
+        # flight_sw_version packs as major<<24 | minor<<16 | patch<<8 | type, and VAYU decodes exactly
         # that (handshake.rs); type 255 means "release", anything lower renders as -rc/-beta/-dev.
         major, minor, patch = profile['fw_ver']
         sw = (major << 24) | (minor << 16) | (patch << 8) | 255
@@ -1117,7 +1117,7 @@ def run_mavlink(args):
                   middleware_sw_version=sw, os_sw_version=sw, board_version=0,
                   vendor_id=0, product_id=0, uid=0)
 
-    # Messages Kite pulls one-shot with MAV_CMD_REQUEST_MESSAGE instead of waiting for the stream.
+    # Messages VAYU pulls one-shot with MAV_CMD_REQUEST_MESSAGE instead of waiting for the stream.
     # AUTOPILOT_VERSION matters most: the handshake requests it and then BLOCKS for up to 3 s, so
     # without a reply every connection stalls and the FC reports its firmware as "unknown".
     ON_DEMAND = {
@@ -1175,7 +1175,7 @@ def run_mavlink(args):
         """INAV's handleIncoming_COMMAND_INT (telemetry/mavlink.c, 9.1).
 
         One command exists: DO_REPOSITION, and only with frame MAV_FRAME_GLOBAL. The relative-alt
-        and terrain-alt frames are commented out in the firmware, so Kite's own reposition (which
+        and terrain-alt frames are commented out in the firmware, so VAYU's own reposition (which
         sends MAV_FRAME_GLOBAL_RELATIVE_ALT) is answered UNSUPPORTED here, exactly as a real board
         answers it. Everything else is UNSUPPORTED too.
         """
@@ -1210,7 +1210,7 @@ def run_mavlink(args):
         # heartbeat then reports PLANE_MODE_GUIDED (inavToArduPlaneMap with isGCSValid() true).
         v.set_mode(profile['modes'][profile['guided_mode']])
         log(f'GCS waypoint -> {tlat:.6f},{tlon:.6f} @ {v.guided[2]:.0f}m')
-        say('Kite SIM: GCS waypoint set')
+        say('VAYU SIM: GCS waypoint set')
         return ACCEPTED
 
     def handle_command(cmd, f, is_int):
@@ -1265,7 +1265,7 @@ def run_mavlink(args):
             v.armed = want
             if want:
                 v.on_ground = v.rel_alt <= 0.5      # arming on the ground still needs a takeoff
-            say(f'Kite SIM: {"ARMED" if want else "DISARMED"} by GCS')
+            say(f'VAYU SIM: {"ARMED" if want else "DISARMED"} by GCS')
             return ACCEPTED
         if cmd == CMD['MAV_CMD_DO_SET_MODE']:
             num = int(p(2))                     # ArduPilot puts the custom mode in param2
@@ -1275,7 +1275,7 @@ def run_mavlink(args):
                 # says the sim is the limit, while a bare number leaves it ambiguous whether the
                 # mode exists at all. Both answers are DENIED either way.
                 known = (PLANE_MODES_UNSIMULATED.get(num) if not profile['can_hover'] else None)
-                say(f'Kite SIM: mode {known.upper() if known else num} not simulated', 'warning')
+                say(f'VAYU SIM: mode {known.upper() if known else num} not simulated', 'warning')
                 return DENIED
             return ACCEPTED
         if cmd == CMD['MAV_CMD_NAV_TAKEOFF']:
@@ -1295,7 +1295,7 @@ def run_mavlink(args):
                 v.set_mode(profile['modes'][land])
             else:
                 v.mode = 'land'                 # ArduPlane has no LAND mode; fly it down anyway
-                say('Kite SIM: landing (simulated approach)')
+                say('VAYU SIM: landing (simulated approach)')
             return ACCEPTED
         if cmd == CMD['MAV_CMD_NAV_RETURN_TO_LAUNCH']:
             v.set_mode(profile['modes'][profile['rtl_mode']])
@@ -1320,7 +1320,7 @@ def run_mavlink(args):
             if spd <= 0:
                 return DENIED
             v.cruise_speed = spd
-            say(f'Kite SIM: speed {spd:.0f} m/s')
+            say(f'VAYU SIM: speed {spd:.0f} m/s')
             return ACCEPTED
         if cmd in (CMD['MAV_CMD_CONDITION_YAW'], CMD['MAV_CMD_GUIDED_CHANGE_HEADING']):
             # CONDITION_YAW takes degrees in param1 (param4 != 0 means relative);
@@ -1339,13 +1339,13 @@ def run_mavlink(args):
             else:
                 return DENIED
             send_home()
-            say('Kite SIM: home set')
+            say('VAYU SIM: home set')
             return ACCEPTED
         if cmd == CMD['MAV_CMD_DO_PAUSE_CONTINUE']:
             v.paused = int(p(1)) == 0
             if v.paused:
                 v.loiter = (v.lat, v.lon, v.rel_alt)
-            say(f'Kite SIM: {"paused" if v.paused else "resumed"}')
+            say(f'VAYU SIM: {"paused" if v.paused else "resumed"}')
             return ACCEPTED
         if cmd == CMD['MAV_CMD_DO_SET_MISSION_CURRENT']:
             seq = int(p(1))
@@ -1359,7 +1359,7 @@ def run_mavlink(args):
                 return TEMP_REJECT
             v.takeoff_alt = talt if talt > 0 else v.cruise_alt
             v.set_mode('takeoff' if 'takeoff' in profile['modes'].values() else 'auto')
-            say('Kite SIM: go around', 'notice')
+            say('VAYU SIM: go around', 'notice')
             return ACCEPTED
         if cmd == CMD['MAV_CMD_DO_VTOL_TRANSITION']:
             # Q_ENABLE is 0: this airframe is not a quadplane, and a real one answers DENIED.
@@ -1367,7 +1367,7 @@ def run_mavlink(args):
             return DENIED
         return UNSUPPORTED
 
-    # msg name -> period seconds. Rates mirror what Kite asks for via SET_MESSAGE_INTERVAL, and
+    # msg name -> period seconds. Rates mirror what VAYU asks for via SET_MESSAGE_INTERVAL, and
     # that command now really does re-rate them (see handle_command), so the sim honours the
     # stream request instead of merely acknowledging it.
     DEFAULT_RATES = {'HEARTBEAT': 1.0, 'SYS_STATUS': 0.5, 'GPS_RAW_INT': 0.2,
@@ -1396,7 +1396,7 @@ def run_mavlink(args):
     stack = f'INAV {args.version} over MAVLink' if inav else profile['fw']
     print(f'[sim] {stack} ({args.vehicle}): {v.mode.upper()}, r={v.radius:.0f}m @ '
           f'{v.cruise_speed:.0f}m/s, alt {v.cruise_alt:.0f}m around {args.lat:.5f},{args.lon:.5f}')
-    print(f'[sim] UDP {args.port}, point Kite at 127.0.0.1:{args.port} '
+    print(f'[sim] UDP {args.port}, point VAYU at 127.0.0.1:{args.port} '
           f'({"NO GPS FIX" if args.no_fix else "3D fix"}, {"disarmed" if not v.armed else "armed"})')
     if inav:
         print('[sim] INAV MAVLink surface only: COMMAND_INT DO_REPOSITION (frame GLOBAL, and only '
@@ -1488,7 +1488,7 @@ def run_mavlink(args):
                 if mission.up_count == 0:
                     mission.items, mission.current, mission.up_expect = [], 0, None
                     mission_ack(MISSION_ACCEPTED)
-                    say('Kite SIM: mission cleared')
+                    say('VAYU SIM: mission cleared')
                     continue
                 mission.up_expect = 0
                 # INAV asks with MISSION_REQUEST (the float variant); ArduPilot uses the _INT one.
@@ -1542,13 +1542,13 @@ def run_mavlink(args):
                     mission.up_buf, mission.up_expect = [], None
                     mission.current = 1 if len(mission.items) > 1 else 0
                     mission_ack(MISSION_ACCEPTED)
-                    say(f'Kite SIM: mission received, {len(mission.items)} items', 'notice')
+                    say(f'VAYU SIM: mission received, {len(mission.items)} items', 'notice')
                     log(f'upload complete: {len(mission.items)} items')
             elif name == 'MISSION_CLEAR_ALL':
                 mission.items, mission.current = [], 0
                 mission.up_buf, mission.up_expect = [], None
                 mission_ack(MISSION_ACCEPTED)
-                say('Kite SIM: mission cleared')
+                say('VAYU SIM: mission cleared')
             elif name == 'MISSION_SET_CURRENT':
                 seq = int(f.get('seq', 0))
                 if 0 <= seq < mission.nav_items():
@@ -1584,8 +1584,8 @@ def run_mavlink(args):
 
         if link.peer and not greeted:
             greeted = True
-            say(f'Kite SIM: {profile["fw"]} (simulated)')
-            say('Kite SIM: EKF3 IMU0 is using GPS')
+            say(f'VAYU SIM: {profile["fw"]} (simulated)')
+            say('VAYU SIM: EKF3 IMU0 is using GPS')
             if args.no_fix:
                 say('PreArm: Need 3D Fix', 'warning')
 
@@ -1654,7 +1654,7 @@ def run_mavlink(args):
                           pos_horiz_variance=0.11, pos_vert_variance=0.04,
                           compass_variance=0.08, terrain_alt_variance=0.0)
             elif name == 'HOME_POSITION':
-                send_home()   # same payload Kite can also pull on demand, so keep it in one place
+                send_home()   # same payload VAYU can also pull on demand, so keep it in one place
             elif name == 'RC_CHANNELS':
                 # Echo the override the GCS is sending, like a real FC: the RC page then shows what
                 # actually reached the vehicle rather than a static frame that never moves.
@@ -1795,7 +1795,7 @@ CODE_NAMES = {v: k for k, v in list(globals().items()) if k.startswith(('MSP_', 
 ARMING_FLAG_ARMED = 1 << 2
 
 # Permanent box IDs in the order the sim reports them from MSP_BOXIDS. The active-modes bitmask in
-# MSP2_INAV_STATUS is indexed into THIS list, not by permanent ID, which is exactly what Kite's
+# MSP2_INAV_STATUS is indexed into THIS list, not by permanent ID, which is exactly what VAYU's
 # parse_active_modes expects (telemetry.rs documents the distinction).
 BOXES = [
     0,   # BOXARM        (a real INAV lists the arm box first, so it takes bit 0)
@@ -1814,7 +1814,7 @@ BOXES = [
 ]
 
 # Which boxes are lit for each flight-model mode. ANGLE rides along with the nav modes because the
-# firmware forces it (processRcModes), and Kite mirrors that, so leaving it out would show a mode
+# firmware forces it (processRcModes), and VAYU mirrors that, so leaving it out would show a mode
 # combination a real INAV never reports.
 # The arm box is lit whenever the vehicle is armed, on top of the mode boxes below.
 BOX_ARM = 0
@@ -1854,7 +1854,7 @@ WP_ACTION_TO_MAV = {
 
 MAX_WAYPOINTS = 60
 
-# INAV settings the sim serves by name over MSP2_COMMON_SETTING. Kite reads nav_fw_loiter_radius
+# INAV settings the sim serves by name over MSP2_COMMON_SETTING. VAYU reads nav_fw_loiter_radius
 # for the Fly-Here radius and the loiter ring; the rest exist so a settings round-trip is testable.
 # Values are (struct format, value) and the radius is in centimetres, as INAV stores it.
 SETTINGS_FMT = {
@@ -1885,7 +1885,7 @@ def crc8_dvb_s2(data, crc=0):
 class MspLink:
     """MSP v1 + v2 framing over a stream (TCP) or datagram (UDP) socket.
 
-    Kite is the client in both cases: it connects out to host:port, so the sim listens. Requests
+    VAYU is the client in both cases: it connects out to host:port, so the sim listens. Requests
     arrive as `$M<` / `$X<` frames and every reply carries the same code back, which is how the
     request/response pairing works (MSP has no sequence numbers).
     """
@@ -1916,7 +1916,7 @@ class MspLink:
 
     def send(self, code, payload=b'', err=False):
         # v1 cannot express a code above 255 or a payload over 254 bytes, so those go out as v2.
-        # Kite's parser handles both, and a real INAV picks the same way.
+        # VAYU's parser handles both, and a real INAV picks the same way.
         if code > 0xFF or len(payload) > 254:
             frame = self.frame_v2(code, payload, err)
         else:
@@ -2153,7 +2153,7 @@ class InavVehicle:
         v = self.v
         cells = self.profile['cells']
         pct_now = max(0, min(100, int(100 - (time.time() - self.t_start) / 7.2)))
-        # batteryState: 0 OK, 1 WARNING, 2 CRITICAL (batteryState_e), which is what drives Kite's
+        # batteryState: 0 OK, 1 WARNING, 2 CRITICAL (batteryState_e), which is what drives VAYU's
         # battery colour, so it has to follow the same drain the voltage does.
         state = 0 if pct_now > 30 else 1 if pct_now > 15 else 2
         flags = 0x01 | ((state & 0x03) << 2) | ((cells & 0x0F) << 4)
@@ -2234,7 +2234,7 @@ def run_msp(args):
 
     print(f'[sim] INAV {args.version} ({args.vehicle}): {v.mode.upper()}, r={v.radius:.0f}m @ '
           f'{v.cruise_speed:.0f}m/s, alt {v.cruise_alt:.0f}m around {args.lat:.5f},{args.lon:.5f}')
-    print(f'[sim] MSP over {args.transport.upper()} on port {args.port}: in Kite pick protocol MSP, '
+    print(f'[sim] MSP over {args.transport.upper()} on port {args.port}: in VAYU pick protocol MSP, '
           f'transport {args.transport.upper()}, host 127.0.0.1, port {args.port}')
     print(f'[sim] {"NO GPS FIX" if args.no_fix else "3D fix"}, '
           f'{"disarmed" if not v.armed else "armed"}. '
@@ -2253,7 +2253,7 @@ def run_msp(args):
         if code == MSP_BUILD_INFO:
             return b'Jan 01 2026' + b'00:00:00' + b'kitesim'
         if code == MSP_NAME:
-            return b'Kite SIM'
+            return b'VAYU SIM'
         if code == MSP_UID:
             return struct.pack('<III', 0x4B495445, 0x53494D554C, 0x41544F52)
         if code == MSP2_INAV_MIXER:
@@ -2277,7 +2277,7 @@ def run_msp(args):
         if code == MSP_RAW_GPS:
             return iv.gps_payload()
         if code == MSP_ALTITUDE:
-            # estimated alt (cm), vario (cm/s), baro alt (cm). Kite reads the first two; the third
+            # estimated alt (cm), vario (cm/s), baro alt (cm). VAYU reads the first two; the third
             # is there because a real FC sends it and a short reply would be a lie about the format.
             return struct.pack('<ihi', int(v.rel_alt * 100), int(-v.vz * 100),
                                int(v.rel_alt * 100))
@@ -2337,7 +2337,7 @@ def run_msp(args):
             iv.apply_rc()
             return b''
         if code == MSP2_INAV_SET_AUX_RC:
-            return b''                                     # latched overlay; acked so Kite stops resending
+            return b''                                     # latched overlay; acked so VAYU stops resending
         if code == MSP2_COMMON_SETTING:
             name = payload.split(b'\x00')[0].decode('ascii', 'replace')
             if name not in settings:
@@ -2395,11 +2395,11 @@ def main():
     ap.add_argument('--vehicle', choices=sorted(PROFILES), default='plane',
                     help='airframe to imitate (default plane)')
     # Transport and port default per protocol rather than to a constant, because the right value
-    # differs, and each matches what Kite's own connection bar defaults to for that transport:
+    # differs, and each matches what VAYU's own connection bar defaults to for that transport:
     # MAVLink is UDP 14550, MSP is TCP 5761 (ConnectionControls.svelte). Resolved after parsing so
     # an explicit flag still wins.
     ap.add_argument('--transport', choices=['udp', 'tcp'],
-                    help='how Kite reaches the sim (default udp for mavlink, tcp for msp; '
+                    help='how VAYU reaches the sim (default udp for mavlink, tcp for msp; '
                          'MAVLink here is UDP only)')
     ap.add_argument('--port', type=int, help='port to bind (default 14550 mavlink, 5761 msp)')
     ap.add_argument('--lat', type=float, default=HOME_LAT, help='home / orbit centre latitude')

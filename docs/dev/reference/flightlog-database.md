@@ -1,6 +1,6 @@
 # Flight-log database (schema reference)
 
-This document describes the local SQLite schema Kite Ground Control uses for the flight log, vehicle, and battery libraries.
+This document describes the local SQLite schema VAYU uses for the flight log, vehicle, and battery libraries.
 
 It is intentionally scoped for GCS and replay use cases, not full Blackbox tuning or firmware-debug workflows.
 
@@ -323,7 +323,7 @@ These are intentionally not part of the replay-focused DB target at this time:
 
 ## Data exchange (.kflight)
 
-The `.kflight` file format is a self-contained SQLite database used for sharing flight records between Kite installations.
+The `.kflight` file format is a self-contained SQLite database used for sharing flight records between VAYU installations.
 
 ### Schema
 

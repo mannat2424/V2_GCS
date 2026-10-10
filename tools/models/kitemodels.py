@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-"""Kite-GC procedural model primitives. Frame: nose=+Z, up=+Y, port(left)=+X, starboard=-X."""
+"""VAYU procedural model primitives. Frame: nose=+Z, up=+Y, port(left)=+X, starboard=-X."""
 import numpy as np, trimesh
 
 BODY  = (236,238,242,255)
@@ -79,7 +79,7 @@ def fin(z_le, y0, height, root_c, tip_c, sweep, thick=0.014):
     return loft(secs, BODY, cap0=False)
 
 def motor_pod(x, y, z, r=0.07, color=DARK, bell=BODY):
-    """Motor: mount disc + bell (no prop — props don't spin in Kite)."""
+    """Motor: mount disc + bell (no prop — props don't spin in VAYU)."""
     parts=[loft([ring_xz(y-0.02,r*1.1,x,z), ring_xz(y+0.01,r*1.1,x,z)], color)]
     parts.append(loft([ring_xz(y+0.01,r*0.75,x,z), ring_xz(y+0.07,r*0.75,x,z), ring_xz(y+0.09,r*0.45,x,z), ring_xz(y+0.10,r*0.15,x,z)], bell))
     return parts

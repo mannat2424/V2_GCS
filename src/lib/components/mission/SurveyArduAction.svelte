@@ -108,19 +108,19 @@
 <style>
   .aa { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
   .aa-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .aa-label { font-size: 12px; color: #c8c8c8; }
+  .aa-label { font-size: 12px; color: #bec6d4; }
   .aa-sel {
-    flex: 1; max-width: 60%; background: #2a2a2a; color: #e0e0e0;
-    border: 1px solid #555; border-radius: 4px; padding: 3px 6px; font-size: 12px;
+    flex: 1; max-width: 60%; background: #111822; color: #e3eaf3;
+    border: 1px solid #3a4a5f; border-radius: 4px; padding: 3px 6px; font-size: 12px;
   }
   .aa-params {
     display: flex; flex-direction: column; gap: 4px;
-    margin: 2px 0 4px 8px; padding-left: 8px; border-left: 2px solid #3a3a3a;
+    margin: 2px 0 4px 8px; padding-left: 8px; border-left: 2px solid #1f2a38;
   }
   .aa-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-  .aa-pl { font-size: 11px; color: #949494; }
+  .aa-pl { font-size: 11px; color: #8493a8; }
   .aa-psel {
-    background: #2a2a2a; color: #e0e0e0; border: 1px solid #555;
+    background: #111822; color: #e3eaf3; border: 1px solid #3a4a5f;
     border-radius: 4px; padding: 2px 6px; font-size: 12px;
   }
 </style>

@@ -1000,7 +1000,7 @@ mod tests {
         };
         gtk::init().expect("gtk init (needs a display)");
         let window = gtk::Window::new(gtk::WindowType::Toplevel);
-        window.set_title("Kite linux sink bench");
+        window.set_title("VAYU linux sink bench");
         window.set_default_size(800, 500);
         let vbox = gtk::Box::new(gtk::Orientation::Vertical, 0);
         window.add(&vbox);
@@ -1066,7 +1066,7 @@ mod tests {
         let url2 = std::env::var("KITE_RTSP_URL2").unwrap_or_else(|_| url.clone());
         gtk::init().expect("gtk init (needs a display)");
         let window = gtk::Window::new(gtk::WindowType::Toplevel);
-        window.set_title("Kite linux sink bench (webview)");
+        window.set_title("VAYU linux sink bench (webview)");
         window.set_default_size(800, 500);
         if let Some(screen) = gtk::gdk::Screen::default() {
             if let Some(visual) = screen.rgba_visual() {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
-"""Turn analysis over flights in the Kite log database (flights.db).
+"""Turn analysis over flights in the VAYU log database (flights.db).
 
 For every telemetry sample of a flight:
 

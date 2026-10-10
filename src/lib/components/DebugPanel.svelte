@@ -899,8 +899,8 @@
         <div class="stat-group">
           <span class="stat-label">{$t('debug.vidSource')}</span>
           <!-- Historic internal value: rtspEngine 'native' means MediaMTX' own RTSP reader —
-               shown by its real name so it can't be confused with Kite's native client. -->
-          <span class="stat-value">{$videoState.kind}{$videoState.rtspEngine ? ` · ${{ native: 'MediaMTX', ffmpeg: 'ffmpeg', kite: 'Kite' }[$videoState.rtspEngine]}` : ''}</span>
+               shown by its real name so it can't be confused with VAYU's native client. -->
+          <span class="stat-value">{$videoState.kind}{$videoState.rtspEngine ? ` · ${{ native: 'MediaMTX', ffmpeg: 'ffmpeg', kite: 'VAYU' }[$videoState.rtspEngine]}` : ''}</span>
           <span class="stat-sep">|</span>
           <span class="stat-label">{$t('debug.vidStatus')}</span>
           <span class="stat-value">{$videoState.status}</span>
@@ -1003,7 +1003,7 @@
       {/if}
       {#if $nativeRtspStats}
         {@const n = $nativeRtspStats}
-        <!-- Kite's own in-process RTSP client (both routes): transport + RTP health straight from
+        <!-- VAYU's own in-process RTSP client (both routes): transport + RTP health straight from
              the receive loop, and the decode sink's presentation numbers when H.264/HEVC plays
              natively. On the MJPEG route the reader block above carries the drawing side. -->
         <div class="debug-stats stats-rows">
@@ -1087,31 +1087,31 @@
   .perf-tab { padding: 10px 12px; overflow-y: auto; font-size: 12px; }
   .perf-head {
     display: flex; align-items: center; gap: 14px;
-    padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid #272727;
+    padding-bottom: 8px; margin-bottom: 8px; border-bottom: 1px solid #1c2633;
   }
-  .perf-fps { font-size: 13px; color: #949494; }
-  .perf-fps b { color: #37a8db; font-size: 16px; font-variant-numeric: tabular-nums; }
+  .perf-fps { font-size: 13px; color: #8493a8; }
+  .perf-fps b { color: #38bdf8; font-size: 16px; font-variant-numeric: tabular-nums; }
   .perf-refresh {
     margin-left: auto; padding: 3px 10px; font-size: 11px;
-    background: #434343; color: #e0e0e0; border: 1px solid #555; border-radius: 4px; cursor: pointer;
+    background: #253244; color: #e3eaf3; border: 1px solid #3a4a5f; border-radius: 4px; cursor: pointer;
   }
-  .perf-refresh:hover { background: #4f4f4f; }
+  .perf-refresh:hover { background: #202d3f; }
   .perf-section {
     margin: 12px 0 4px; font-size: 11px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.5px; color: #37a8db;
+    letter-spacing: 0.5px; color: #38bdf8;
   }
   .perf-row { display: flex; align-items: center; justify-content: space-between; padding: 3px 0; }
-  .perf-row span { color: #c0c0c0; }
+  .perf-row span { color: #b6c2d1; }
   .perf-row input, .perf-row select {
     width: 110px; height: 24px; box-sizing: border-box; padding: 0 6px;
-    background: #434343; border: 1px solid #555; border-radius: 4px; color: #e0e0e0; font-size: 12px;
+    background: #253244; border: 1px solid #3a4a5f; border-radius: 4px; color: #e3eaf3; font-size: 12px;
   }
-  .perf-check { display: flex; align-items: center; gap: 7px; padding: 3px 0; color: #c0c0c0; cursor: pointer; }
-  .perf-clock { margin-left: auto; color: #37a8db; font-variant-numeric: tabular-nums; }
-  .perf-slider { width: 100%; accent-color: #37a8db; cursor: pointer; }
+  .perf-check { display: flex; align-items: center; gap: 7px; padding: 3px 0; color: #b6c2d1; cursor: pointer; }
+  .perf-clock { margin-left: auto; color: #38bdf8; font-variant-numeric: tabular-nums; }
+  .perf-slider { width: 100%; accent-color: #38bdf8; cursor: pointer; }
   .perf-slider:disabled { cursor: default; opacity: 0.45; }
-  .perf-empty { padding: 20px 4px; color: #949494; font-style: italic; }
-  .perf-hint { margin-top: 12px; padding-top: 8px; border-top: 1px solid #272727; color: #777; font-size: 11px; line-height: 1.4; }
+  .perf-empty { padding: 20px 4px; color: #8493a8; font-style: italic; }
+  .perf-hint { margin-top: 12px; padding-top: 8px; border-top: 1px solid #1c2633; color: #68788e; font-size: 11px; line-height: 1.4; }
 
   /* Phone: no top/status bar; keep clear of the widget column. */
   :global(html.is-phone) .debug-panel {
@@ -1126,8 +1126,8 @@
     right: 12px;
     width: 540px;
     max-height: calc(100vh - 53px - 24px - 30px);
-    background: rgba(30, 30, 30, 0.95);
-    border: 1px solid rgba(55, 168, 219, 0.4);
+    background: rgba(12, 17, 24, 0.95);
+    border: 1px solid rgba(56, 189, 248, 0.4);
     border-radius: 8px;
     z-index: 150;
     display: flex;
@@ -1149,20 +1149,20 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
-    background: rgba(55, 168, 219, 0.1);
-    border-bottom: 1px solid rgba(55, 168, 219, 0.2);
+    background: rgba(56, 189, 248, 0.1);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2);
   }
 
   .debug-title {
     font-size: 12px;
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
   }
 
   .debug-close {
     background: none;
     border: none;
-    color: #949494;
+    color: #8493a8;
     font-size: 14px;
     cursor: pointer;
     padding: 2px 6px;
@@ -1185,7 +1185,7 @@
     background: none;
     border: none;
     border-bottom: 2px solid transparent;
-    color: #949494;
+    color: #8493a8;
     font-size: 11px;
     font-weight: 600;
     padding: 5px 12px;
@@ -1194,12 +1194,12 @@
   }
 
   .tab:hover {
-    color: #e0e0e0;
+    color: #e3eaf3;
   }
 
   .tab.active {
-    color: #37a8db;
-    border-bottom-color: #37a8db;
+    color: #38bdf8;
+    border-bottom-color: #38bdf8;
   }
 
   .inject-row {
@@ -1221,7 +1221,7 @@
     gap: 4px;
     font-size: 10px;
     font-weight: 700;
-    color: #949494;
+    color: #8493a8;
     text-transform: uppercase;
     letter-spacing: 0.3px;
     cursor: pointer;
@@ -1244,7 +1244,7 @@
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 3px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-family: inherit;
     font-size: 10px;
     padding: 3px 5px;
@@ -1258,14 +1258,14 @@
 
   .inj-num:focus {
     outline: none;
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
 
   .inj-btn {
-    background: rgba(55, 168, 219, 0.15);
-    border: 1px solid rgba(55, 168, 219, 0.3);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 3px;
-    color: #37a8db;
+    color: #38bdf8;
     cursor: pointer;
     font-size: 12px;
     line-height: 1;
@@ -1273,20 +1273,20 @@
   }
 
   .inj-btn:hover {
-    background: rgba(55, 168, 219, 0.3);
+    background: rgba(56, 189, 248, 0.3);
   }
 
   .dbg-btn {
-    background: rgba(55, 168, 219, 0.15);
-    border: 1px solid rgba(55, 168, 219, 0.3);
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
     border-radius: 3px;
-    color: #37a8db;
+    color: #38bdf8;
     cursor: pointer;
     font-size: 12px;
     padding: 4px 10px;
   }
   .dbg-btn:hover {
-    background: rgba(55, 168, 219, 0.3);
+    background: rgba(56, 189, 248, 0.3);
   }
 
   .debug-stats {
@@ -1317,17 +1317,17 @@
   }
 
   .stat-label {
-    color: #949494;
+    color: #8493a8;
     font-weight: 600;
   }
 
   .stat-value {
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-variant-numeric: tabular-nums;
   }
 
   .stat-sep {
-    color: #555;
+    color: #3a4a5f;
   }
 
   .stat-warn {
@@ -1356,9 +1356,9 @@
   }
 
   .gate-badge.unstable {
-    background: rgba(148, 148, 148, 0.1);
-    color: #999;
-    border: 1px solid rgba(148, 148, 148, 0.2);
+    background: rgba(138, 146, 160, 0.1);
+    color: #8796ab;
+    border: 1px solid rgba(138, 146, 160, 0.2);
   }
 
   .debug-table-wrap {
@@ -1375,13 +1375,13 @@
   .debug-table thead {
     position: sticky;
     top: 0;
-    background: rgba(30, 30, 30, 0.98);
+    background: rgba(12, 17, 24, 0.98);
   }
 
   .debug-table th {
     padding: 6px 8px;
     text-align: left;
-    color: #949494;
+    color: #8493a8;
     font-weight: 600;
     font-size: 10px;
     text-transform: uppercase;
@@ -1391,21 +1391,21 @@
 
   .debug-table td {
     padding: 4px 8px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   }
 
   .debug-table tr:hover {
-    background: rgba(55, 168, 219, 0.05);
+    background: rgba(56, 189, 248, 0.05);
   }
 
   .debug-table tr.inactive td {
-    color: #777;
+    color: #68788e;
   }
 
   .empty-cell {
     text-align: center;
-    color: #777;
+    color: #68788e;
     font-style: italic;
     padding: 12px 8px;
   }
@@ -1472,7 +1472,7 @@
 
   .empty-row {
     text-align: center !important;
-    color: #777 !important;
+    color: #68788e !important;
     padding: 12px !important;
   }
 
@@ -1494,12 +1494,12 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: rgba(148, 148, 148, 0.2);
+    background: rgba(138, 146, 160, 0.2);
   }
 
   .dot.on {
-    background: #37a8db;
-    box-shadow: 0 0 4px #37a8db;
+    background: #38bdf8;
+    box-shadow: 0 0 4px #38bdf8;
   }
 
   .status-badge {
@@ -1518,9 +1518,9 @@
   }
 
   .status-badge.init {
-    background: rgba(148, 148, 148, 0.1);
-    color: #777;
-    border: 1px solid rgba(148, 148, 148, 0.2);
+    background: rgba(138, 146, 160, 0.1);
+    color: #68788e;
+    border: 1px solid rgba(138, 146, 160, 0.2);
   }
 
   .has-timeouts {
@@ -1538,7 +1538,7 @@
   }
 
   .cap-path {
-    color: #37a8db;
+    color: #38bdf8;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1556,7 +1556,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    color: #949494;
+    color: #8493a8;
     margin-bottom: 4px;
   }
 
@@ -1580,7 +1580,7 @@
   .gatt-svc {
     font-size: 10px;
     font-weight: 700;
-    color: #37a8db;
+    color: #38bdf8;
     margin: 6px 0 2px;
     font-variant-numeric: tabular-nums;
   }
@@ -1591,7 +1591,7 @@
     gap: 8px;
     font-size: 10px;
     padding: 2px 0 2px 12px;
-    color: #949494;
+    color: #8493a8;
   }
 
   .gatt-char.sub {
@@ -1601,7 +1601,7 @@
   .gatt-uuid {
     font-variant-numeric: tabular-nums;
     min-width: 56px;
-    color: #e0e0e0;
+    color: #e3eaf3;
   }
 
   .gatt-char.sub .gatt-uuid {
@@ -1610,7 +1610,7 @@
 
   .gatt-props {
     flex: 1;
-    color: #949494;
+    color: #8493a8;
   }
 
   .gatt-act {

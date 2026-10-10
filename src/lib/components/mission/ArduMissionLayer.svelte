@@ -636,18 +636,18 @@
   /* Permanent edit-mode reference labels (same look as the INAV layer; only one mission layer is
      mounted at a time, so the duplicate :global rule never conflicts). */
   :global(.wp-param-label-wrapper) { background: none !important; border: none !important; overflow: visible !important; width: auto !important; height: auto !important; }
-  :global(.wp-param-label) { background: rgba(30,30,30,0.88); color: #ccc; padding: 3px 8px; border-radius: 4px; font-size: 12px; line-height: 1.4; white-space: nowrap; border: 1px solid rgba(55,168,219,0.35); pointer-events: none; transform: scale(var(--ui-scale, 1)); transform-origin: top left; }
+  :global(.wp-param-label) { background: rgba(12, 17, 24,0.88); color: #c3cedb; padding: 3px 8px; border-radius: 4px; font-size: 12px; line-height: 1.4; white-space: nowrap; border: 1px solid rgba(56, 189, 248,0.35); pointer-events: none; transform: scale(var(--ui-scale, 1)); transform-origin: top left; }
 
   /* New popup-framework classes (the base wpe-* classes are global in InavMissionLayer). */
   /* ArduPilot param labels (Acceptance / Pass Radius / …) are longer than INAV's — give them a wider,
      no-wrap label column so they stay on one line and the value controls line up. Scoped to the Ardu
      popup so INAV's narrower layout is untouched. */
   :global(.wp-editor-popup-ardu .wpe-row label) { width: 78px; white-space: nowrap; }
-  :global(.wpe-applies) { color: #888; font-size: 10px; font-weight: 400; margin-left: 4px; }
-  :global(.wpe-canonical) { color: #7a7a7a; font-size: 10px; font-weight: 400; font-family: 'Consolas', monospace; }
+  :global(.wpe-applies) { color: #7a8aa0; font-size: 10px; font-weight: 400; margin-left: 4px; }
+  :global(.wpe-canonical) { color: #707886; font-size: 10px; font-weight: 400; font-family: 'Consolas', monospace; }
   :global(.wpe-canonical-line) { margin: 1px 0 4px; padding-left: 2px; }
-  :global(.wpe-info) { color: #37a8db; font-size: 10px; cursor: help; opacity: 0.8; }
-  :global(.wpe-adv-toggle) { display: block; width: 100%; text-align: left; background: none; border: none; border-top: 1px dashed #555; margin-top: 4px; padding: 4px 0 2px; color: #37a8db; font-size: 11px; cursor: pointer; }
+  :global(.wpe-info) { color: #38bdf8; font-size: 10px; cursor: help; opacity: 0.8; }
+  :global(.wpe-adv-toggle) { display: block; width: 100%; text-align: left; background: none; border: none; border-top: 1px dashed #3a4a5f; margin-top: 4px; padding: 4px 0 2px; color: #38bdf8; font-size: 11px; cursor: pointer; }
   :global(.wpe-adv-toggle:hover) { color: #5cc0ec; }
   :global(.wpe-adv-body) { margin-top: 2px; }
   /* Jump repeat-count badge (↺N) pinned near the source waypoint — purple to match the jump line. */

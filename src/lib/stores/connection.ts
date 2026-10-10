@@ -24,7 +24,7 @@ const NET_PORT_DEFAULTS: Record<string, number> = {
   'msp:tcp': 5761,
 };
 
-/** The port Kite would fill in for this selection, or undefined if it has no standard one. */
+/** The port VAYU would fill in for this selection, or undefined if it has no standard one. */
 export function defaultNetPort(protocol: string, transport: string): number | undefined {
   return NET_PORT_DEFAULTS[`${protocol}:${transport}`];
 }

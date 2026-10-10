@@ -1570,7 +1570,7 @@ mod tests {
             let hwnd = CreateWindowExW(
                 WINDOW_EX_STYLE(0),
                 class,
-                w!("Kite sink bench"),
+                w!("VAYU sink bench"),
                 WS_OVERLAPPEDWINDOW | WS_VISIBLE,
                 100,
                 100,

@@ -21,7 +21,7 @@ const REPO: &str = "BtbN/FFmpeg-Builds";
 const RELEASES_PAGE: &str = "https://github.com/BtbN/FFmpeg-Builds/releases";
 /// The pinned ffmpeg release branch (BtbN `n<branch>-latest` assets follow it). See `download`.
 const FFMPEG_BRANCH: &str = "9.0";
-const HTTP_USER_AGENT: &str = "Kite-GC ffmpeg-fetch";
+const HTTP_USER_AGENT: &str = "VAYU ffmpeg-fetch";
 
 /// Filename of ffmpeg for the current platform.
 pub fn binary_name() -> &'static str {

@@ -1,9 +1,9 @@
 # ============================================================
-# Kite Ground Control — collect + rename build outputs (Windows)
+# VAYU — collect + rename build outputs (Windows)
 # Renames Tauri's outputs to a unified scheme and drops them in <repo>/release/:
 #
-#     KiteGC_Windows_x64_<Version>_<Type>.<ext>
-#     KiteGC_Android_<abi>_<Version>_installer.apk      (when an Android release build exists)
+#     VAYU_Windows_x64_<Version>_<Type>.<ext>
+#     VAYU_Android_<abi>_<Version>_installer.apk      (when an Android release build exists)
 #
 #   Type = installer  (NSIS -setup.exe; the Android .apk)
 #        | portable   (kite-gc.exe, zipped with an empty `.portable` marker so the download keeps its
@@ -16,7 +16,7 @@
 # `-AndroidOnly` collects the APKs alone (implies -Keep). `just build-android` uses it: an Android
 # build leaves the DESKTOP outputs of an earlier build untouched in target/release, and collecting
 # them would republish a stale binary under the current version number — a 1.0.0-rc2 kite-gc.exe
-# came out as KiteGC_Windows_x64_1.1.0-dev_portable.zip (found 2026-09-04).
+# came out as VAYU_Windows_x64_1.1.0-dev_portable.zip (found 2026-09-04).
 # ============================================================
 param([switch]$Keep, [switch]$AndroidOnly)
 if ($AndroidOnly) { $Keep = $true }
@@ -29,7 +29,7 @@ $rel = Join-Path $target 'release'
 $bundle = Join-Path $rel 'bundle'
 $out = Join-Path $root 'release'
 
-$app = 'KiteGC'; $os = 'Windows'; $arch = 'x64'
+$app = 'VAYU'; $os = 'Windows'; $arch = 'x64'
 function Get-Name($type, $ext) { "${app}_${os}_${arch}_${version}_${type}.${ext}" }
 
 if (-not $Keep -and (Test-Path $out)) { Remove-Item $out -Recurse -Force }
@@ -53,7 +53,7 @@ Get-ChildItem (Join-Path $bundle 'nsis\*-setup.exe') -ErrorAction SilentlyContin
 # Portable executable -> zip (+ a generated empty `.portable` marker).
 $exe = Join-Path $rel 'kite-gc.exe'
 if (Test-Path $exe) {
-    $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('kitegc-portable-' + [guid]::NewGuid())
+    $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('vayu-portable-' + [guid]::NewGuid())
     New-Item -ItemType Directory -Path $tmp | Out-Null
     Copy-Item $exe (Join-Path $tmp 'kite-gc.exe') -Force
     New-Item -ItemType File -Path (Join-Path $tmp '.portable') | Out-Null

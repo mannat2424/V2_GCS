@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * after a failure.
  *
  * The model is scoped storage, deliberately: the user grants **one folder** through the system tree
- * picker ([pickFolder]), Kite takes a persistable grant on exactly that folder, and no storage
+ * picker ([pickFolder]), VAYU takes a persistable grant on exactly that folder, and no storage
  * permission appears in the manifest. Because a SAF grant provides `content://` documents rather
  * than POSIX paths, nothing *lives* in the folder — the SQLite database and the raw-log writers
  * need real paths and stay app-private — instead the session-end mirror ([syncDirToTree]) copies

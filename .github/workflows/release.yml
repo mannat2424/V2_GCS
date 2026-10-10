@@ -1,4 +1,4 @@
-# Kite Ground Control — Release build (manual)
+# VAYU — Release build (manual)
 #
 # Manually triggered only (Actions tab -> "Release build" -> Run workflow, or
 # `gh workflow run release.yml`). Builds the distributable artifacts on a pinned,
@@ -61,7 +61,7 @@ jobs:
   # Silicon and Intel Macs. Built UNSIGNED on purpose: no Apple Developer credentials are placed on CI
   # (they stay on the maintainer's machine — see `just notarize-macos` for the local sign+notarize
   # step). An unsigned download is Gatekeeper-quarantined: first launch is right-click -> Open, or run
-  # `xattr -dr com.apple.quarantine "/Applications/Kite Ground Control.app"`.
+  # `xattr -dr com.apple.quarantine "/Applications/VAYU.app"`.
   macos:
     name: Build (macOS universal · unsigned)
     runs-on: macos-latest

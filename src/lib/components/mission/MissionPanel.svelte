@@ -90,20 +90,20 @@
     z-index: 1000;
   }
   .switch-dialog {
-    background: #2e2e2e;
-    border: 1px solid #37a8db;
+    background: #121a24;
+    border: 1px solid #38bdf8;
     border-radius: 6px;
     padding: 16px;
     max-width: 280px;
     width: 90%;
   }
-  .switch-title { font-size: 14px; font-weight: bold; color: #37a8db; margin-bottom: 8px; }
-  .switch-body { font-size: 12px; color: #ccc; margin: 0 0 12px; line-height: 1.5; }
+  .switch-title { font-size: 14px; font-weight: bold; color: #38bdf8; margin-bottom: 8px; }
+  .switch-body { font-size: 12px; color: #c3cedb; margin: 0 0 12px; line-height: 1.5; }
   .switch-actions { display: flex; flex-direction: column; gap: 6px; }
   .btn-switch-confirm { width: 100%; padding: 7px; background: #c0392b; border: none; border-radius: 4px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer; }
   .btn-switch-confirm:hover { background: #e74c3c; }
   .btn-switch-keep { width: 100%; padding: 7px; background: #2a3a2a; border: 1px solid #4caf50; border-radius: 4px; color: #81c784; font-size: 13px; cursor: pointer; }
   .btn-switch-keep:hover { background: #4caf50; color: #fff; }
-  .btn-switch-cancel { width: 100%; padding: 7px; background: #333; border: 1px solid #555; border-radius: 4px; color: #ccc; font-size: 13px; cursor: pointer; }
-  .btn-switch-cancel:hover { background: #444; }
+  .btn-switch-cancel { width: 100%; padding: 7px; background: #18212d; border: 1px solid #3a4a5f; border-radius: 4px; color: #c3cedb; font-size: 13px; cursor: pointer; }
+  .btn-switch-cancel:hover { background: #273446; }
 </style>

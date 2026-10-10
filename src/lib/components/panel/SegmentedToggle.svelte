@@ -87,8 +87,8 @@
     align-items: stretch;
     box-sizing: border-box;
     padding: 2px;
-    background: #2a2a2a;
-    border: 1px solid #555;
+    background: #111822;
+    border: 1px solid #3a4a5f;
     border-radius: 5px;
   }
   .seg-md { height: 28px; font-size: 12px; }
@@ -103,8 +103,8 @@
     position: absolute;
     top: 2px;
     bottom: 2px;
-    background: rgba(55, 168, 219, 0.22);
-    border: 1px solid #37a8db;
+    background: rgba(56, 189, 248, 0.22);
+    border: 1px solid #38bdf8;
     border-radius: 4px;
     transition: left 0.2s ease, width 0.2s ease;
     pointer-events: none;
@@ -123,20 +123,20 @@
     line-height: 1.5;
     background: none;
     border: none;
-    color: #aaa;
+    color: #9eacbf;
     cursor: pointer;
     white-space: nowrap;
     font-family: inherit;
     transition: color 0.15s;
   }
-  .seg-btn:hover:not(.active):not(:disabled) { color: #e0e0e0; }
-  .seg-btn.active { color: #37a8db; }
+  .seg-btn:hover:not(.active):not(:disabled) { color: #e3eaf3; }
+  .seg-btn.active { color: #38bdf8; }
   /* Per-option disabled: dim just this segment (whole-control disabled is handled below). */
-  .seg-btn:disabled { color: #5a5a5a; cursor: not-allowed; }
+  .seg-btn:disabled { color: #3d4e65; cursor: not-allowed; }
   /* Read-only: dim the whole control and show a not-allowed cursor; the active segment stays marked. */
   .seg.disabled { opacity: 0.55; }
   .seg.disabled .seg-btn { cursor: not-allowed; }
-  .seg.disabled .seg-btn:hover:not(.active) { color: #aaa; }
+  .seg.disabled .seg-btn:hover:not(.active) { color: #9eacbf; }
   /* Harmless in content mode (segment fits its label); the graceful fallback in full mode. */
   .seg-label { overflow: hidden; text-overflow: ellipsis; }
   .seg-icon { display: inline-flex; flex-shrink: 0; }

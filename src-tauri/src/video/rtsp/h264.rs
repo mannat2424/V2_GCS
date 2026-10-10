@@ -7,7 +7,7 @@
 //! form (4-byte start codes), which is what the platform decoders take: single NAL units,
 //! STAP-A aggregates and FU-A fragments — the three packetization modes real encoders
 //! emit (`packetization-mode=1`). STAP-B/MTAP/FU-B (interleaved mode) are not produced by
-//! any encoder Kite meets and mark the AU damaged.
+//! any encoder VAYU meets and mark the AU damaged.
 //!
 //! AU boundaries: the RTP marker bit ends an AU; a timestamp change without one (lost
 //! marker packet) flushes the previous AU first. Loss policy matches the pipeline's

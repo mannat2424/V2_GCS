@@ -1,12 +1,12 @@
 # Roadmap
 
-A high-level view of where Kite Ground Control is and where it's going. Kite is currently in the
+A high-level view of where VAYU is and where it's going. VAYU is currently in the
 **release-candidate** phase, heading toward a **1.0** release. (The detailed internal roadmap and
 per-feature plans are kept privately; new public plans are tracked in [`active/`](active/).)
 
 ## Shipped
 
-Kite is already a full-featured GCS. Broadly, what works today:
+VAYU is already a full-featured GCS. Broadly, what works today:
 
 **Connectivity**
 
@@ -60,7 +60,7 @@ Kite is already a full-featured GCS. Broadly, what works today:
 
 ## Toward 1.0
 
-The 1.0 feature scope is **complete**. Kite is in the release-candidate phase: features are frozen and
+The 1.0 feature scope is **complete**. VAYU is in the release-candidate phase: features are frozen and
 the remaining work is stabilisation — acting on field reports, validating across platforms and hardware,
 and fixing bugs. New feature work is tracked under *Post-1.0* below.
 
@@ -77,7 +77,7 @@ moves up into *Shipped* once it's in a release.
 | **H.265 / HEVC video** | Med | Idea | Cameras that only emit HEVC (SIYI gimbals, most IP-cam main streams) currently show no picture at all. No browser engine accepts HEVC over WebRTC, so the choice is an ffmpeg transcode (compatibility, but doubly lossy and heavy on ARM) or native decode via MSE (lossless, added latency). Whether it's worth building at all is still open — settle it with an MSE feasibility test first. |
 | **PX4 ULog (`.ulg`) import** | Med | Idea | PX4's onboard flight log — the counterpart to ArduPilot Dataflash `.bin`, which the logbook already imports. PX4 is currently the only supported platform with no full-rate log import, only MAVLink `.tlog`. The work is mostly mapping uORB topic fields onto the flight-record schema. |
 | **Linux Bluetooth SPP** | Med | Planned | Serial-Port-Profile support on Linux alongside BLE, for older Bluetooth hardware that offers no BLE. |
-| **Auxiliary sources over TCP / UDP** | Med | Idea | Background connections to auxiliary devices already work over serial (ADS-B receivers, INAV-Radar); the source config carries a `transport` field that currently only accepts `serial`. Adding TCP/UDP would let network-attached devices — Kite-Link nodes in particular — feed the same pipeline. |
+| **Auxiliary sources over TCP / UDP** | Med | Idea | Background connections to auxiliary devices already work over serial (ADS-B receivers, INAV-Radar); the source config carries a `transport` field that currently only accepts `serial`. Adding TCP/UDP would let network-attached devices — VAYU-Link nodes in particular — feed the same pipeline. |
 | **Custom tooltip / assistance system** | Low | Idea | Hints are browser-native `title` attributes today (~200 of them) plus Leaflet tooltips on map objects. A custom system would allow styling, richer content and delay control — cosmetic, so it slipped out of the 1.0 scope. |
 | **RF link budget (phase 2)** | Low | Idea | The RF analyser currently models relative obstacle loss only, with the map ray layer shipped. A budget phase would add RF power, antenna gain and a real range estimate. |
 | **SVG asset extraction** | Low | Idea | Move hardcoded inline SVG icons (the `Button.svelte` icon registry, map marker icons) into editable files under `static/`. Icons that inherit `currentColor` have to stay inline or be inlined at build time. |

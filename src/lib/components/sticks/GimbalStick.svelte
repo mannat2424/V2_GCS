@@ -45,7 +45,7 @@
     padding: 6px;
     box-sizing: border-box;
     /* Widget-style glass, a touch more transparent. */
-    background: rgba(30, 30, 30, 0.5);
+    background: rgba(12, 17, 24, 0.5);
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -68,7 +68,7 @@
   /* Centre crosshair (faint). */
   .cross {
     position: absolute;
-    background: rgba(148, 148, 148, 0.35);
+    background: rgba(138, 146, 160, 0.35);
   }
   .cross-h { left: 0; right: 0; top: 50%; height: 1px; transform: translateY(-0.5px); }
   .cross-v { top: 0; bottom: 0; left: 50%; width: 1px; transform: translateX(-0.5px); }
@@ -84,7 +84,7 @@
   }
 
   .dot-primary {
-    background: #37a8db;
+    background: #38bdf8;
     z-index: 2;
   }
 

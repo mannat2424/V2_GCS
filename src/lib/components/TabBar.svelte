@@ -10,8 +10,8 @@
     label: string;
     /** Trusted, app-defined inline SVG string (or a short glyph). */
     icon: string;
-    /** Icon tile gradient [top, bottom] — the same colours as the dock tile. */
-    tint: [string, string];
+    /** The app's hue (config/appIcons) — the icon colour and the active tab's top edge. */
+    hue: string;
     /** Pinned tabs (Map / Video / Split) have no close button. */
     pinned?: boolean;
     /** Small red "live" dot on the tab icon. */
@@ -61,6 +61,7 @@
     class:active={tab.key === activeKey}
     class:pinned={tab.pinned}
     data-key={tab.key}
+    style:--hue={tab.hue}
     role="tab"
     tabindex="0"
     aria-selected={tab.key === activeKey}
@@ -70,7 +71,7 @@
     onauxclick={(e) => onAux(e, tab)}
     onmousedown={(e) => { if (e.button === 1) e.preventDefault(); }}
   >
-    <span class="tb-icon" style:--t1={tab.tint[0]} style:--t2={tab.tint[1]}>
+    <span class="tb-icon">
       {@html tab.icon}
       {#if tab.live}<span class="tb-live" aria-hidden="true"></span>{/if}
     </span>
@@ -106,9 +107,9 @@
     gap: 0;
     padding: 0 8px;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #1c1e22, #222428);
-    border-bottom: 1px solid #33373d;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(180deg, #080c12, #0b1118);
+    border-bottom: 1px solid #1c2633;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     min-width: 0;
   }
 
@@ -137,7 +138,7 @@
     width: 1px;
     height: 18px;
     margin: 0 6px;
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(148, 178, 214, 0.18);
     flex-shrink: 0;
   }
 
@@ -145,16 +146,17 @@
     position: relative;
     display: flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     height: 28px;
     min-width: 0;
     max-width: 190px;
     flex: 0 1 190px;
-    padding: 0 6px 0 9px;
+    padding: 0 6px 0 10px;
     margin-right: 2px;
     border-radius: 8px 8px 0 0;
-    color: #a3a7ad;
+    color: #7f8da2;
     font-size: 12.5px;
+    letter-spacing: 0.15px;
     cursor: pointer;
     white-space: nowrap;
     box-sizing: border-box;
@@ -166,18 +168,28 @@
     padding-right: 11px;
   }
   .tb-tab:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: #e2e4e7;
+    background: rgba(148, 178, 214, 0.07);
+    color: #d6dee9;
   }
   .tb-tab:focus-visible {
-    box-shadow: inset 0 0 0 1px #37a8db;
+    box-shadow: inset 0 0 0 1px #38bdf8;
   }
-  /* Active: the tab "opens into" the content below — lighter ground, accent top edge, and it
-     covers the strip's bottom border. */
+  /* Active: the tab "opens into" the content below — lighter ground, a top edge in the app's hue
+     that fades out sideways, and it covers the strip's bottom border. */
   .tb-tab.active {
-    background: #2e3136;
-    color: #fff;
-    box-shadow: inset 0 2px 0 #37a8db;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--hue) 9%, #141c27), #121a24);
+    color: #f1f5f9;
+  }
+  .tb-tab.active::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 0;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    background: var(--hue);
+    box-shadow: 0 0 10px var(--hue);
   }
   .tb-tab.active::after {
     content: '';
@@ -186,7 +198,7 @@
     right: 0;
     bottom: -1px;
     height: 1px;
-    background: #2e3136;
+    background: #121a24;
   }
   /* Thin separators between inactive neighbours, like Chrome. */
   .tb-tab:not(.active) + .tb-tab:not(.active)::before {
@@ -196,38 +208,42 @@
     top: 7px;
     bottom: 7px;
     width: 1px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(148, 178, 214, 0.12);
   }
 
   .tb-icon {
     position: relative;
     flex-shrink: 0;
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
+    width: 17px;
+    height: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 7px;
+    color: var(--hue);
+    font-size: 8px;
     font-weight: 700;
-    background: linear-gradient(180deg, var(--t1), var(--t2));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    opacity: 0.75;
+    transition: opacity 0.12s;
+  }
+  .tb-tab:hover .tb-icon,
+  .tb-tab.active .tb-icon {
+    opacity: 1;
   }
   .tb-icon :global(svg) {
-    width: 13px;
-    height: 13px;
+    width: 17px;
+    height: 17px;
     display: block;
   }
   .tb-live {
     position: absolute;
-    top: -3px;
+    top: -2px;
     right: -3px;
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #ff3b30;
-    border: 1.5px solid #1c1e22;
+    background: #ff4d5e;
+    border: 1.5px solid #0b1118;
+    box-shadow: 0 0 6px rgba(255, 77, 94, 0.8);
   }
 
   .tb-label {
@@ -246,12 +262,12 @@
     border-radius: 50%;
     background: transparent;
     color: inherit;
-    opacity: 0.6;
+    opacity: 0.55;
     cursor: pointer;
   }
   .tb-close:hover {
     opacity: 1;
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(148, 178, 214, 0.16);
   }
   .tb-close svg {
     display: block;

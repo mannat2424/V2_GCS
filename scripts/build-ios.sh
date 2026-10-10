@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Kite Ground Control — iOS / iPad Release Build Script
+# VAYU — iOS / iPad Release Build Script
 # Builds a signed .ipa for install/distribution (not live-reload).
 # Use scripts/run-ipad.sh for day-to-day dev runs instead.
 #
@@ -31,7 +31,7 @@ cd "$ROOT"
 
 echo ""
 echo "============================================"
-echo " Kite Ground Control — iOS Release Build"
+echo " VAYU — iOS Release Build"
 echo "============================================"
 echo ""
 

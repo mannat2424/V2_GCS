@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 # ============================================================
-# Kite Ground Control — macOS notarize + staple (LOCAL ONLY)
+# VAYU — macOS notarize + staple (LOCAL ONLY)
 # Submits the collected .dmg to Apple's notary service and staples the ticket,
 # so it opens with no Gatekeeper warning on any Mac.
 #
@@ -32,9 +32,9 @@
 #     APPLE_APP_PASSWORD     an app-specific password (appleid.apple.com)
 #
 # One-time keychain-profile setup (keeps the password out of your shell/env):
-#   xcrun notarytool store-credentials kite-notary \
+#   xcrun notarytool store-credentials vayu-notary \
 #     --apple-id you@example.com --team-id TEAMID --password <app-specific-pw>
-#   export NOTARY_PROFILE=kite-notary
+#   export NOTARY_PROFILE=vayu-notary
 # ============================================================
 
 set -euo pipefail
@@ -55,7 +55,7 @@ echo "[1/5] Checking the app inside the .dmg is signed for distribution..."
 # otherwise hit a bare "hdiutil: attach failed" and, under set -e, a silent exit. Reuse the existing
 # mount instead, and only detach what this script attached itself.
 # hdiutil info prints "image-path : <path>" then tab-separated "/dev/diskNsM <uuid> <mountpoint>"
-# lines for that image. Split on tabs, not spaces: volume names contain them ("Kite Ground Control"),
+# lines for that image. Split on tabs, not spaces: volume names contain them ("VAYU"),
 # so a last-field match would only ever see the final word.
 MNT="$(hdiutil info | awk -F'\t' -v dmg="$(cd "$(dirname "$DMG")" && pwd)/$(basename "$DMG")" '
     /^image-path/ { p = $0; sub(/^image-path[[:space:]]*:[[:space:]]*/, "", p); mine = (p == dmg) }
@@ -84,7 +84,7 @@ fi
 
 APP="$(ls -d "$MNT"/*.app 2>/dev/null | head -1 || true)"
 if [ -z "$APP" ]; then
-    echo "[notarize] No .app inside $DMG. The image is not a Kite bundle."
+    echo "[notarize] No .app inside $DMG. The image is not a VAYU bundle."
     exit 1
 fi
 

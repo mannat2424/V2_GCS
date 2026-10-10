@@ -1,14 +1,14 @@
 # Reporting a problem
 
 Found a bug, or something not working as described? Reports are very welcome — a good one gets it fixed
-much faster. Kite is developed openly on GitHub:
+much faster. VAYU is developed openly on GitHub:
 
-[:material-github: Open an issue on GitHub](https://github.com/b14ckyy/Kite-GC/issues){ .md-button }
-[:fontawesome-brands-discord: Ask in #help on Discord](https://discord.gg/3FM7EWhkg9){ .md-button }
+[:material-github: Open an issue on GitHub](https://github.com/mannat2424/V2_GCS/issues){ .md-button }
+
 
 ## Before you file
 
-- **Not sure it's a bug?** Ask in `#help` on the [Kite Discord](https://discord.gg/3FM7EWhkg9) first (English) —
+- **Not sure it's a bug?** Open an issue and describe what you see —
   a quick answer is often all it takes, and a confirmed bug becomes an issue from there.
 - **Check the troubleshooting pages** — many common snags are covered under
   **[Connection](connection.md)** and **[Video](video.md)**.
@@ -30,7 +30,7 @@ The more of this you provide, the quicker it can be diagnosed:
    4. → the app shows X instead of Y
    ```
 4. **Your environment:**
-    - **Kite version** (shown in the top bar, and under **About** in Settings).
+    - **VAYU version** (shown in the top bar, and under **About** in Settings).
     - **Operating system** and version (Windows / Linux / macOS, and which).
     - **Autopilot and firmware version** — INAV / ArduPilot / PX4 and the exact version.
     - **Connection type** — USB serial, Bluetooth (SPP / BLE), TCP or UDP.

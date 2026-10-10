@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 # ============================================================
-# Kite Ground Control — macOS Build Script
+# VAYU — macOS Build Script
 # Builds a UNIVERSAL (arm64 + x86_64) .app and .dmg that run on both
 # Apple Silicon and Intel Macs.
 #
@@ -23,7 +23,7 @@ set -e
 
 echo ""
 echo "============================================"
-echo " Kite Ground Control — macOS Release Build"
+echo " VAYU — macOS Release Build"
 echo "============================================"
 echo ""
 

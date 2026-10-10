@@ -3,7 +3,7 @@
 
 // One-shot MAVLink parameter reads issued on connect.
 //
-// Most state Kite needs streams continuously (telemetry), but a few facts live only in FC
+// Most state VAYU needs streams continuously (telemetry), but a few facts live only in FC
 // parameters. The header EKF indicator needs the active estimator core, which is the AHRS_EKF_TYPE
 // parameter (2 = EKF2, 3 = EKF3) — there is no telemetry message that carries it. We fire a single
 // PARAM_REQUEST_READ before the handler thread starts; the FC's PARAM_VALUE reply is decoded in the

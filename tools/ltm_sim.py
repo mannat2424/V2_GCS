@@ -1,4 +1,4 @@
-"""Minimal LTM telemetry simulator — a fake aircraft for Kite's passive "Telemetry" protocol.
+"""Minimal LTM telemetry simulator — a fake aircraft for VAYU's passive "Telemetry" protocol.
 
 Streams LightTelemetry frames (`$T<type><payload><xor>`) the way an INAV LTM output would: A
 (attitude) / G (gps) / S (status) at --rate, O (home) at 1 Hz. The aircraft arms after --arm-after
@@ -7,13 +7,13 @@ seconds, then flies a circle of --radius m around --home at a climbing altitude 
 the foreground-service notification and the track backfill on a phone
 (Dev-Docs active/BACKGROUND_TELEMETRY.md).
 
-Kite side: Protocol = Telemetry, Transport = UDP, host = this machine, port = --port. Kite binds
+VAYU side: Protocol = Telemetry, Transport = UDP, host = this machine, port = --port. VAYU binds
 that port locally and learns the peer from the first datagram, so send TO the phone:
 
     python tools/ltm_sim.py --udp 192.168.1.87:14551
 
-TCP variant (Kite connects to us — pairs with `adb reverse tcp:14551 tcp:14551` when the phone has
-no Wi-Fi): `python tools/ltm_sim.py --tcp 14551`, Kite host = 127.0.0.1, port 14551.
+TCP variant (VAYU connects to us — pairs with `adb reverse tcp:14551 tcp:14551` when the phone has
+no Wi-Fi): `python tools/ltm_sim.py --tcp 14551`, VAYU host = 127.0.0.1, port 14551.
 """
 import argparse
 import math
@@ -50,8 +50,8 @@ def o_frame(lat: float, lon: float, alt_m: float, fix_home: int) -> bytes:
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--udp", metavar="HOST:PORT", help="send datagrams to the phone (Kite: Telemetry · UDP)")
-    ap.add_argument("--tcp", metavar="PORT", type=int, help="serve one TCP client (Kite: Telemetry · TCP)")
+    ap.add_argument("--udp", metavar="HOST:PORT", help="send datagrams to the phone (VAYU: Telemetry · UDP)")
+    ap.add_argument("--tcp", metavar="PORT", type=int, help="serve one TCP client (VAYU: Telemetry · TCP)")
     ap.add_argument("--rate", type=float, default=5.0, help="A/G/S frames per second (default 5)")
     ap.add_argument("--home", default="48.1000,11.5000", help="home lat,lon")
     ap.add_argument("--radius", type=float, default=300.0, help="circle radius in m")
@@ -70,13 +70,13 @@ def main() -> None:
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         target = (host, int(port))
         send = lambda b: sock.sendto(b, target)
-        print(f"LTM -> udp {host}:{port} at {args.rate:g} Hz; Kite: Telemetry - UDP - host = this machine, port {port}")
+        print(f"LTM -> udp {host}:{port} at {args.rate:g} Hz; VAYU: Telemetry - UDP - host = this machine, port {port}")
     else:
         srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         srv.bind(("0.0.0.0", args.tcp))
         srv.listen(1)
-        print(f"LTM tcp server on :{args.tcp} - waiting for Kite (Telemetry - TCP)...")
+        print(f"LTM tcp server on :{args.tcp} - waiting for VAYU (Telemetry - TCP)...")
         conn, peer = srv.accept()
         print(f"client {peer}")
         send = conn.sendall

@@ -2,7 +2,7 @@
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
 //! In-process RTSP bridge — the native video path (Dev-Docs active/MOBILE_RTSP.md):
-//! Kite's own RTSP client (`video::rtsp`) reads the source (UDP first, automatic TCP
+//! VAYU's own RTSP client (`video::rtsp`) reads the source (UDP first, automatic TCP
 //! fallback) and routes by the negotiated codec:
 //!
 //! * **MJPEG** (P1) — frames are broadcast on the same local multipart HTTP port the
@@ -713,7 +713,7 @@ mod tests {
             let hwnd = CreateWindowExW(
                 WINDOW_EX_STYLE(0),
                 class,
-                w!("Kite native RTSP bench"),
+                w!("VAYU native RTSP bench"),
                 WS_OVERLAPPEDWINDOW | WS_VISIBLE,
                 120,
                 120,

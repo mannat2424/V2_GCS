@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-"""Preview .glb models the way Kite's 2D top-down renderer does (and a side view), into one PNG grid."""
+"""Preview .glb models the way VAYU's 2D top-down renderer does (and a side view), into one PNG grid."""
 import sys, zlib, struct, math, glob
 import numpy as np
 sys.path.insert(0, sys.argv[1])

@@ -477,7 +477,7 @@
   .widget-card {
     position: relative;
     box-sizing: border-box;
-    background: rgba(30, 30, 30, 0.75);
+    background: rgba(12, 17, 24, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
@@ -502,14 +502,14 @@
   }
   .hist-line {
     fill: none;
-    stroke: #37a8db;
+    stroke: #38bdf8;
     stroke-width: 2;
     stroke-linejoin: round;
     stroke-linecap: round;
   }
   .fwd-line {
     fill: none;
-    stroke: #37a8db;
+    stroke: #38bdf8;
     stroke-width: 2;
     stroke-dasharray: 6 4;
     stroke-linejoin: round;
@@ -522,17 +522,17 @@
     stroke-dasharray: 3 3;
   }
   .uav-ring {
-    fill: rgba(55, 168, 219, 0.25);
+    fill: rgba(56, 189, 248, 0.25);
     stroke: #ffffff;
     stroke-width: 2;
   }
   .uav-dot {
     fill: #ffffff;
-    stroke: #1a1a1a;
+    stroke: #0b1017;
     stroke-width: 1;
   }
   .axis-label {
-    fill: #949494;
+    fill: #8493a8;
     font-size: var(--axis-fs, 13px);
   }
   /* readouts — overlay, widget typography */
@@ -553,13 +553,13 @@
   }
   .r-label {
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
   .r-val {
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-variant-numeric: tabular-nums;
   }
   .readout.warn .r-label,
@@ -572,7 +572,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888;
+    color: #7a8aa0;
     font-size: 12px;
   }
 </style>

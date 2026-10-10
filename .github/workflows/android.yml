@@ -1,4 +1,4 @@
-# Kite Ground Control - Android APK
+# VAYU - Android APK
 #
 # Builds the Android app and uploads the APK as a workflow artifact. Run it from the Actions tab
 # ("Run workflow"); it also runs on its own when one of the Android-only files changes (see `on:`).
@@ -115,7 +115,7 @@ jobs:
       # package"), which means an uninstall and the loss of the flight database on every single update.
       #
       # Set four repository secrets to fix that permanently:
-      #   KEYSTORE_B64       base64 of a .jks  (base64 -w0 kite.jks)
+      #   KEYSTORE_B64       base64 of a .jks  (base64 -w0 vayu.jks)
       #   KEYSTORE_PASSWORD  its store password
       #   KEY_ALIAS          the key alias inside it
       #   KEY_PASSWORD       that key's password

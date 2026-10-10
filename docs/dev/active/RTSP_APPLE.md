@@ -30,7 +30,7 @@
 >   (`backdrop-filter: blur`) stays live on WebKit and re-samples the 60 Hz video layer beneath it in the
 >   software compositor. Metal should absorb that; if Sebastian still measures a WindowServer delta on
 >   hardware, drop the blur on a panel while it hosts a native sink (Windows loses it there anyway).
-> - Dev loop that worked: edit on Windows, `scp` into `~/src/Kite-GC`, `cargo check` over SSH (~10 s),
+> - Dev loop that worked: edit on Windows, `scp` into `~/src/VAYU`, `cargo check` over SSH (~10 s),
 >   `just dev` launched detached (`nohup … < /dev/null & disown`), KiteShot screenshots.
 
 
@@ -49,7 +49,7 @@
 - **macOS behaves like Windows/Linux**: the "native client" toggle stays visible, the
   classic MediaMTX/ffmpeg path remains the switchable reserve engine (it is validated on
   macOS — do not regress it).
-- **iOS behaves like Android**: the Kite client is the ONLY route — iOS cannot spawn
+- **iOS behaves like Android**: the VAYU client is the ONLY route — iOS cannot spawn
   sidecar processes at all (no ffmpeg, no MediaMTX), so there is no classic path to
   toggle. Force it on in the store, hide the toggle.
 - **iPad only — NO video support on iPhone.** On an iPhone the video panel shows a
@@ -70,7 +70,7 @@
 
 ## Session setup on the Mac (do this first)
 
-- Clone/pull the Kite-GC repo, branch `feat/rtsp-apple` cut from `development`.
+- Clone/pull the VAYU repo, branch `feat/rtsp-apple` cut from `development`.
 - **CLAUDE.md is gitignored (machine-local)** — ask Marc for a copy BEFORE working; it
   carries the binding project rules. The critical ones, in case it is missing: respond in
   the user's language, code/comments/commits in English; NEVER commit or push without the
@@ -134,7 +134,7 @@
   picture like DOM content, it never shrinks it. Hole corners produced by clipping stay
   square (the router handles that in the DOM).
 - **What Apple does TODAY**: the accept list for "other OS" is MJPEG-only
-  (`rtsp_native.rs` — the `#[cfg(not(any(...)))]` arm), so on macOS the Kite-client
+  (`rtsp_native.rs` — the `#[cfg(not(any(...)))]` arm), so on macOS the VAYU-client
   toggle already works for MJPEG sources and H264/HEVC end in a readable codec error. On
   iOS the RTSP kind is blocked in the UI entirely (start-button disable + placeholder in
   `VideoPanel.svelte` — both fall in this port).
@@ -338,7 +338,7 @@ don't even need a re-host, overlapping siblings are enough.
 
 ## Definition of done
 
-Parity with Windows/Android/Linux: MJPEG (multipart) + H264 + HEVC through the Kite
+Parity with Windows/Android/Linux: MJPEG (multipart) + H264 + HEVC through the VAYU
 client on macOS AND iPad; hole punch under the DOM; scroll-crop correct (two-rect
 contract); mirror/rotate live (or the Android-style disabled-toggle fallback with
 rationale); smoothing-buffer depths 0–3 wired through the existing stepper; Debug Monitor

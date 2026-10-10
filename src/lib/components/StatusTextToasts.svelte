@@ -52,7 +52,7 @@
     z-index: 480; /* below the radar conflict banner (500) */
     width: max-content;
     max-width: min(640px, calc(100vw - var(--toast-dock-inset, 0px) - 32px));
-    background: rgba(30, 30, 30, 0.82);
+    background: rgba(12, 17, 24, 0.82);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
@@ -87,10 +87,10 @@
     max-height: 108px; /* ~5 lines, then it scrolls to the newest */
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: #555 transparent;
+    scrollbar-color: #3a4a5f transparent;
   }
   .msg-lines::-webkit-scrollbar { width: 6px; }
-  .msg-lines::-webkit-scrollbar-thumb { background: #555; border-radius: 3px; }
+  .msg-lines::-webkit-scrollbar-thumb { background: #3a4a5f; border-radius: 3px; }
 
   .msg-line {
     display: flex;
@@ -108,7 +108,7 @@
   .m-count { flex: 0 0 auto; margin-left: auto; padding-left: 8px; font-size: 11px; opacity: 0.55; font-variant-numeric: tabular-nums; }
 
   .msg-line.info    { color: #cfe7f3; }
-  .msg-line.info .m-icon { color: #37a8db; }
+  .msg-line.info .m-icon { color: #38bdf8; }
   .msg-line.warning { color: #f6e3b0; }
   .msg-line.warning .m-icon { color: #f4c020; }
   .msg-line.error   { color: #f6c9c9; background: rgba(120, 30, 30, 0.45); }

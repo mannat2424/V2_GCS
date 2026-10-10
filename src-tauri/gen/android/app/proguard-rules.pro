@@ -20,7 +20,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
-# ── Kite ─────────────────────────────────────────────────────────────────────
+# ── VAYU ─────────────────────────────────────────────────────────────────────
 # The USB-serial bridge is called only from Rust over JNI (see
 # src-tauri/src/transport/serial_android.rs), which R8 cannot see: no Java or Kotlin
 # code calls listDevices/open/read/write/setControlLines/close, so in a minified

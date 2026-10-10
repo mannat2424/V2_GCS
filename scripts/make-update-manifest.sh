@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 # ============================================================
-# Kite Ground Control — sign the collected artifacts + write the updater manifest (LOCAL ONLY)
+# VAYU — sign the collected artifacts + write the updater manifest (LOCAL ONLY)
 #
 # The in-app "Update and Restart" (src-tauri/src/commands/updater.rs) fetches
-#     https://github.com/b14ckyy/Kite-GC/releases/download/<tag>/latest.json
+#     https://github.com/mannat2424/V2_GCS/releases/download/<tag>/latest.json
 # and installs the entry for its platform after checking the minisign signature against the public
 # key in tauri.conf.json. Every entry therefore needs the artifact AND its `.sig`. Run this over the
 # release/ folder once every platform's artifacts are in it, right before `gh release create`:
 #
-#     TAURI_SIGNING_PRIVATE_KEY_PATH=<Dev-Docs>/keys/kite-updater.key \
+#     TAURI_SIGNING_PRIVATE_KEY_PATH=<Dev-Docs>/keys/vayu-updater.key \
 #         scripts/make-update-manifest.sh [tag]        # tag defaults to v<package.json version>
 #     gh release create <tag> --notes-file … release/*
 #
@@ -31,25 +31,25 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$ROOT/release"
 VERSION="$(grep '"version"' "$ROOT/package.json" | head -1 | sed -E 's/.*"version"[[:space:]]*:[[:space:]]*"([^"]+)".*/\1/')"
 TAG="${1:-v$VERSION}"
-BASE="https://github.com/b14ckyy/Kite-GC/releases/download/$TAG"
+BASE="https://github.com/mannat2424/V2_GCS/releases/download/$TAG"
 
 [ -d "$OUT" ] || { echo "[manifest] no release/ folder — collect the builds first" >&2; exit 1; }
 if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PATH:-}" ] && [ -z "${TAURI_SIGNING_PRIVATE_KEY:-}" ]; then
-    echo "[manifest] set TAURI_SIGNING_PRIVATE_KEY_PATH to the updater key (Dev-Docs/keys/kite-updater.key)" >&2
+    echo "[manifest] set TAURI_SIGNING_PRIVATE_KEY_PATH to the updater key (Dev-Docs/keys/vayu-updater.key)" >&2
     exit 1
 fi
 
 # <platform-key> <artifact file name>. Order = the order in the manifest.
 PLATFORMS=(
-    "windows-x86_64      KiteGC_Windows_x64_${VERSION}_installer.exe"
-    "darwin-aarch64      KiteGC_macOS_universal_${VERSION}_update.tar.gz"
-    "darwin-x86_64       KiteGC_macOS_universal_${VERSION}_update.tar.gz"
-    "linux-x86_64-deb    KiteGC_Linux_x64_${VERSION}_installer.deb"
-    "linux-x86_64-rpm    KiteGC_Linux_x64_${VERSION}_installer.rpm"
-    "linux-x86_64        KiteGC_Linux_x64_${VERSION}_standalone.AppImage"
-    "linux-aarch64-deb   KiteGC_Linux_arm64_${VERSION}_installer.deb"
-    "linux-aarch64-rpm   KiteGC_Linux_arm64_${VERSION}_installer.rpm"
-    "linux-aarch64       KiteGC_Linux_arm64_${VERSION}_standalone.AppImage"
+    "windows-x86_64      VAYU_Windows_x64_${VERSION}_installer.exe"
+    "darwin-aarch64      VAYU_macOS_universal_${VERSION}_update.tar.gz"
+    "darwin-x86_64       VAYU_macOS_universal_${VERSION}_update.tar.gz"
+    "linux-x86_64-deb    VAYU_Linux_x64_${VERSION}_installer.deb"
+    "linux-x86_64-rpm    VAYU_Linux_x64_${VERSION}_installer.rpm"
+    "linux-x86_64        VAYU_Linux_x64_${VERSION}_standalone.AppImage"
+    "linux-aarch64-deb   VAYU_Linux_arm64_${VERSION}_installer.deb"
+    "linux-aarch64-rpm   VAYU_Linux_arm64_${VERSION}_installer.rpm"
+    "linux-aarch64       VAYU_Linux_arm64_${VERSION}_standalone.AppImage"
 )
 
 # 1. Sign what is unsigned. `tauri signer sign` writes <file>.sig beside the file and reads the key

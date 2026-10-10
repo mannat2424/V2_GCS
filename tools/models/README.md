@@ -8,8 +8,8 @@ contacts). Everything runs with [uv](https://docs.astral.sh/uv/); no project-lev
 | `kitemodels.py`      | Shared primitives (lofts, wings, prop guards) and the colour constants (`BODY`, `GUARD`, `RED`, `GREEN`, …). |
 | `generate_uav.py`    | Own-UAV models: `uav-plane`, `uav-quad`, `uav-tricopter`, `uav-vtol`, `uav-arrow`. |
 | `generate_adsb.py`   | Radar models: `adsb-light` … `adsb-dot`, `ff-uav`. |
-| `fix_glb.py`         | Post-process one `.glb` for Kite: consistent outward winding, vertex normals, uniform scale. |
-| `glb_u16.py`         | Rewrite index accessors to uint16 (Kite's 2D loader reads `Uint16Array`). |
+| `fix_glb.py`         | Post-process one `.glb` for VAYU: consistent outward winding, vertex normals, uniform scale. |
+| `glb_u16.py`         | Rewrite index accessors to uint16 (VAYU's 2D loader reads `Uint16Array`). |
 | `glb_info.py`        | Print extents, nav-light positions and node data of `.glb` files (orientation check). |
 | `render_topdown.py`  | Raster preview (top + side) with the same maths as the 2D top-down renderer. |
 | `overview.py`        | Labelled overview sheets for the user docs. |

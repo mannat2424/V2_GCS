@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-//! UDP subscription server — Kite listens on UDP 27300; a consumer subscribes by sending the
+//! UDP subscription server — VAYU listens on UDP 27300; a consumer subscribes by sending the
 //! `SUBSCRIBE` word there and keeps receiving frames as long as it repeats it at least every
 //! `SUBSCRIPTION_TTL`.
 //!
-//! Same shape as the TCP stream from the client's side (the client initiates, Kite needs no target
+//! Same shape as the TCP stream from the client's side (the client initiates, VAYU needs no target
 //! configured, several clients at once), with UDP's fire-and-forget delivery. The first subscribe from
 //! a new address is answered with the `hello` record so the client can confirm the subscription and
 //! the schema; a subscriber that goes quiet simply ages out — no explicit unsubscribe.

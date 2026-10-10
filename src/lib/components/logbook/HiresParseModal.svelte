@@ -55,8 +55,8 @@
   }
 
   .dialog-box {
-    background: #2e2e2e;
-    border: 1px solid rgba(55, 168, 219, 0.45);
+    background: #121a24;
+    border: 1px solid rgba(56, 189, 248, 0.45);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     padding: 20px 24px 16px;
@@ -67,27 +67,27 @@
   .dialog-title {
     font-size: 14px;
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e3eaf3;
     margin-bottom: 10px;
   }
 
   .dialog-message {
     font-size: 12px;
-    color: #bbb;
+    color: #b1b9c7;
     line-height: 1.5;
     margin-bottom: 14px;
   }
 
   .hires-progress {
     height: 8px;
-    background: #434343;
+    background: #253244;
     border-radius: 4px;
     overflow: hidden;
   }
 
   .hires-progress-fill {
     height: 100%;
-    background: #37a8db;
+    background: #38bdf8;
     border-radius: 4px;
     transition: width 0.2s ease;
   }
@@ -95,7 +95,7 @@
   .hires-progress-msg {
     margin-top: 6px;
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
     min-height: 14px;
   }
 </style>

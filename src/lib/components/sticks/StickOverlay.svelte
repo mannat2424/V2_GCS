@@ -69,13 +69,13 @@
     display: flex;
     gap: 10px;
     padding: 3px 8px;
-    background: rgba(30, 30, 30, 0.5);
+    background: rgba(12, 17, 24, 0.5);
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     font-size: 10px;
-    color: #c0c0c0;
+    color: #b6c2d1;
   }
 
   .leg {
@@ -93,6 +93,6 @@
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7);
   }
 
-  .leg-primary { background: #37a8db; }
+  .leg-primary { background: #38bdf8; }
   .leg-secondary { background: #f39c12; opacity: 0.65; }
 </style>

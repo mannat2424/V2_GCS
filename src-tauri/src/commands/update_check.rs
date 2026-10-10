@@ -9,8 +9,8 @@
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-const RELEASES_LATEST: &str = "https://api.github.com/repos/b14ckyy/Kite-GC/releases/latest";
-const RELEASES_LIST: &str = "https://api.github.com/repos/b14ckyy/Kite-GC/releases?per_page=20";
+const RELEASES_LATEST: &str = "https://api.github.com/repos/mannat2424/V2_GCS/releases/latest";
+const RELEASES_LIST: &str = "https://api.github.com/repos/mannat2424/V2_GCS/releases?per_page=20";
 
 /// The user's channel (Settings → Updates). Mirrors `UpdateCheckMode` minus `disabled`, which never
 /// reaches the backend.
@@ -93,7 +93,7 @@ fn pick<'a>(releases: &'a [Value], channel: UpdateChannel, current: &str) -> Opt
 pub async fn check_for_update(app: tauri::AppHandle, channel: UpdateChannel) -> Result<Option<UpdateInfo>, String> {
     let current = app.package_info().version.to_string();
     let client = reqwest::Client::builder()
-        .user_agent(format!("Kite-GC/{current} update-check"))
+        .user_agent(format!("VAYU/{current} update-check"))
         .build()
         .map_err(|e| format!("HTTP client error: {e}"))?;
 

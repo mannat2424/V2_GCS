@@ -9,7 +9,7 @@
 //! * `client` — RTSP control (OPTIONS/DESCRIBE/SETUP/PLAY, Basic + Digest auth, keepalive)
 //!   and the two data transports: **RTP/UDP** (NAT pinhole punch + RTCP receiver reports)
 //!   and **TCP-interleaved**, with automatic UDP→TCP fallback when no RTP arrives after
-//!   PLAY (CGNAT/firewall paths). UDP first — Kite flies over lossy, high-latency links
+//!   PLAY (CGNAT/firewall paths). UDP first — VAYU flies over lossy, high-latency links
 //!   where TCP retransmits stack delay exactly when the link degrades.
 //! * `sdp` — minimal SDP: media sections, rtpmap, control URLs.
 //! * `rtp` — RTP header parse + a small bounded reorder window (latency over completeness:

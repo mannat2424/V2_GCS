@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-"""Radar / ADS-B contact models for Kite-GC (static/models/radar/). Bodies are pure WHITE: the 3D map
+"""Radar / ADS-B contact models for VAYU (static/models/radar/). Bodies are pure WHITE: the 3D map
 tints contacts with Cesium's HIGHLIGHT blend (lit surface × altitude colour), so any grey in the material
 would darken the colour scale. Only silhouette + orientation matter otherwise. Frame: nose=+Z, up=+Y, port=+X.
 Run:  uv run --with trimesh --with numpy --with scipy python generate_adsb.py <outdir> [names...]"""

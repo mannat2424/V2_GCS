@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-"""Normalise a generated .glb for Kite: consistent outward winding, vertex normals, uniform scale.
+"""Normalise a generated .glb for VAYU: consistent outward winding, vertex normals, uniform scale.
 Run: uv run --with trimesh --with numpy --with scipy python fix_glb.py <factor> <in.glb> <out.glb>"""
 import sys
 import numpy as np

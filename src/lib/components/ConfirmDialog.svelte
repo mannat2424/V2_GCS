@@ -114,8 +114,8 @@
   }
 
   .dialog-box {
-    background: #2e2e2e;
-    border: 1px solid rgba(55, 168, 219, 0.45);
+    background: #121a24;
+    border: 1px solid rgba(56, 189, 248, 0.45);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     padding: 20px 24px 16px;
@@ -126,13 +126,13 @@
   .dialog-title {
     font-size: 14px;
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e3eaf3;
     margin-bottom: 10px;
   }
 
   .dialog-message {
     font-size: 12px;
-    color: #bbb;
+    color: #b1b9c7;
     line-height: 1.5;
     white-space: pre-line;
     margin-bottom: 16px;
@@ -143,11 +143,11 @@
     align-items: center;
     gap: 8px;
     font-size: 12px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     margin: -6px 0 14px;
     cursor: pointer;
   }
-  .dialog-check input { accent-color: #37a8db; }
+  .dialog-check input { accent-color: #38bdf8; }
 
   .dialog-buttons {
     display: flex;
@@ -161,19 +161,19 @@
     font-size: 12px;
     font-weight: 600;
     border-radius: 4px;
-    border: 1px solid #555;
-    background: #434343;
-    color: #e0e0e0;
+    border: 1px solid #3a4a5f;
+    background: #253244;
+    color: #e3eaf3;
     cursor: pointer;
     transition: background 0.15s;
   }
 
   .dialog-btn:hover {
-    background: #505050;
+    background: #2e3d51;
   }
 
   .dialog-btn-cancel {
-    color: #999;
+    color: #8796ab;
   }
 
   .dialog-btn-danger {
@@ -187,12 +187,12 @@
   }
 
   .dialog-btn-primary {
-    background: #1a6b94;
-    border-color: #2590c8;
+    background: #0369a1;
+    border-color: #0ea5e9;
     color: #fff;
   }
 
   .dialog-btn-primary:hover {
-    background: #237fae;
+    background: #0284c7;
   }
 </style>

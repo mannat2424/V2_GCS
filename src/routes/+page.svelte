@@ -45,6 +45,7 @@
   import NavRail from "$lib/components/NavRail.svelte";
   import AppDock, { type DockItem } from "$lib/components/AppDock.svelte";
   import TabBar, { type TabBarItem } from "$lib/components/TabBar.svelte";
+  import { APP_ICONS, APP_HUES, FALLBACK_HUE } from "$lib/config/appIcons";
   import VideoEmptyState from "$lib/components/video/VideoEmptyState.svelte";
   import { viewMode, setViewMode, setSplitFrac, setSideFrac, commitSplit, swapSplitSides, addOpenTab, removeOpenTab, APP_DOCK_PX, TAB_BAR_PX, type ViewMode } from "$lib/stores/viewMode";
   import { getCurrentWindow } from "@tauri-apps/api/window";
@@ -479,7 +480,7 @@
    *  INAV SITL's MSP port on the desktop. */
   const INITIAL_NET_PORT = isMobile ? 14550 : 5761;
   let tcpPort = $state(INITIAL_NET_PORT);
-  /** Is the port still one Kite filled in (so the protocol / transport selectors may move it), or one
+  /** Is the port still one VAYU filled in (so the protocol / transport selectors may move it), or one
    *  the pilot typed? Owned here rather than in ConnectionControls so the toolbar and the phone
    *  popout cannot end up with two different answers. Set from the restored connection below. */
   let portIsAuto = $state(true);
@@ -914,34 +915,9 @@
   const railActiveTab = $derived(terrainOpen ? 'terrain' : activeTab);
 
   // ── App Dock ────────────────────────────────────────────────────────────────────────────────
-  // View tabs (new) + the panel apps (the former rail tabs) + utilities, iOS-style tiles.
-  const ICON_VIEW_MAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6.2 8.7 4l6.6 2.4L21 4.2v13.6L15.3 20l-6.6-2.4L3 19.8Z" fill="currentColor" fill-opacity="0.18"/><path d="M8.7 4v13.6M15.3 6.4V20"/></svg>';
-  const ICON_VIEW_VIDEO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M10 8.8v6.4l5.4-3.2Z" fill="currentColor" stroke="none"/></svg>';
-  const ICON_VIEW_SPLIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><rect x="2.5" y="4.5" width="9.5" height="15" rx="2.5" fill="currentColor" fill-opacity="0.3" stroke="none"/><path d="M12 4.5v15"/></svg>';
-  const ICON_WIDGETS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 17.5a8.5 8.5 0 1 1 15.6 0"/><path d="M12 13.5 15.8 8.6"/><circle cx="12" cy="13.5" r="1.4" fill="currentColor"/><path d="M5.5 12h1.3M17.2 12h1.3M12 5.8v1.3"/></svg>';
-  const ICON_FULLSCREEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
-  const ICON_FULLSCREEN_EXIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
-
-  /** Tile gradients per app (iOS-like: each app keeps its own colour). */
-  const DOCK_TINTS: Record<string, [string, string]> = {
-    'view:map': ['#4cd964', '#1f9a3c'],
-    'view:video': ['#ff6b5e', '#d1281c'],
-    'view:split': ['#7d7bff', '#4a47d6'],
-    'uav-info': ['#7f8fa6', '#4b586c'],
-    mission: ['#ffb340', '#e07b00'],
-    control: ['#bf7dff', '#8a3fd1'],
-    'rc-control': ['#ff6fa8', '#d6336f'],
-    terrain: ['#c79a63', '#8c6230'],
-    logbook: ['#ffd84d', '#d9a400'],
-    radar: ['#44e08a', '#119a52'],
-    airspace: ['#5ac8fa', '#0a7bd9'],
-    video: ['#ff8a50', '#d44d14'],
-    settings: ['#a0a0a8', '#5f5f68'],
-    'dev-playground': ['#6b6b6b', '#3a3a3a'],
-    'util:widgets': ['#4fd1c5', '#16897f'],
-    'util:fullscreen': ['#5c6470', '#30353d'],
-  };
-  const FALLBACK_TINT: [string, string] = ['#6b7a8c', '#3e4957'];
+  // View tabs + the panel apps (the former rail tabs) + utilities. Icons and hues: config/appIcons.
+  const appIcon = (key: string) => APP_ICONS[key] ?? '';
+  const appHue = (key: string) => APP_HUES[key] ?? FALLBACK_HUE;
 
   const widgetsVisible = $derived($layout.bottomDock.visible || $layout.sideDock.visible);
   let isFullscreen = $state(false);
@@ -953,7 +929,7 @@
   // need it). With no tab left, a start page covers the screen until something is opened.
   /** The panel currently shown (or parked), if any. */
   const activePanelId = $derived(terrainOpen ? 'terrain' : navPanelOpen ? activeTab : null);
-  /** Panel metadata (label / icon / tint) by id, for the dock and the tab bar. */
+  /** Panel metadata (label / icon / hue) by id, for the dock and the tab bar. */
   const panelMeta = $derived(
     Object.fromEntries(
       railTabs
@@ -963,21 +939,21 @@
           {
             // The Video *panel* configures the source; "Video" is the view tab.
             label: tab.id === 'video' ? $t('dock.videoSource') : tab.label(),
-            icon: tab.id === 'dev-playground' ? 'DEV' : tab.icon,
-            tint: DOCK_TINTS[tab.id] ?? FALLBACK_TINT,
+            icon: appIcon(tab.id) || tab.icon,
+            hue: appHue(tab.id),
           },
         ]),
-    ) as Record<string, { label: string; icon: string; tint: [string, string] }>,
+    ) as Record<string, { label: string; icon: string; hue: string }>,
   );
   const VIEW_TABS: { mode: ViewMode; label: () => string; icon: string }[] = [
-    { mode: 'map', label: () => $t('dock.viewMap'), icon: ICON_VIEW_MAP },
-    { mode: 'video', label: () => $t('dock.viewVideo'), icon: ICON_VIEW_VIDEO },
-    { mode: 'split', label: () => $t('dock.viewSplit'), icon: ICON_VIEW_SPLIT },
+    { mode: 'map', label: () => $t('dock.viewMap'), icon: appIcon('view:map') },
+    { mode: 'video', label: () => $t('dock.viewVideo'), icon: appIcon('view:video') },
+    { mode: 'split', label: () => $t('dock.viewSplit'), icon: appIcon('view:split') },
   ];
   const viewMeta = $derived(
     Object.fromEntries(
-      VIEW_TABS.map((v) => [v.mode, { label: v.label(), icon: v.icon, tint: DOCK_TINTS[`view:${v.mode}`] }]),
-    ) as Record<ViewMode, { label: string; icon: string; tint: [string, string] }>,
+      VIEW_TABS.map((v) => [v.mode, { label: v.label(), icon: v.icon, hue: appHue(`view:${v.mode}`) }]),
+    ) as Record<ViewMode, { label: string; icon: string; hue: string }>,
   );
   /** Open tabs that are currently available (e.g. Control hides while not on MAVLink), bar order. */
   const openTabKeys = $derived(
@@ -1009,6 +985,8 @@
   );
   /** The view laid out on screen: a side-by-side tab always shows the map beside its panel. */
   const shownView = $derived<ViewMode>(layoutMode === 'side' ? 'map' : view);
+  /** The Video tab is in front: the picture gets the whole zone, the widget docks step aside. */
+  const videoTabActive = $derived(layoutMode === 'view' && shownView === 'video');
   /** Side-by-side: the panel pane's width (logical px, the zoomed chrome's units). */
   const sidePaneW = $derived(Math.round($viewMode.sideFrac * logicalW));
 
@@ -1043,14 +1021,14 @@
       running: openTabKeys.includes(`tab:${id}`),
     }));
     const utils: DockItem[] = [
-      { id: 'util:widgets', label: $t('dock.widgets'), icon: ICON_WIDGETS, tint: DOCK_TINTS['util:widgets'], active: widgetsVisible },
+      { id: 'util:widgets', label: $t('dock.widgets'), icon: appIcon('util:widgets'), hue: appHue('util:widgets'), active: widgetsVisible },
     ];
     if (!isMobile) {
       utils.push({
         id: 'util:fullscreen',
         label: $t('dock.fullscreen'),
-        icon: isFullscreen ? ICON_FULLSCREEN_EXIT : ICON_FULLSCREEN,
-        tint: DOCK_TINTS['util:fullscreen'],
+        icon: appIcon(isFullscreen ? 'util:fullscreen-exit' : 'util:fullscreen'),
+        hue: appHue('util:fullscreen'),
         active: isFullscreen,
       });
     }
@@ -1234,7 +1212,7 @@
   ensureUserLocation();
 
   /** Protocol the connection bar starts on. Settings → Connection owns the choice: "Last used"
-   *  (the default, and the behaviour Kite has always had) restores the stored protocol, while a
+   *  (the default, and the behaviour VAYU has always had) restores the stored protocol, while a
    *  fixed value wins over that store on every launch. Only a protocol we actually support is
    *  honoured, with MSP as the fallback: the old form mapped everything that was not MAVLink onto
    *  MSP, which silently rewrote a stored `telemetry` choice, so a pilot who last connected in
@@ -1259,9 +1237,9 @@
   selectedTransport = startupTransport;
   if (saved.lastHost) tcpHost = saved.lastHost;
   const storedPort = saved.lastTcpPort || INITIAL_NET_PORT;
-  // Whether the port is Kite's or the pilot's is stored alongside it. A profile written before that
+  // Whether the port is VAYU's or the pilot's is stored alongside it. A profile written before that
   // field existed has to be guessed at once, from the stored port against the stored protocol and
-  // transport: equal to the standard port (or a transport that has no port at all) means Kite's.
+  // transport: equal to the standard port (or a transport that has no port at all) means VAYU's.
   const storedPortDefault = defaultNetPort(saved.lastProtocol, saved.lastTransport);
   const startupPortIsAuto = saved.lastPortIsAuto
     ?? (storedPortDefault === undefined || storedPort === storedPortDefault);
@@ -1721,8 +1699,8 @@
     settings.patch({ flightLogRawPath: '' });
   }
 
-  // Set when the flight DB was written by a NEWER Kite (downgrade guard, `db-newer:` marker from
-  // the backend) — the logbook shows a targeted "restore a backup or update Kite" notice instead
+  // Set when the flight DB was written by a NEWER VAYU (downgrade guard, `db-newer:` marker from
+  // the backend) — the logbook shows a targeted "restore a backup or update VAYU" notice instead
   // of a generic error and stays disabled; the DB file is never touched. Cleared on a successful
   // load (e.g. after the user pointed the DB path at a compatible copy). The explanatory popup
   // fires ONCE per session, and ONLY on a real schema mismatch — every other DB error keeps the
@@ -2071,7 +2049,7 @@
     } else if (ext === 'ulg') {
       await performUlogImport(filePath, false); // PX4 ULog
     } else if (ext === 'kflight') {
-      await performKflightImport(filePath); // KiteGC exchange file
+      await performKflightImport(filePath); // VAYU exchange file
     } else if (ext === 'rawmsp' || ext === 'tlog') {
       await performRawImport(filePath); // raw serial log (ADR-049)
     } else {
@@ -2831,7 +2809,7 @@
 
   // BLE discovery is a firehose: the backend scan puts the adapter into CONTINUOUS discovery, and
   // BlueZ emits a D-Bus signal per advertisement (hundreds/s in a busy RF area) for as long as it
-  // runs — pegging dbus-daemon + bluetoothd, not Kite itself. So we never hold it open: each scan is
+  // runs — pegging dbus-daemon + bluetoothd, not VAYU itself. So we never hold it open: each scan is
   // a short bounded WINDOW. One fires on entering BLE (list ready), and one each time the device
   // dropdown is opened (fresh RSSI) via onRescanBle. Devices stream in through the `ble-device` event
   // (listener set up in initPage) during the window.
@@ -3952,7 +3930,7 @@
       <div class="sp-grid">
         {#each startItems as item (item.id)}
           <button class="sp-app" onclick={() => onDockSelect(item.id)}>
-            <span class="sp-tile" style:--t1={item.tint[0]} style:--t2={item.tint[1]}>{@html item.icon}</span>
+            <span class="sp-tile" style:--hue={item.hue}>{@html item.icon}</span>
             <span class="sp-label">{item.label}</span>
           </button>
         {/each}
@@ -4133,7 +4111,7 @@
 
   {#if !phoneUi}
   <!-- ======= BOTTOM WIDGET PANEL ======= -->
-  <div class="zone-bottom-dock" class:zone-hidden={!$layout.bottomDock.visible} class:panel-editing={widgetEditMode} bind:clientWidth={bottomDockW} bind:clientHeight={bottomDockH} style:padding-left="{bottomLeftReserve}px">
+  <div class="zone-bottom-dock" class:zone-hidden={!$layout.bottomDock.visible || videoTabActive} class:panel-editing={widgetEditMode} bind:clientWidth={bottomDockW} bind:clientHeight={bottomDockH} style:padding-left="{bottomLeftReserve}px">
     <div class="panel-bottom-wrap">
       <!-- Edit mode (both docks share it): entered by a long-press on a widget, left by a click
            outside the docks or Escape — the panels own the gesture, the flag lives here. -->
@@ -4162,7 +4140,7 @@
   {/if}
 
   <!-- ======= RIGHT WIDGET PANEL ======= -->
-  <div class="zone-side-dock" class:zone-hidden={!$layout.sideDock.visible} class:panel-editing={widgetEditMode} bind:clientWidth={sideDockW} bind:clientHeight={sideDockH}>
+  <div class="zone-side-dock" class:zone-hidden={!$layout.sideDock.visible || videoTabActive} class:panel-editing={widgetEditMode} bind:clientWidth={sideDockW} bind:clientHeight={sideDockH}>
     <WidgetPanel
       widgetIds={panels.right}
       orientation="vertical"
@@ -4408,8 +4386,9 @@
     {/if}
     {#if useDock}
       <!-- ======= APP DOCK (iOS-style shelf: views · panel apps · utilities) =======
-           In the panels layer so it (and its hover names) stay above full pages and panels. -->
-      <div class="dock-float" style:height="{appDockH}px">
+           In the panels layer so it (and its hover names) stay above full pages and panels.
+           Tucked away on the start page, whose launcher grid already shows every app. -->
+      <div class="dock-float" class:tucked={layoutMode === 'start'} style:height="{appDockH}px">
         <AppDock groups={dockGroups} onSelect={onDockSelect} />
       </div>
     {/if}
@@ -4439,7 +4418,7 @@
 
 <style>
   /* ============================================================
-     Kite Ground Control Theme — Floating Panel Layout
+     VAYU Theme — Floating Panel Layout
      Color palette derived from INAV Configurator
      https://github.com/iNavFlight/inav-configurator
      ============================================================ */
@@ -4454,9 +4433,9 @@
     padding: 8px 16px;
     font-size: 12px;
     font-weight: 600;
-    color: #cfe8f5;
+    color: #d4f0fd;
     background: rgba(26, 107, 148, 0.92);
-    border: 1px solid #2590c8;
+    border: 1px solid #0ea5e9;
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
     pointer-events: none;
@@ -4466,8 +4445,8 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #3d3f3e;
-    color: #e0e0e0;
+    background-color: #0b1017;
+    color: #e3eaf3;
     overflow: hidden;
     /* Block accidental text selection on drag everywhere (UI is app-like, not a document) */
     user-select: none;
@@ -4782,13 +4761,13 @@
     right: 0;
     background: transparent;
     border-style: solid;
-    border-color: rgba(190, 190, 190, 0.4);
+    border-color: rgba(180, 188, 202, 0.4);
     border-left: none;
     border-bottom: none;
     cursor: nesw-resize;
   }
   .mf-grip:hover {
-    border-color: rgba(190, 190, 190, 0.6);
+    border-color: rgba(180, 188, 202, 0.6);
   }
   /* Same look as FloatingVideoWindow's .fw-move: the rounded square with the four-way arrow in
      the bottom-left corner (box, border and padding inline, scaled). */
@@ -4796,13 +4775,13 @@
     top: auto;
     background: transparent;
     border-style: solid;
-    border-color: rgba(190, 190, 190, 0.4);
-    color: rgba(190, 190, 190, 0.4);
+    border-color: rgba(180, 188, 202, 0.4);
+    color: rgba(180, 188, 202, 0.4);
     cursor: grab;
   }
   .mf-move:hover {
-    border-color: rgba(190, 190, 190, 0.6);
-    color: rgba(190, 190, 190, 0.6);
+    border-color: rgba(180, 188, 202, 0.6);
+    color: rgba(180, 188, 202, 0.6);
   }
   .mf-move:active {
     cursor: grabbing;
@@ -4823,13 +4802,13 @@
     left: 0;
     background: transparent;
     border-style: solid;
-    border-color: rgba(190, 190, 190, 0.4);
-    color: rgba(190, 190, 190, 0.4);
+    border-color: rgba(180, 188, 202, 0.4);
+    color: rgba(180, 188, 202, 0.4);
     cursor: pointer;
   }
   .mf-size:hover {
-    border-color: rgba(190, 190, 190, 0.6);
-    color: rgba(190, 190, 190, 0.6);
+    border-color: rgba(180, 188, 202, 0.6);
+    color: rgba(180, 188, 202, 0.6);
   }
   .mf-size svg {
     display: block;
@@ -4876,7 +4855,7 @@
   }
   .map-video-wrap.unobstructed .map-video-box {
     background: #000;
-    border: 1px solid rgba(55, 168, 219, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     box-sizing: border-box;
     /* Drop shadow — near-black right at the frame, fading out wide and soft: lifts the
        framed video clearly off the blurred backdrop map. */
@@ -4894,7 +4873,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888;
+    color: #7a8aa0;
     font-size: 12px;
     background: #000;
   }
@@ -4998,8 +4977,8 @@
     padding: 24px 24px calc(var(--app-dock-h, 0px) + 24px);
     box-sizing: border-box;
     background:
-      radial-gradient(ellipse at 50% 35%, rgba(55, 168, 219, 0.12), transparent 60%),
-      linear-gradient(180deg, #202328, #16181b);
+      radial-gradient(ellipse at 50% 35%, rgba(56, 189, 248, 0.12), transparent 60%),
+      linear-gradient(180deg, #0f1621, #080c12);
   }
   :global(html.is-mobile) .start-page {
     top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px));
@@ -5007,11 +4986,11 @@
   .sp-title {
     font-size: 22px;
     font-weight: 600;
-    color: #eef0f2;
+    color: #e6eefc;
   }
   .sp-hint {
     font-size: 13px;
-    color: #949494;
+    color: #8493a8;
     margin-bottom: 18px;
   }
   .sp-grid {
@@ -5030,7 +5009,7 @@
     border: none;
     border-radius: 12px;
     background: none;
-    color: #d6d8db;
+    color: #ced6e4;
     font-size: 12px;
     cursor: pointer;
   }
@@ -5038,25 +5017,30 @@
     background: rgba(255, 255, 255, 0.05);
   }
   .sp-tile {
-    width: 56px;
-    height: 56px;
-    border-radius: 13px;
+    width: 58px;
+    height: 58px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--hue);
     font-size: 16px;
     font-weight: 700;
-    background: linear-gradient(180deg, var(--t1), var(--t2));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 4px 12px rgba(0, 0, 0, 0.4);
-    transition: transform 0.15s ease;
+    background:
+      radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--hue) 12%, transparent), transparent 70%),
+      linear-gradient(180deg, #1a2433, #0f1620);
+    border: 1px solid rgba(148, 178, 214, 0.12);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 6px 16px rgba(0, 0, 0, 0.45);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
   .sp-app:hover .sp-tile {
     transform: translateY(-3px) scale(1.06);
+    border-color: color-mix(in srgb, var(--hue) 50%, transparent);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--hue) 25%, transparent), 0 8px 18px rgba(0, 0, 0, 0.5);
   }
   .sp-tile :global(svg) {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     display: block;
   }
   .sp-label {
@@ -5085,6 +5069,12 @@
   }
   .dock-float > :global(*) {
     pointer-events: auto;
+    transition: transform 0.28s cubic-bezier(0.3, 0.7, 0.4, 1), opacity 0.2s ease;
+  }
+  .dock-float.tucked > :global(*) {
+    transform: translateY(calc(100% + 40px));
+    opacity: 0;
+    pointer-events: none;
   }
 
   /* ── Full-page and side-by-side tabs ───────────────────────────
@@ -5099,8 +5089,8 @@
     bottom: 24px;
     pointer-events: auto;
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(55, 168, 219, 0.08), transparent 55%),
-      linear-gradient(180deg, #202328, #17191c);
+      radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.08), transparent 55%),
+      linear-gradient(180deg, #0e141d, #090d13);
   }
   .panels-layer > .page-ground.side {
     right: auto;
@@ -5164,14 +5154,14 @@
     left: 50%;
     width: 3px;
     transform: translateX(-50%);
-    background: rgba(20, 22, 26, 0.95);
-    box-shadow: 0 0 0 1px rgba(55, 168, 219, 0.25), 0 0 10px rgba(0, 0, 0, 0.6);
+    background: rgba(9, 13, 18, 0.95);
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25), 0 0 10px rgba(0, 0, 0, 0.6);
     transition: background-color 0.15s, box-shadow 0.15s;
   }
   .split-divider:hover .split-line,
   .split-divider.dragging .split-line {
-    background: #37a8db;
-    box-shadow: 0 0 12px rgba(55, 168, 219, 0.7);
+    background: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
   }
   .split-swap {
     position: relative;
@@ -5181,15 +5171,15 @@
     border-radius: 50%;
     padding: 7px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(30, 32, 36, 0.85);
+    background: rgba(13, 19, 26, 0.85);
     backdrop-filter: var(--glass-blur, blur(8px));
-    color: #e6e6e6;
+    color: #dce4f2;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
     transition: background-color 0.15s, transform 0.15s;
   }
   .split-swap:hover {
-    background: #37a8db;
+    background: #38bdf8;
     transform: scale(1.08);
   }
   .split-swap svg {

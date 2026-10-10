@@ -10,7 +10,7 @@ export interface LicenseGroup {
   items: { name: string; license: string }[];
 }
 
-/** Autopilot firmware Kite GC interoperates with (MSP / MAVLink). Shown as a linked "special mention"
+/** Autopilot firmware VAYU interoperates with (MSP / MAVLink). Shown as a linked "special mention"
  *  above the third-party block — acknowledgement, not a licence obligation (we bundle none of it). */
 export interface SupportedFirmware {
   name: string;

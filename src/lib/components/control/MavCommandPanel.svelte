@@ -315,7 +315,7 @@
   .cc-notice {
     padding: 18px 12px;
     text-align: center;
-    color: #949494;
+    color: #8493a8;
     font-size: 12.5px;
   }
 
@@ -327,7 +327,7 @@
     font-size: 20px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    color: #37a8db;
+    color: #38bdf8;
   }
 
   .cc-takeoff {
@@ -359,7 +359,7 @@
 
   .cc-guided-hint {
     font-size: 11px;
-    color: #37a8db;
+    color: #38bdf8;
     font-style: italic;
     text-align: center;
   }
@@ -374,7 +374,7 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #949494;
+    color: #8493a8;
   }
   .cc-modegrid {
     display: grid;
@@ -386,7 +386,7 @@
     align-items: center;
     gap: 6px;
     font-size: 11px;
-    color: #949494;
+    color: #8493a8;
     cursor: pointer;
   }
   .cc-warn { color: #d4a017; }
@@ -400,16 +400,16 @@
   .cc-setwp.disabled { opacity: 0.5; }
   .cc-setwp-hint {
     font-size: 10.5px;
-    color: #949494;
+    color: #8493a8;
     font-style: italic;
   }
   .cc-select {
     width: 100%;
     height: 30px;
     padding: 0 8px;
-    background: #2e2e2e;
-    color: #e0e0e0;
-    border: 1px solid #272727;
+    background: #121a24;
+    color: #e3eaf3;
+    border: 1px solid #1c2633;
     border-radius: 5px;
     font-size: 12.5px;
   }
@@ -423,6 +423,6 @@
   }
   .cc-feedback.ok .cc-fb-msg { color: #59aa29; }
   .cc-feedback.err .cc-fb-msg { color: #d40000; }
-  .cc-fb-action { font-weight: 700; color: #cfd2d1; }
+  .cc-fb-action { font-weight: 700; color: #c7cfdd; }
   .cc-fb-msg { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 </style>

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# Kite Ground Control — iPad / iOS Dev Run Script
+# VAYU — iPad / iOS Dev Run Script
 # One command to build the whole stack (web + Rust core + Xcode
 # wrapper) and launch it on a connected iPad with live reload.
 #
@@ -33,7 +33,7 @@ cd "$ROOT"
 
 echo ""
 echo "============================================"
-echo " Kite Ground Control — iPad Dev Run"
+echo " VAYU — iPad Dev Run"
 echo "============================================"
 echo ""
 

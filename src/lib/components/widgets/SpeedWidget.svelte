@@ -135,7 +135,7 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
-    background: rgba(30, 30, 30, 0.75);
+    background: rgba(12, 17, 24, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--ws) * 0.08);
@@ -159,25 +159,25 @@
   .w-label {
     font-size: calc(var(--ws) * 0.13);
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
   .w-value {
     font-size: calc(var(--ws) * 0.3);
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-variant-numeric: tabular-nums;
     line-height: 1.1;
     margin-top: calc(var(--ws) * 0.02);
   }
   .w-unit {
     font-size: calc(var(--ws) * 0.11);
-    color: #888;
+    color: #7a8aa0;
   }
   .w-secondary {
     font-size: calc(var(--ws) * 0.11);
-    color: #aaa;
+    color: #9eacbf;
   }
 
   /* ── Side bars (throttle / acceleration) ── */
@@ -191,7 +191,7 @@
   .vbar-label {
     font-size: calc(var(--ws) * 0.08);
     font-weight: 600;
-    color: #888;
+    color: #7a8aa0;
     letter-spacing: 0.02em;
   }
   .vbar-track {
@@ -209,7 +209,7 @@
   }
   .vbar-fill.thr {
     bottom: 0;
-    background: #37a8db;
+    background: #38bdf8;
     transition: height 0.2s ease;
   }
   /* 25/50/75 % reference ticks on the throttle bar — thicker and overhanging both sides for clarity. */

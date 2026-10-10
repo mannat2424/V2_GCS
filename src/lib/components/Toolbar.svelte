@@ -79,7 +79,7 @@
   // Nothing here shrinks on its own, so a narrow window used to push them out of the frame entirely
   // (worst with a connected UAV, where the sensor bar adds ~200 px). Instead of clipping at random,
   // the bar sheds content in a fixed order as it runs out of room:
-  //   1 = version   2 = wordmark → icon   3 = sensor bar   4 = connection controls onto a second row
+  //   1 = (spare)   2 = wordmark → icon   3 = sensor bar   4 = connection controls onto a second row
   // Level 4 only applies while disconnected — that's the only time those controls are wide.
   // Past level 4 the centre group simply clips (see `.toolbar-center`), which is the last-resort
   // guarantee: only the left and centre groups ever give way, so the window buttons stay put on both
@@ -212,14 +212,11 @@
   <div class="toolbar-left" data-tauri-drag-region>
     <img
       class="logo"
-      src={collapse >= 2 ? '/branding/kitegc-icon-white.svg' : '/branding/kitegc-wordmark-white.svg'}
+      src={collapse >= 2 ? '/branding/vayu-icon.svg' : '/branding/vayu-wordmark-white.svg'}
       alt={$t('app.brand')}
       draggable="false"
       data-tauri-drag-region
     />
-    {#if collapse < 1}
-      <span class="version" data-tauri-drag-region>v{appVersion}</span>
-    {/if}
     <!-- Phone collapsed state: slim connection-status strip shown in place of the full controls. -->
     <span class="tb-collapsed-status">
       <span class="tb-status-dot" class:connected={connStatus === 'connected'}></span>
@@ -333,8 +330,8 @@
     align-items: center;
     padding: 0 16px;
     height: 50px;
-    background: #2e2e2e;
-    border-bottom: 3px solid #37a8db;
+    background: #121a24;
+    border-bottom: 3px solid #38bdf8;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 200;
@@ -389,9 +386,9 @@
     right: 0;
     z-index: 1;
     padding: 7px 16px 8px 12px;
-    background: #2e2e2e;
-    border-bottom: 3px solid #37a8db;
-    border-left: 1px solid #272727;
+    background: #121a24;
+    border-bottom: 3px solid #38bdf8;
+    border-left: 1px solid #1c2633;
     border-bottom-left-radius: 6px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.35);
   }
@@ -444,9 +441,9 @@
       padding: 0;
       font-size: 16px;
       line-height: 1;
-      color: #e0e0e0;
-      background: #3a3a3a;
-      border: 1px solid #555;
+      color: #e3eaf3;
+      background: #1f2a38;
+      border: 1px solid #3a4a5f;
       border-radius: 6px;
       cursor: pointer;
       z-index: 1;
@@ -476,10 +473,10 @@
     gap: 6px;
     margin-left: 10px;
     font-size: 13px;
-    color: #cfcfcf;
+    color: #c9d3df;
   }
   .tb-collapsed-proto {
-    color: #37a8db;
+    color: #38bdf8;
     font-weight: 600;
   }
   .tb-collapsed-arm {
@@ -502,23 +499,18 @@
 
   .logo {
     display: block;
-    height: 36px;
+    height: 32px;
     width: auto;
     user-select: none;
-  }
-
-  .version {
-    font-size: 11px;
-    color: #949494;
   }
 
   .sensor-bar {
     display: flex;
     gap: 1px;
-    background: #434343;
+    background: #253244;
     border-radius: 5px;
-    border: 1px solid #272727;
-    box-shadow: 0 2px 0 rgba(92, 92, 92, 0.5);
+    border: 1px solid #1c2633;
+    box-shadow: 0 2px 0 rgba(63, 80, 103, 0.5);
     overflow: hidden;
   }
 
@@ -566,10 +558,10 @@
     padding: 6px 12px;
     font-size: 10px;
     font-weight: 600;
-    color: #4f4f4f;
+    color: #202d3f;
     text-shadow: 0 1px rgba(0, 0, 0, 1.0);
-    background: #434343 linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.45));
-    border-right: 1px solid #373737;
+    background: #253244 linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.45));
+    border-right: 1px solid #161f2c;
     text-align: center;
     min-width: 36px;
   }
@@ -604,10 +596,10 @@
     height: 28px;
     box-sizing: border-box;
     padding: 0 10px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #cfcfcf;
+    color: #c9d3df;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -615,13 +607,13 @@
     transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   }
   .relay-toggle:hover {
-    background: rgba(55, 168, 219, 0.18);
-    color: #e0e0e0;
+    background: rgba(56, 189, 248, 0.18);
+    color: #e3eaf3;
   }
   .relay-toggle.open {
-    background: rgba(55, 168, 219, 0.22);
-    border-color: #37a8db;
-    color: #37a8db;
+    background: rgba(56, 189, 248, 0.22);
+    border-color: #38bdf8;
+    color: #38bdf8;
   }
 
 </style>

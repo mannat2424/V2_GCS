@@ -27,7 +27,7 @@ pub const SCHEMA_VERSION: u32 = 1;
 /// `src/lib/helpers/arming.ts` — keep the two in step.
 const ARMED_BIT: u32 = 1 << 2;
 
-/// Which link Kite is on — the three input paths of the unified pipeline.
+/// Which link VAYU is on — the three input paths of the unified pipeline.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum Protocol {
@@ -79,7 +79,7 @@ pub struct Telemetry<'a> {
     pub ekf: Option<EkfOut>,
     pub misc: Option<MiscOut>,
     pub vehicle: Option<&'a Vehicle>,
-    /// Passive links only: the carrier protocol Kite locked onto (+ a tunneled one, e.g. MAVLink).
+    /// Passive links only: the carrier protocol VAYU locked onto (+ a tunneled one, e.g. MAVLink).
     pub passive_protocol: Option<&'a PassiveProtocol>,
     /// Epoch ms of the last FC telemetry event of any group.
     pub last_update: Option<u64>,

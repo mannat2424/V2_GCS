@@ -1,5 +1,5 @@
 # ============================================================
-# Kite Ground Control — Windows Build Script (PowerShell)
+# VAYU — Windows Build Script (PowerShell)
 # Builds a standalone Windows executable + NSIS installer.
 #
 # Recommended: use "just build-windows" (or "just build").
@@ -13,7 +13,7 @@
 
 Write-Host ''
 Write-Host '============================================' -ForegroundColor Cyan
-Write-Host ' Kite Ground Control - Windows Release Build' -ForegroundColor Cyan
+Write-Host ' VAYU - Windows Release Build' -ForegroundColor Cyan
 Write-Host '============================================' -ForegroundColor Cyan
 Write-Host ''
 

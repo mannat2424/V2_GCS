@@ -1,4 +1,4 @@
-# Copilot Instructions — Kite Ground Control (INAV GCS)
+# Copilot Instructions — VAYU (INAV GCS)
 
 These rules are loaded automatically for every Copilot session in this workspace.
 

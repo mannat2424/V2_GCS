@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-"""Rewrite a .glb so every index accessor is uint16 (Kite's 2D mesh loader reads Uint16Array).
+"""Rewrite a .glb so every index accessor is uint16 (VAYU's 2D mesh loader reads Uint16Array).
 Rebuilds the BIN chunk view by view. Usage: glb_u16.py <in.glb> <out.glb>"""
 import json, struct, sys
 import numpy as np

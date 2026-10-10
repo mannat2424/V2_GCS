@@ -251,12 +251,12 @@
     z-index: 1900;
     width: 290px;
     padding: 8px;
-    background: rgba(30, 30, 30, 0.82);
+    background: rgba(12, 17, 24, 0.82);
     backdrop-filter: var(--panel-blur, blur(10px));
-    border: 1px solid rgba(55, 168, 219, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-radius: 8px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
   }
   .bp-header {
@@ -264,7 +264,7 @@
     align-items: center;
     margin-bottom: 8px;
     padding-bottom: 6px;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #273446;
   }
   .batch-popup :global(.ns-input) {
     width: 70px;
@@ -273,7 +273,7 @@
   .bp-title {
     flex: 1;
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     font-size: 11px;
@@ -283,7 +283,7 @@
     height: 18px;
     border: none;
     background: transparent;
-    color: #aaa;
+    color: #9eacbf;
     cursor: pointer;
     border-radius: 3px;
   }
@@ -299,15 +299,15 @@
   }
   .bp-label {
     width: 46px;
-    color: #999;
+    color: #8796ab;
     flex-shrink: 0;
   }
   .bp-toggle {
     flex-shrink: 0;
     min-width: 46px;
-    background: #333;
-    color: #cfe8f5;
-    border: 1px solid rgba(55, 168, 219, 0.4);
+    background: #18212d;
+    color: #d4f0fd;
+    border: 1px solid rgba(56, 189, 248, 0.4);
     border-radius: 4px;
     padding: 4px 6px;
     font-size: 11px;
@@ -327,26 +327,26 @@
   .bp-action {
     margin-top: 4px;
     padding-top: 6px;
-    border-top: 1px dashed #444;
+    border-top: 1px dashed #273446;
   }
   .bp-actions {
     display: flex;
     justify-content: flex-end;
     margin-top: 8px;
     padding-top: 8px;
-    border-top: 1px solid #444;
+    border-top: 1px solid #273446;
   }
   .bp-apply {
-    background: rgba(55, 168, 219, 0.18);
-    color: #cfe8f5;
-    border: 1px solid rgba(55, 168, 219, 0.5);
+    background: rgba(56, 189, 248, 0.18);
+    color: #d4f0fd;
+    border: 1px solid rgba(56, 189, 248, 0.5);
     border-radius: 5px;
     padding: 5px 14px;
     font-weight: 600;
     cursor: pointer;
   }
   .bp-apply:hover {
-    background: rgba(55, 168, 219, 0.3);
+    background: rgba(56, 189, 248, 0.3);
   }
   .bp-apply:disabled {
     opacity: 0.5;

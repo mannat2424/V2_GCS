@@ -298,7 +298,7 @@ fn build_gpx(flight: &Flight, track: &[&TelemetryRecord]) -> String {
 
     format!(
         r#"<?xml version="1.0" encoding="UTF-8"?>
-<gpx version="1.1" creator="KiteGC"
+<gpx version="1.1" creator="VAYU"
      xmlns="http://www.topografix.com/GPX/1/1">
   <metadata>
     <name>{name}</name>

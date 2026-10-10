@@ -486,13 +486,13 @@ export function parseWaypoints(text: string): ArduWaypoint[] {
 //  * ComplexItems (Survey, Corridor Scan, …) are QGC-computed patterns that only QGC can
 //    expand into waypoints → refuse the whole file with a readable error rather than
 //    silently dropping flight path.
-//  * geoFence / rallyPoints sections are ignored — Kite handles fence and rally as
+//  * geoFence / rallyPoints sections are ignored — VAYU handles fence and rally as
 //    separate subsystems; a .plan EXPORT that bundles them is a planned 1.1 feature.
 //  * plannedHomePosition is ignored — like the MAVLink path, the working mission holds
 //    only real waypoints (ArduPilot's home slot 0 is synthesized on upload, PX4 has no
 //    home slot at all; see `reserve_home` in mavlink_proto/mission.rs).
 //  * null params (QGC's "no preference", typically yaw) become 0 — the same value
-//    Kite-authored missions carry in those fields. NaN cannot cross the Tauri IPC
+//    VAYU-authored missions carry in those fields. NaN cannot cross the Tauri IPC
 //    boundary (JSON has no NaN; the Rust side deserializes plain f32).
 
 /** Which system a .plan targets: `mission.firmwareType` 12 (MAV_AUTOPILOT_PX4) → px4, everything

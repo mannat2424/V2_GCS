@@ -13,11 +13,11 @@
 //!                  undefined symbol: vaMapBuffer2
 //! ```
 //!
-//! To Kite that looks exactly like "ffmpeg is not installed" — and since the MJPEG fallback is the
+//! To VAYU that looks exactly like "ffmpeg is not installed" — and since the MJPEG fallback is the
 //! only RTSP path on a WebView without WebRTC, video stops working entirely. It also detonates at a
 //! distance: every helper we spawn inherits the same broken environment.
 //! The trigger is a host library update (the symbol above appeared when newer `libva` arrived), so
-//! an AppImage that worked yesterday can break without anything in Kite changing.
+//! an AppImage that worked yesterday can break without anything in VAYU changing.
 //!
 //! Our helpers (`ffmpeg`, `mediamtx`, `blackbox_decode`) and the system tools we call (`tar`, `ps`)
 //! are all self-contained or system-linked: none of them wants the AppImage's libraries. Stripping

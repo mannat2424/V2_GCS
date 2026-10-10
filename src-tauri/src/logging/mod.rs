@@ -35,7 +35,7 @@ struct FileLogger {
 }
 
 /// Third-party crates whose Debug/Info output would bury ours. `reqwest`/`hyper` emit a line per HTTP
-/// connection, and Kite polls ADS-B, tiles and the video API continuously — a Debug-level log was
+/// connection, and VAYU polls ADS-B, tiles and the video API continuously — a Debug-level log was
 /// ~90 % "starting new connection" noise, which is precisely the level a tester is asked to switch to.
 /// They stay fully visible from **Warn** upwards, so a real failure is never hidden.
 const NOISY_TARGETS: &[&str] = &[
@@ -221,7 +221,7 @@ fn write_session_header(level: LevelFilter, portable: bool) {
     write_raw(&format!("\n{sep}"));
     write_raw(&format!("Session start: {now}"));
     write_raw(&format!(
-        "Kite Ground Control v{} (build {}, {}) \u{b7} {}/{} \u{b7} portable={}",
+        "VAYU v{} (build {}, {}) \u{b7} {}/{} \u{b7} portable={}",
         env!("KITE_APP_VERSION"),
         env!("KITE_GIT_HASH"),
         if cfg!(debug_assertions) { "debug" } else { "release" },

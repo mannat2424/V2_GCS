@@ -936,35 +936,35 @@
   .bmv2-detail-actions { display: flex; flex: 1; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
 
   .setting-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
-  .setting-label { font-size: 12px; color: #e0e0e0; }
+  .setting-label { font-size: 12px; color: #e3eaf3; }
   /* Form controls match the md button height (28px) so toolbars align cleanly (no vertical jog). */
-  .setting-select { height: 28px; padding: 0 8px; background: #434343; border: 1px solid #555; border-radius: 4px; color: #e0e0e0; font-size: 12px; }
-  .setting-input { height: 28px; padding: 0 8px; background: #434343; border: 1px solid #555; border-radius: 4px; color: #e0e0e0; font-size: 12px; }
+  .setting-select { height: 28px; padding: 0 8px; background: #253244; border: 1px solid #3a4a5f; border-radius: 4px; color: #e3eaf3; font-size: 12px; }
+  .setting-input { height: 28px; padding: 0 8px; background: #253244; border: 1px solid #3a4a5f; border-radius: 4px; color: #e3eaf3; font-size: 12px; }
   .bmv2-search { flex: 1; min-width: 0; }
-  .bmv2-search-clear { background: none; border: none; color: #777; cursor: pointer; font-size: 13px; padding: 2px 4px; line-height: 1; flex-shrink: 0; }
-  .bmv2-search-clear:hover { color: #e0e0e0; }
+  .bmv2-search-clear { background: none; border: none; color: #68788e; cursor: pointer; font-size: 13px; padding: 2px 4px; line-height: 1; flex-shrink: 0; }
+  .bmv2-search-clear:hover { color: #e3eaf3; }
 
-  .section-heading { margin: 8px 0 6px 0; font-size: 11px; font-weight: 600; color: #37a8db; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section-heading { margin: 8px 0 6px 0; font-size: 11px; font-weight: 600; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  .panel-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 40px 0; color: #555; font-size: 12px; }
+  .panel-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 40px 0; color: #3a4a5f; font-size: 12px; }
   .panel-empty-icon { font-size: 28px; opacity: 0.4; }
 
   .tree-node { margin-bottom: 4px; }
-  .tree-toggle { width: 100%; text-align: left; border: 1px solid #555; border-radius: 4px; background: #353535; color: #ddd; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 5px 7px; font-size: 12px; font-weight: 600; }
-  .tree-toggle:hover { border-color: #37a8db; }
-  .tree-toggle-sub { background: #303030; font-weight: 500; }
-  .tree-special > .tree-toggle { background: #2a2a2a; color: #b0b0b0; border-style: dashed; }
-  .tree-caret { color: #9cc6d9; font-size: 11px; line-height: 1; }
+  .tree-toggle { width: 100%; text-align: left; border: 1px solid #3a4a5f; border-radius: 4px; background: #151e2a; color: #d6dee9; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 5px 7px; font-size: 12px; font-weight: 600; }
+  .tree-toggle:hover { border-color: #38bdf8; }
+  .tree-toggle-sub { background: #131b26; font-weight: 500; }
+  .tree-special > .tree-toggle { background: #111822; color: #a6aebc; border-style: dashed; }
+  .tree-caret { color: #9adcf9; font-size: 11px; line-height: 1; }
   .tree-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tree-count { font-size: 10px; color: #8fb4c5; background: rgba(55, 168, 219, 0.12); border: 1px solid rgba(55, 168, 219, 0.32); border-radius: 999px; padding: 1px 6px; }
+  .tree-count { font-size: 10px; color: #8ccbe8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 999px; padding: 1px 6px; }
   .tree-items { margin-top: 4px; margin-left: 12px; }
 
-  .lib-item { width: calc(100% - 4px); text-align: left; border: 1px solid #555; border-radius: 4px; background: #383838; color: #ddd; margin-bottom: 4px; padding: 6px; cursor: pointer; }
-  .lib-item:hover { border-color: #37a8db; }
-  .lib-item.selected { border-color: #37a8db; background: rgba(55, 168, 219, 0.18); }
+  .lib-item { width: calc(100% - 4px); text-align: left; border: 1px solid #3a4a5f; border-radius: 4px; background: #16202d; color: #d6dee9; margin-bottom: 4px; padding: 6px; cursor: pointer; }
+  .lib-item:hover { border-color: #38bdf8; }
+  .lib-item.selected { border-color: #38bdf8; background: rgba(56, 189, 248, 0.18); }
   .lib-item-title { font-size: 12px; color: #fff; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lib-item-label { margin-left: 10px; color: #fff; font-weight: 600; }
-  .lib-item-meta { margin-top: 2px; display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 10px; color: #aaa; align-items: center; }
+  .lib-item-meta { margin-top: 2px; display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 10px; color: #9eacbf; align-items: center; }
   .bat-chem { text-transform: uppercase; }
   .bat-badge { font-size: 9px; color: #e0b050; border: 1px solid rgba(224, 176, 80, 0.4); border-radius: 999px; padding: 0 5px; text-transform: uppercase; }
 
@@ -975,8 +975,8 @@
   /* Read-only notes field: full width, height grows with content, subtly highlighted. Hidden
      when empty (unlike the flight log, where notes are edited more often and always shown). */
   .bmv2-notes-field {
-    width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 12px; color: #d8d8d8;
-    background: rgba(55, 168, 219, 0.06); border: 1px solid rgba(55, 168, 219, 0.25);
+    width: 100%; box-sizing: border-box; padding: 8px 10px; font-size: 12px; color: #ced6e4;
+    background: rgba(56, 189, 248, 0.06); border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 4px; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.45;
   }
 
@@ -984,30 +984,30 @@
   .bmv2-pack-actions { display: flex; justify-content: space-between; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
 
   .fc-info-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 10px; font-size: 12px; }
-  .fc-label { color: #949494; }
-  .fc-value { color: #e0e0e0; font-weight: 600; overflow-wrap: anywhere; }
+  .fc-label { color: #8493a8; }
+  .fc-value { color: #e3eaf3; font-weight: 600; overflow-wrap: anywhere; }
 
-  .det-flights { border-top: 1px solid #333; padding-top: 8px; }
-  .flight-row { width: 100%; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: #e0e0e0; padding: 4px 6px; background: none; border: none; border-radius: 4px; cursor: pointer; text-align: left; }
-  .flight-row:hover { background: rgba(55, 168, 219, 0.15); }
+  .det-flights { border-top: 1px solid #18212d; padding-top: 8px; }
+  .flight-row { width: 100%; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: #e3eaf3; padding: 4px 6px; background: none; border: none; border-radius: 4px; cursor: pointer; text-align: left; }
+  .flight-row:hover { background: rgba(56, 189, 248, 0.15); }
   .flight-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .flight-meta { color: #888; flex-shrink: 0; }
-  .flight-none { color: #777; font-size: 12px; padding: 4px 0; }
+  .flight-meta { color: #7a8aa0; flex-shrink: 0; }
+  .flight-none { color: #68788e; font-size: 12px; padding: 4px 0; }
 
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; }
   .fld { display: block; }
-  .fld-label { display: block; font-size: 11px; font-weight: 600; color: #949494; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
-  .fld-input { box-sizing: border-box; width: 100%; padding: 5px 7px; font-size: 12px; color: #e0e0e0; background: #1f1f1f; border: 1px solid #444; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; }
-  .fld-input:focus { outline: none; border-color: #37a8db; }
+  .fld-label { display: block; font-size: 11px; font-weight: 600; color: #8493a8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+  .fld-input { box-sizing: border-box; width: 100%; padding: 5px 7px; font-size: 12px; color: #e3eaf3; background: #0d131b; border: 1px solid #273446; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  .fld-input:focus { outline: none; border-color: #38bdf8; }
   .fld-input:disabled { opacity: 0.6; }
   .fld-area { resize: vertical; }
   .form-actions { display: flex; gap: 6px; margin-top: 8px; }
 
-  .usage-box { border: 1px solid #444; border-radius: 4px; padding: 8px; background: rgba(55, 168, 219, 0.06); }
-  .usage-hint { font-size: 11px; color: #949494; margin-bottom: 6px; }
+  .usage-box { border: 1px solid #273446; border-radius: 4px; padding: 8px; background: rgba(56, 189, 248, 0.06); }
+  .usage-hint { font-size: 11px; color: #8493a8; margin-bottom: 6px; }
 
   .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-  .modal-card { box-sizing: border-box; background: #2e2e2e; border: 1px solid rgba(55, 168, 219, 0.35); border-radius: 8px; padding: 14px; width: min(540px, 92vw); max-height: 88vh; overflow-y: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); }
+  .modal-card { box-sizing: border-box; background: #121a24; border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 8px; padding: 14px; width: min(540px, 92vw); max-height: 88vh; overflow-y: auto; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5); }
 
   .bat-status { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 1001; padding: 6px 12px; font-size: 11px; color: #f39c12; background: rgba(0, 0, 0, 0.8); border-radius: 6px; }
   /* Phone: centre on the map area — a screen-centred pill runs under the widget column. */

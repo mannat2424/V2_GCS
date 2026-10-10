@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <!-- No storage permission on purpose. The custom database / raw-log folders (Settings → Flight
-         Logbook) use a SAF tree grant: the user picks ONE folder in the system picker and Kite holds
+         Logbook) use a SAF tree grant: the user picks ONE folder in the system picker and VAYU holds
          a persistable grant on exactly that folder — the scoped-storage model. The app itself keeps
          writing app-private (SQLite and the raw writers need real POSIX paths, which SAF does not
          provide); a session-end mirror copies the artefacts into the granted folder, which is what
@@ -38,7 +38,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <!-- USB serial needs no <uses-permission>: access is granted per device at runtime, either by the
-         system dialog UsbSerial.open() raises or by the user picking Kite from the attach dialog that
+         system dialog UsbSerial.open() raises or by the user picking VAYU from the attach dialog that
          the intent filter below produces.
 
          BLE-serial (BleSerial.kt + transport/ble_android.rs) requests these at runtime on first
@@ -53,7 +53,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
 
-    <!-- Hardware is optional across the board: Kite runs fine as a network-only GCS on a device with
+    <!-- Hardware is optional across the board: VAYU runs fine as a network-only GCS on a device with
          no USB host port, no Bluetooth radio and no camera, so none of these may gate installation. -->
     <uses-feature android:name="android.hardware.usb.host" android:required="false" />
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
@@ -67,7 +67,7 @@
     <uses-feature android:name="android.software.leanback" android:required="false" />
 
     <!-- networkSecurityConfig replaces the usesCleartextTraffic switch (which Android ignores once
-         a config is present): release allows cleartext ONLY to loopback (the Kite RTSP client's
+         a config is present): release allows cleartext ONLY to loopback (the VAYU RTSP client's
          in-process MJPEG server), debug stays fully open for the dev server (res/xml override). -->
     <application
         android:icon="@mipmap/ic_launcher"
@@ -89,7 +89,7 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
 
-            <!-- Offer Kite when a USB-serial device is plugged in. Choosing it here grants the USB
+            <!-- Offer VAYU when a USB-serial device is plugged in. Choosing it here grants the USB
                  permission for that device, so the in-app prompt never appears. `device_filter.xml`
                  lists exactly what UsbSerial.kt can actually drive. -->
             <intent-filter>

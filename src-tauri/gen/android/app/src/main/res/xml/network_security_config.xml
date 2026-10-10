@@ -3,7 +3,7 @@
      this file is the single cleartext policy for release builds (debug has its own override under
      src/debug/res/xml/, kept permissive for the `tauri android dev` server on the LAN).
 
-     Loopback cleartext must stay allowed: the Kite RTSP client's MJPEG route streams
+     Loopback cleartext must stay allowed: the VAYU RTSP client's MJPEG route streams
      multipart-JPEG from an in-process server at http://127.0.0.1:<port> into the WebView
      (video/rtsp_native.rs) — same-device traffic that never leaves the phone/tablet.
      Everything else stays cleartext-blocked, as before. -->

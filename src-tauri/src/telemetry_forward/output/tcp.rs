@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-//! TCP server output sink — Kite hosts a TCP server; other GCS / monitoring apps connect *to* it and
+//! TCP server output sink — VAYU hosts a TCP server; other GCS / monitoring apps connect *to* it and
 //! receive the encoded telemetry stream. Frames are broadcast to all connected clients; dead clients are
 //! dropped on the next write.
 //!

@@ -1,6 +1,6 @@
-# Kite GC — development docs
+# VAYU — development docs
 
-Open, working development docs for **Kite Ground Control**, kept in the repository so plans, references
+Open, working development docs for **VAYU**, kept in the repository so plans, references
 and conventions are visible to contributors. The polished, published developer guide lives on the
 documentation site under **For developers** (`docs/user/for-developers/`); this folder is the **living
 working area** (browse it on GitHub).

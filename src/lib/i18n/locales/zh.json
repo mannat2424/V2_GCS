@@ -1,6 +1,6 @@
 {
   "app": {
-    "brand": "KiteGC",
+    "brand": "VAYU",
     "version": "v{version}"
   },
   "window": {
@@ -395,7 +395,7 @@
   },
   "update": {
     "title": "有可用更新",
-    "body": "Kite Ground Control 有新版本可用。",
+    "body": "VAYU 有新版本可用。",
     "latest": "最新版本：",
     "current": "当前版本：",
     "prerelease": "预发布",
@@ -409,7 +409,7 @@
     "downloading": "正在下载… {pct}%",
     "installing": "正在安装…",
     "failed": "更新失败：{error}",
-    "portableNote": "便携版：可执行文件将被就地替换，然后 Kite 重新启动。"
+    "portableNote": "便携版：可执行文件将被就地替换，然后 VAYU 重新启动。"
   },
   "airspace": {
     "title": "空域管理器",
@@ -610,8 +610,8 @@
     "alertCpaLookAhead": "CPA 前瞻时间",
     "ffModule": "ESP32 模块（串口）",
     "ffNodeName": "节点名称",
-    "ffNodeNamePlaceholder": "KITE-GCS",
-    "ffHint": "Kite在你的GCS位置模拟一个INAV飞控，以便模块共享并中继对等节点。",
+    "ffNodeNamePlaceholder": "VAYU-GCS",
+    "ffHint": "VAYU在你的GCS位置模拟一个INAV飞控，以便模块共享并中继对等节点。",
     "linkQuality": "链路质量 (0–4)",
     "acType": {
       "light": "轻型飞机",
@@ -658,7 +658,7 @@
     "auto": "自动",
     "rtspUrl": "RTSP URL",
     "nativeClient": "原生 RTSP 客户端（实验性）",
-    "nativeClientHint": "Kite 自带的 RTSP 客户端——无需 MediaMTX 和 ffmpeg。支持 MJPEG、H.264 和 HEVC 源（Windows、Android 和 Linux 上硬件解码 H.264/HEVC）；优先 UDP 连接，自动回退 TCP。",
+    "nativeClientHint": "VAYU 自带的 RTSP 客户端——无需 MediaMTX 和 ffmpeg。支持 MJPEG、H.264 和 HEVC 源（Windows、Android 和 Linux 上硬件解码 H.264/HEVC）；优先 UDP 连接，自动回退 TCP。",
     "dockShow": "显示视频",
     "dockHide": "隐藏视频",
     "dockMapShow": "显示地图",
@@ -931,9 +931,9 @@
   "logbook": {
     "title": "飞行日志",
     "disabled": "飞行日志已禁用。在设置中启用并重新连接。",
-    "dbNewer": "此飞行数据库来自更新版本的 Kite。在安装匹配或更新的 Kite 版本之前，飞行日志保持禁用——数据库不会被修改。",
+    "dbNewer": "此飞行数据库来自更新版本的 VAYU。在安装匹配或更新的 VAYU 版本之前，飞行日志保持禁用——数据库不会被修改。",
     "dbNewerTitle": "数据库来自更新版本",
-    "dbNewerPopup": "此飞行数据库由更新版本的 Kite 创建，无法在当前版本中使用。数据库不会被修改。\n\n请恢复旧数据库的备份（或将数据库路径指向兼容的副本），否则飞行日志不可用。也可以重新安装更新版本的 Kite。",
+    "dbNewerPopup": "此飞行数据库由更新版本的 VAYU 创建，无法在当前版本中使用。数据库不会被修改。\n\n请恢复旧数据库的备份（或将数据库路径指向兼容的副本），否则飞行日志不可用。也可以重新安装更新版本的 VAYU。",
     "sortMode": "排序模式",
     "sortAircraftLocationDate": "飞行器 -> 位置 -> 日期",
     "sortLocationDateAircraft": "位置 -> 日期 -> 飞行器",
@@ -1060,7 +1060,7 @@
     "decoderMissingMsg": "INAV黑盒子日志需要外部工具 'blackbox_decode'，但未安装。是否从官方iNavFlight发布版自动下载？",
     "decoderDownload": "下载",
     "decoderDownloadFailed": "无法下载 blackbox_decode：{error}",
-    "kflightFileFilter": "KiteGC 飞行文件",
+    "kflightFileFilter": "VAYU 飞行文件",
     "exportTitle": "导出完成",
     "exportSuccess": "{count} 次飞行导出成功。",
     "importKflightTitle": "导入完成",
@@ -1821,7 +1821,7 @@
     "vidNatPresented": "已呈现",
     "vidNatCodec": "编码",
     "vidNatDroppedHidden": "丢弃（屏幕外）",
-    "vidNatHint": "Kite 自带的 RTSP 客户端。「输入帧」统计解包器交付的数量（H.264/HEVC 访问单元可能拆分到达——「已呈现」才是真实画面帧率）；「丢弃」统计丢包后整帧丢弃的数量。RTP 接收/丢失/重排序/迟到直接来自接收循环。在硬件解码路径上，「已呈现」是 D3D 层实际显示到屏幕的帧数。",
+    "vidNatHint": "VAYU 自带的 RTSP 客户端。「输入帧」统计解包器交付的数量（H.264/HEVC 访问单元可能拆分到达——「已呈现」才是真实画面帧率）；「丢弃」统计丢包后整帧丢弃的数量。RTP 接收/丢失/重排序/迟到直接来自接收循环。在硬件解码路径上，「已呈现」是 D3D 层实际显示到屏幕的帧数。",
     "perf": {
       "fps": "FPS",
       "fpsOverlay": "Cesium FPS叠加",

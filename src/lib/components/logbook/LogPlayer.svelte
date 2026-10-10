@@ -445,10 +445,10 @@
     max-width: calc(100vw - 40px);
     box-sizing: border-box;
     z-index: 50;
-    background: rgba(46, 46, 46, 0.92);
+    background: rgba(18, 26, 36, 0.92);
     backdrop-filter: var(--panel-blur, blur(10px));
     -webkit-backdrop-filter: var(--panel-blur, blur(10px));
-    border: 1px solid rgba(55, 168, 219, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     padding: 8px 14px 6px;
@@ -517,15 +517,15 @@
     align-items: center;
     gap: 14px;
     padding: 7px 18px 8px;
-    background: rgba(46, 46, 46, 0.92);
+    background: rgba(18, 26, 36, 0.92);
     backdrop-filter: var(--panel-blur, blur(10px));
     -webkit-backdrop-filter: var(--panel-blur, blur(10px));
-    border: 1px solid rgba(55, 168, 219, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-top: none;
     border-radius: 0 0 8px 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     font-size: 16px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     user-select: none;
     pointer-events: none;
     transform: translate(-50%, -110%);
@@ -546,25 +546,25 @@
   }
   .lpc-type {
     font-weight: 400;
-    color: #949494;
+    color: #8493a8;
   }
   .lpc-time {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 15px;
-    color: #949494;
+    color: #8493a8;
     font-variant-numeric: tabular-nums;
     flex-shrink: 0;
   }
   .lpc-bar {
     flex: 1;
     height: 8px;
-    background: #434343;
+    background: #253244;
     border-radius: 3px;
     overflow: hidden;
   }
   .lpc-fill {
     height: 100%;
-    background: #37a8db;
+    background: #38bdf8;
     border-radius: 3px;
   }
 
@@ -588,9 +588,9 @@
   }
 
   .log-player-source-btn {
-    background: #434343;
-    border: 1px solid #555;
-    color: #949494;
+    background: #253244;
+    border: 1px solid #3a4a5f;
+    color: #8493a8;
     font-size: 10px;
     font-weight: 600;
     padding: 2px 6px;
@@ -600,7 +600,7 @@
   }
 
   .log-player-source-btn.active {
-    background: #37a8db;
+    background: #38bdf8;
     color: #fff;
     border-color: #339cc1;
   }
@@ -619,7 +619,7 @@
     text-align: center;
     font-size: 13px;
     font-weight: 600;
-    color: #e0e0e0;
+    color: #e3eaf3;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -627,7 +627,7 @@
 
   .log-player-firmware {
     font-weight: 400;
-    color: #949494;
+    color: #8493a8;
     font-size: 12px;
   }
 
@@ -635,7 +635,7 @@
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 13px;
     font-weight: 600;
-    color: #37a8db;
+    color: #38bdf8;
     flex-shrink: 0;
     letter-spacing: 0.02em;
     font-variant-numeric: tabular-nums;
@@ -644,7 +644,7 @@
   .log-player-close {
     background: none;
     border: none;
-    color: #949494;
+    color: #8493a8;
     font-size: 16px;
     cursor: pointer;
     padding: 0 4px;
@@ -670,7 +670,7 @@
   .log-player-time {
     font-family: 'JetBrains Mono', 'Fira Code', monospace;
     font-size: 12px;
-    color: #949494;
+    color: #8493a8;
     font-variant-numeric: tabular-nums;
   }
 
@@ -685,9 +685,9 @@
   .log-player-btn {
     flex: 1 1 0;
     min-width: 0;
-    background: #434343;
-    border: 1px solid #555;
-    color: #e0e0e0;
+    background: #253244;
+    border: 1px solid #3a4a5f;
+    color: #e3eaf3;
     font-size: 12px;
     padding: 7px 2px;
     border-radius: 4px;
@@ -697,15 +697,15 @@
   }
 
   .log-player-btn:hover {
-    background: rgba(55, 168, 219, 0.15);
-    border-color: #37a8db;
+    background: rgba(56, 189, 248, 0.15);
+    border-color: #38bdf8;
   }
 
   .log-player-btn.play-btn {
     font-size: 14px;
     padding: 6px 2px;
     flex-grow: 1.4; /* the one button you aim for most */
-    background: #37a8db;
+    background: #38bdf8;
     color: #fff;
     border-color: #339cc1;
   }
@@ -718,7 +718,7 @@
     font-weight: 700;
     min-width: 32px;
     text-align: center;
-    color: #37a8db;
+    color: #38bdf8;
   }
 
   .log-player-scrubber {
@@ -730,7 +730,7 @@
     height: 6px;
     -webkit-appearance: none;
     appearance: none;
-    background: #434343;
+    background: #253244;
     border-radius: 3px;
     outline: none;
     cursor: pointer;
@@ -742,8 +742,8 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #37a8db;
-    border: 2px solid #e0e0e0;
+    background: #38bdf8;
+    border: 2px solid #e3eaf3;
     cursor: pointer;
   }
 
@@ -751,8 +751,8 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #37a8db;
-    border: 2px solid #e0e0e0;
+    background: #38bdf8;
+    border: 2px solid #e3eaf3;
     cursor: pointer;
   }
 
@@ -765,9 +765,9 @@
   }
 
   .track-color-select select {
-    background: #434343;
-    border: 1px solid #555;
-    color: #e0e0e0;
+    background: #253244;
+    border: 1px solid #3a4a5f;
+    color: #e3eaf3;
     font-size: 11px;
     padding: 2px 6px;
     border-radius: 3px;
@@ -776,7 +776,7 @@
   }
 
   .track-color-select select:hover {
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
 
   .model-select {
@@ -784,9 +784,9 @@
   }
 
   .model-select select {
-    background: #434343;
-    border: 1px solid #555;
-    color: #e0e0e0;
+    background: #253244;
+    border: 1px solid #3a4a5f;
+    color: #e3eaf3;
     font-size: 11px;
     padding: 2px 6px;
     border-radius: 3px;
@@ -796,7 +796,7 @@
   }
 
   .model-select select:hover {
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
 
   .track-legend {
@@ -805,7 +805,7 @@
     gap: 8px;
     flex-wrap: wrap;
     font-size: 11px;
-    color: #c0c0c0;
+    color: #b6c2d1;
   }
 
   .legend-item {
@@ -845,6 +845,6 @@
 
   .gradient-label {
     font-size: 10px;
-    color: #949494;
+    color: #8493a8;
   }
 </style>

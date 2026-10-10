@@ -223,7 +223,7 @@
   // On the image path this used to read "MJPEG" for every source, because MJPEG is what reaches the
   // screen — true, and not what the user is asking. The transcode verdict answers the real question:
   // the backend only gets `copy` when the mpjpeg muxer accepted the source's own packets, which no
-  // codec but MJPEG survives. Anything else was decoded and re-encoded, and the only other codec Kite
+  // codec but MJPEG survives. Anything else was decoded and re-encoded, and the only other codec VAYU
   // supports over RTSP is H.264.
   //
   // Both ends are named on the transcode path, because the bitrate next to it is the MJPEG one and
@@ -261,7 +261,7 @@
     if (s.status !== 'live') return null;
     if (s.nativeSink) {
       // The whole chain is hardware: RTP → depacketizer → MF decoder (DXVA) → D3D layer.
-      return { method: 'Kite RTSP client → native decode', transcode: null, transcodeHw: true, surfaceHw: true };
+      return { method: 'VAYU RTSP client → native decode', transcode: null, transcodeHw: true, surfaceHw: true };
     }
     if (s.mjpegUrl) {
       const mode = s.activeTranscode;
@@ -269,10 +269,10 @@
       const via = engine ?? (mode === 'copy' ? $t('video.pipeline.copy') : undefined);
       return {
         // Always ffmpeg: the image path reads the source itself and broadcasts `-f mpjpeg` through
-        // Kite's own server. It used to run through go2rtc, whose republish was measured as the
+        // VAYU's own server. It used to run through go2rtc, whose republish was measured as the
         // cause of the freezes, and naming go2rtc here now would point at the wrong component.
         method: s.rtspEngine === 'kite'
-          ? 'Kite RTSP client → MJPEG'
+          ? 'VAYU RTSP client → MJPEG'
           : `ffmpeg → MJPEG${via ? ` (${via})` : ''}`,
         transcode: mode,
         // A stream copy is better than hardware — there is nothing to accelerate — so it counts as
@@ -526,7 +526,7 @@
         </div>
       </div>
 
-      <!-- Experimental: Kite's own in-process RTSP client (MOBILE_RTSP.md) — no MediaMTX, no
+      <!-- Experimental: VAYU's own in-process RTSP client (MOBILE_RTSP.md) — no MediaMTX, no
            ffmpeg. MJPEG on the multipart path; H.264/HEVC decode in hardware (Windows).
            On Android it is the ONLY route (no sidecars on mobile) — forced on in the store,
            nothing to toggle. -->
@@ -593,8 +593,8 @@
       </div>
 
       {#if isIOS}
-        <!-- RTSP is a placeholder on iOS only: the engine cannot run there, and the Kite-client
-             route arrives with MOBILE_RTSP P3. Android runs the Kite client (forced above). -->
+        <!-- RTSP is a placeholder on iOS only: the engine cannot run there, and the VAYU-client
+             route arrives with MOBILE_RTSP P3. Android runs the VAYU client (forced above). -->
         <div class="ffmpeg-box">
           <p class="hint">{$t('video.rtspMobilePlaceholder')}</p>
         </div>
@@ -712,17 +712,17 @@
     gap: 8px;
     font-size: 14px;
     font-weight: 600;
-    color: #cfcfcf;
+    color: #c9d3df;
   }
   .state-dot {
     flex: 0 0 auto;
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #949494;
+    background: #8493a8;
   }
   .vp-status.live .state-dot { background: #59aa29; box-shadow: 0 0 6px rgba(89, 170, 41, 0.7); }
-  .vp-status.live .vp-state { color: #e0e0e0; }
+  .vp-status.live .vp-state { color: #e3eaf3; }
   .vp-status.starting .state-dot { background: #e0a53c; }
   .vp-status.error .state-dot { background: #d40000; }
   .vp-status.error .vp-state { color: #ff6b6b; font-weight: 500; }
@@ -755,7 +755,7 @@
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #949494;
+    color: #8493a8;
   }
   /* Diagnostic pipeline readout: dot + method + a HW/SW badge. Green = hardware-composited <video>
      (getUserMedia / engine-WebRTC); amber = the software ffmpeg→MJPEG <img> fallback. */
@@ -785,28 +785,28 @@
 
   .field { display: flex; flex-direction: column; gap: 4px; }
   .field-row { display: flex; align-items: center; gap: 8px; }
-  .label { font-size: 12px; color: #aaa; }
-  .label.muted { color: #666; }
+  .label { font-size: 12px; color: #9eacbf; }
+  .label.muted { color: #4b5b71; }
   /* Match the framework form-control height (md button = 28px). */
   .field select {
     height: 28px;
     padding: 0 8px;
-    background: #434343;
-    color: #e0e0e0;
-    border: 1px solid #555;
+    background: #253244;
+    color: #e3eaf3;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
     font-size: 12px;
   }
   .field .text-input {
     height: 28px;
     padding: 0 8px;
-    background: #434343;
-    color: #e0e0e0;
-    border: 1px solid #555;
+    background: #253244;
+    color: #e3eaf3;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
     font-size: 12px;
   }
-  .hint { font-size: 11px; color: #777; margin: 0; }
+  .hint { font-size: 11px; color: #68788e; margin: 0; }
   .hint.err { color: #d40000; }
 
   /* RTSP direct-connect row + saved-connection list */
@@ -815,9 +815,9 @@
   .rtsp-transport {
     height: 28px;
     padding: 0 6px;
-    background: #434343;
-    color: #e0e0e0;
-    border: 1px solid #555;
+    background: #253244;
+    color: #e3eaf3;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
     font-size: 12px;
     flex: 0 0 auto;
@@ -826,7 +826,7 @@
     height: 28px;
     min-width: 30px;
     padding: 0 6px;
-    background: #37a8db;
+    background: #38bdf8;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -840,12 +840,12 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    background: #2e2e2e;
-    border: 1px solid #272727;
+    background: #121a24;
+    border: 1px solid #1c2633;
     border-radius: 4px;
     padding: 3px 4px 3px 6px;
   }
-  .rtsp-item.active { border-color: rgba(55, 168, 219, 0.75); }
+  .rtsp-item.active { border-color: rgba(56, 189, 248, 0.75); }
   .rtsp-item-main {
     flex: 1;
     min-width: 0;
@@ -855,36 +855,36 @@
     gap: 8px;
     background: none;
     border: none;
-    color: #e0e0e0;
+    color: #e3eaf3;
     cursor: pointer;
     text-align: left;
     padding: 3px 2px;
     font-size: 12px;
   }
-  .rtsp-item-main:hover .rtsp-item-name { color: #37a8db; }
+  .rtsp-item-main:hover .rtsp-item-name { color: #38bdf8; }
   .rtsp-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .rtsp-item-transport { flex: 0 0 auto; font-size: 10px; color: #949494; letter-spacing: 0.04em; }
+  .rtsp-item-transport { flex: 0 0 auto; font-size: 10px; color: #8493a8; letter-spacing: 0.04em; }
   .rtsp-item-btn {
     flex: 0 0 auto;
     width: 24px;
     height: 24px;
     background: none;
     border: none;
-    color: #949494;
+    color: #8493a8;
     cursor: pointer;
     border-radius: 3px;
     font-size: 12px;
   }
-  .rtsp-item-btn:hover { background: #3a3a3a; color: #e0e0e0; }
+  .rtsp-item-btn:hover { background: #1f2a38; color: #e3eaf3; }
   .rtsp-item-btn.del:hover { background: rgba(212, 0, 0, 0.3); color: #ff4444; }
   .rtsp-edit {
     flex: 1;
     min-width: 0;
     height: 26px;
     padding: 0 6px;
-    background: #434343;
-    color: #e0e0e0;
-    border: 1px solid #555;
+    background: #253244;
+    color: #e3eaf3;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
     font-size: 12px;
   }
@@ -903,11 +903,11 @@
   .dl-bar {
     flex: 1;
     height: 6px;
-    background: #1d1d1d;
+    background: #0c1117;
     border-radius: 3px;
     overflow: hidden;
   }
-  .dl-fill { height: 100%; background: #37a8db; transition: width 0.2s ease; }
+  .dl-fill { height: 100%; background: #38bdf8; transition: width 0.2s ease; }
   .dl-pct { font-size: 11px; color: #9ad0e8; font-variant-numeric: tabular-nums; min-width: 30px; text-align: right; }
 
 </style>

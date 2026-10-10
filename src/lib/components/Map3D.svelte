@@ -4941,10 +4941,10 @@
     box-sizing: border-box;
     width: 38px;
     height: 38px;
-    background: rgba(46, 46, 46, 0.9);
-    border: 2px solid rgba(55, 168, 219, 0.5);
+    background: rgba(18, 26, 36, 0.9);
+    border: 2px solid rgba(56, 189, 248, 0.5);
     border-radius: 6px;
-    color: #37a8db;
+    color: #38bdf8;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -4956,7 +4956,7 @@
 
   .map-control-btn:hover {
     background: var(--btn-active-bg);
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
 
   .map-zoom-btn {
@@ -4987,16 +4987,16 @@
 
   /* Free = dimmed, no active lock */
   .map-cam-btn.mode-free {
-    background: rgba(46, 46, 46, 0.45);
-    border-color: rgba(55, 168, 219, 0.45);
+    background: rgba(18, 26, 36, 0.45);
+    border-color: rgba(56, 189, 248, 0.45);
     color: rgba(199, 223, 232, 0.95);
   }
 
   /* Follow = full blue (smooth chase) */
   .map-cam-btn.mode-follow {
-    background: rgba(46, 46, 46, 0.92);
-    border-color: rgba(55, 168, 219, 0.7);
-    color: #37a8db;
+    background: rgba(18, 26, 36, 0.92);
+    border-color: rgba(56, 189, 248, 0.7);
+    color: #38bdf8;
   }
 
   /* Orbit = cyan/teal tint */
@@ -5015,8 +5015,8 @@
 
   .map-cam-btn:hover {
     background: var(--btn-active-bg) !important;
-    border-color: #37a8db !important;
-    color: #37a8db !important;
+    border-color: #38bdf8 !important;
+    color: #38bdf8 !important;
   }
 
   .cam-icon { overflow: visible; }

@@ -1,6 +1,6 @@
 {
   "app": {
-    "brand": "KiteGC",
+    "brand": "VAYU",
     "version": "v{version}"
   },
   "window": {
@@ -395,7 +395,7 @@
   },
   "update": {
     "title": "Update verfügbar",
-    "body": "Eine neue Version von Kite Ground Control ist verfügbar.",
+    "body": "Eine neue Version von VAYU ist verfügbar.",
     "latest": "Neueste:",
     "current": "Installiert:",
     "prerelease": "Pre-Release",
@@ -409,7 +409,7 @@
     "downloading": "Wird heruntergeladen… {pct}%",
     "installing": "Wird installiert…",
     "failed": "Update fehlgeschlagen: {error}",
-    "portableNote": "Portable-Version: die Programmdatei wird an Ort und Stelle ersetzt, dann startet Kite neu."
+    "portableNote": "Portable-Version: die Programmdatei wird an Ort und Stelle ersetzt, dann startet VAYU neu."
   },
   "airspace": {
     "title": "Airspace Manager",
@@ -610,8 +610,8 @@
     "alertCpaLookAhead": "CPA-Vorausschau",
     "ffModule": "ESP32-Modul (seriell)",
     "ffNodeName": "Node-Name",
-    "ffNodeNamePlaceholder": "KITE-GCS",
-    "ffHint": "Kite emuliert ein INAV-FC an deiner GCS-Position, damit das Modul sie teilt und Peers weiterreicht.",
+    "ffNodeNamePlaceholder": "VAYU-GCS",
+    "ffHint": "VAYU emuliert ein INAV-FC an deiner GCS-Position, damit das Modul sie teilt und Peers weiterreicht.",
     "linkQuality": "Link-Qualität (0–4)",
     "acType": {
       "light": "Leichtflugzeug",
@@ -659,7 +659,7 @@
     "rtspUrl": "RTSP-URL",
     "rtspTransportHint": "Transport: UDP (niedrigste Latenz, z. B. UAV-Link), TCP oder Auto (beide versuchen)",
     "nativeClient": "Nativer RTSP-Client (experimentell)",
-    "nativeClientHint": "Kites eigener integrierter RTSP-Client — braucht weder MediaMTX noch ffmpeg. MJPEG-, H.264- und HEVC-Quellen (H.264/HEVC-Dekodierung in Hardware auf Windows, Android und Linux); verbindet zuerst per UDP mit automatischem TCP-Fallback.",
+    "nativeClientHint": "VAYUs eigener integrierter RTSP-Client — braucht weder MediaMTX noch ffmpeg. MJPEG-, H.264- und HEVC-Quellen (H.264/HEVC-Dekodierung in Hardware auf Windows, Android und Linux); verbindet zuerst per UDP mit automatischem TCP-Fallback.",
     "dockShow": "Video einblenden",
     "dockHide": "Video ausblenden",
     "dockMapShow": "Karte einblenden",
@@ -867,9 +867,9 @@
     "directionLines": "Richtungsanzeiger",
     "directionLinesHint": "Heading-, Kurs- und Turn-Linien am Flugzeug auf der Karte",
     "mavlinkFullTelemetry": "Volle MAVLink-Telemetrie",
-    "mavlinkFullTelemetryHint": "Nur MAVLink: streamt alles, was der FC mit seinen eigenen konfigurierten Raten sendet (ignoriert die Fluglage-/GPS-Rate-Einstellungen). Für Highspeed-Links und vollständige Aufzeichnung im .tlog. Standard aus — Kite fordert ein reduziertes Rate-Set an, das auf langsame RC-Links passt.",
+    "mavlinkFullTelemetryHint": "Nur MAVLink: streamt alles, was der FC mit seinen eigenen konfigurierten Raten sendet (ignoriert die Fluglage-/GPS-Rate-Einstellungen). Für Highspeed-Links und vollständige Aufzeichnung im .tlog. Standard aus — VAYU fordert ein reduziertes Rate-Set an, das auf langsame RC-Links passt.",
     "telemetryApi": "Telemetrie-API",
-    "telemetryApiHint": "Stellt Kites Live-Telemetrie anderen Programmen als JSON bereit — nur lesend. TCP-Stream auf Port 27300, HTTP-Abfrage auf Port 27301, UDP-Abonnenten auf Port 27300. Läuft im Hintergrund, auch auf dem Handy. Siehe Telemetrie-API-Referenz in der Doku.",
+    "telemetryApiHint": "Stellt VAYUs Live-Telemetrie anderen Programmen als JSON bereit — nur lesend. TCP-Stream auf Port 27300, HTTP-Abfrage auf Port 27301, UDP-Abonnenten auf Port 27300. Läuft im Hintergrund, auch auf dem Handy. Siehe Telemetrie-API-Referenz in der Doku.",
     "telemetryApiTcp": "TCP-Stream (Port 27300)",
     "telemetryApiHttp": "HTTP-Abfrage (Port 27301)",
     "telemetryApiUdp": "UDP-Abonnenten (Port 27300)",
@@ -955,9 +955,9 @@
   "logbook": {
     "title": "Flug-Logbuch",
     "disabled": "Flugaufzeichnung ist deaktiviert. In den Einstellungen aktivieren und neu verbinden.",
-    "dbNewer": "Diese Flug-Datenbank stammt aus einer neueren Kite-Version. Das Logbuch bleibt deaktiviert, bis eine passende oder neuere Kite-Version installiert ist — die Datenbank wird nicht verändert.",
+    "dbNewer": "Diese Flug-Datenbank stammt aus einer neueren VAYU-Version. Das Logbuch bleibt deaktiviert, bis eine passende oder neuere VAYU-Version installiert ist — die Datenbank wird nicht verändert.",
     "dbNewerTitle": "Flug-Datenbank aus neuerer Version",
-    "dbNewerPopup": "Diese Flug-Datenbank wurde von einer neueren Kite-Version erstellt und kann mit dieser Version nicht verwendet werden. Die Datenbank wird NICHT verändert.\n\nSpiele eine Sicherung der alten Datenbank ein (oder wähle einen kompatiblen Datenbank-Pfad) — sonst steht das Logbuch nicht zur Verfügung. Alternativ die neuere Kite-Version wieder installieren.",
+    "dbNewerPopup": "Diese Flug-Datenbank wurde von einer neueren VAYU-Version erstellt und kann mit dieser Version nicht verwendet werden. Die Datenbank wird NICHT verändert.\n\nSpiele eine Sicherung der alten Datenbank ein (oder wähle einen kompatiblen Datenbank-Pfad) — sonst steht das Logbuch nicht zur Verfügung. Alternativ die neuere VAYU-Version wieder installieren.",
     "sortMode": "Sortierung",
     "sortAircraftLocationDate": "Fluggerät -> Ort -> Datum",
     "sortLocationDateAircraft": "Ort -> Datum -> Fluggerät",
@@ -1088,7 +1088,7 @@
     "decoderMissingMsg": "INAV-Blackbox-Logs benötigen das externe Tool 'blackbox_decode', das nicht installiert ist. Automatisch von den offiziellen iNavFlight-Releases herunterladen?",
     "decoderDownload": "Herunterladen",
     "decoderDownloadFailed": "blackbox_decode konnte nicht heruntergeladen werden: {error}",
-    "kflightFileFilter": "KiteGC-Flugdateien",
+    "kflightFileFilter": "VAYU-Flugdateien",
     "exportTitle": "Export abgeschlossen",
     "exportSuccess": "{count} Flug/Flüge erfolgreich exportiert.",
     "importKflightTitle": "Import abgeschlossen",
@@ -1850,7 +1850,7 @@
     "vidNatPresented": "Präsentiert",
     "vidNatCodec": "Codec",
     "vidNatDroppedHidden": "Verworfen (unsichtbar)",
-    "vidNatHint": "Kites eigener RTSP-Client. „Frames ein“ zählt, was der Depacketizer liefert (H.264/HEVC-Access-Units können geteilt ankommen — „Präsentiert“ ist die echte Bildrate); „Verworfen“ zählt nach Paketverlust komplett verworfene Frames. RTP empf./Verloren/Umsortiert/Verspätet kommen direkt aus der Empfangsschleife: Verloren kam nie an, Umsortiert wurde vom 16-Paket-Fenster repariert, Verspätet kam zu spät. Auf dem Hardware-Decode-Pfad ist „Präsentiert“, was der D3D-Layer tatsächlich angezeigt hat.",
+    "vidNatHint": "VAYUs eigener RTSP-Client. „Frames ein“ zählt, was der Depacketizer liefert (H.264/HEVC-Access-Units können geteilt ankommen — „Präsentiert“ ist die echte Bildrate); „Verworfen“ zählt nach Paketverlust komplett verworfene Frames. RTP empf./Verloren/Umsortiert/Verspätet kommen direkt aus der Empfangsschleife: Verloren kam nie an, Umsortiert wurde vom 16-Paket-Fenster repariert, Verspätet kam zu spät. Auf dem Hardware-Decode-Pfad ist „Präsentiert“, was der D3D-Layer tatsächlich angezeigt hat.",
     "perf": {
       "fps": "FPS",
       "fpsOverlay": "Cesium-FPS-Overlay",

@@ -1,6 +1,6 @@
 # Data pipeline (reference)
 
-How data flows through Kite Ground Control: the **inbound telemetry** path (source → store → widget, for
+How data flows through VAYU: the **inbound telemetry** path (source → store → widget, for
 both live and replay) and the **parallel data networks** that don't go through the telemetry store
 (Radar, outbound RC control, the Telemetry Relay, live recording). See the
 [architecture overview](../../user/for-developers/architecture.md) for the higher-level picture.

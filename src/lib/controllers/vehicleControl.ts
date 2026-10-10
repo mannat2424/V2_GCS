@@ -142,7 +142,7 @@ export const rcLinkPresent: Readable<boolean> = derived(
 );
 
 /** Whether stick-flown modes are safe to select: there must be a usable RC source — either a physical
- *  transmitter (the FC reports RC RSSI) OR Kite's own RC control is engaged, i.e. we're streaming the
+ *  transmitter (the FC reports RC RSSI) OR VAYU's own RC control is engaged, i.e. we're streaming the
  *  sticks to the FC (ArduPilot RC_CHANNELS_OVERRIDE / PX4 MANUAL_CONTROL). Without one, a stick mode
  *  would leave the vehicle with no control input, so the panel keeps those modes locked. */
 export const stickModesUnlocked: Readable<boolean> = derived(

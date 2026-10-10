@@ -37,7 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger
  *
  * Android grants USB access per device and per session. [open] requests it and blocks on the system
  * dialog; the `USB_DEVICE_ATTACHED` intent filter in the manifest covers the nicer path where the user
- * picks Kite when they plug the cable in, which grants permission without a prompt.
+ * picks VAYU when they plug the cable in, which grants permission without a prompt.
  */
 object UsbSerial {
     private const val ACTION_PERMISSION = "com.kitegc.app.USB_PERMISSION"
@@ -59,7 +59,7 @@ object UsbSerial {
     /**
      * The reason each handle's most recent call failed, keyed by handle.
      *
-     * Per handle, not one global string: Kite can hold several links at once — a flight controller on
+     * Per handle, not one global string: VAYU can hold several links at once — a flight controller on
      * USB while a SiK radio is on a second port — and each is driven by its own Rust thread. With a
      * single slot, a write failing on one link between another link's failed call and its `lastError`
      * fetch would hand the second thread the first one's message, which is the kind of bug that only

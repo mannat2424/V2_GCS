@@ -277,16 +277,16 @@
     right: 8px;
     width: 520px;
     max-width: calc(100vw - 16px);
-    background: rgba(46, 46, 46, 0.97);
-    border: 1px solid #272727;
-    border-top: 2px solid #37a8db;
+    background: rgba(18, 26, 36, 0.97);
+    border: 1px solid #1c2633;
+    border-top: 2px solid #38bdf8;
     border-radius: 0 0 8px 8px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
     backdrop-filter: var(--panel-blur, blur(10px));
     padding: 10px 12px;
     z-index: 199;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    color: #e0e0e0;
+    color: #e3eaf3;
   }
 
   .link-row {
@@ -295,23 +295,23 @@
     gap: 6px;
     font-size: 12px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #272727;
+    border-bottom: 1px solid #1c2633;
     flex-wrap: wrap;
   }
-  .link-label { font-weight: 700; color: #37a8db; letter-spacing: 0.04em; }
+  .link-label { font-weight: 700; color: #38bdf8; letter-spacing: 0.04em; }
   .link-proto { font-weight: 600; }
-  .link-stat { color: #cfcfcf; font-variant-numeric: tabular-nums; }
-  .link-stat.dim, .sep { color: #949494; }
+  .link-stat { color: #c9d3df; font-variant-numeric: tabular-nums; }
+  .link-stat.dim, .sep { color: #8493a8; }
 
   .section-label {
     font-size: 10px;
     font-weight: 700;
-    color: #949494;
+    color: #8493a8;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     margin: 8px 0 6px;
   }
-  .empty { font-size: 12px; color: #949494; padding: 2px 0 6px; }
+  .empty { font-size: 12px; color: #8493a8; padding: 2px 0 6px; }
 
   .relay-row {
     display: flex;
@@ -319,16 +319,16 @@
     gap: 6px;
     margin-bottom: 6px;
   }
-  .enable { width: 15px; height: 15px; accent-color: #37a8db; flex: none; }
+  .enable { width: 15px; height: 15px; accent-color: #38bdf8; flex: none; }
 
   .r-select {
     height: 28px;
     box-sizing: border-box;
     padding: 0 6px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
   }
   .r-select.proto { width: 92px; }
@@ -340,13 +340,13 @@
     height: 28px;
     box-sizing: border-box;
     padding: 0 6px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
   }
-  .r-input::placeholder { color: #777; }
+  .r-input::placeholder { color: #68788e; }
   .r-input.host { flex: 1 1 auto; min-width: 0; }
   .r-input.port-num { width: 84px; appearance: textfield; -moz-appearance: textfield; }
   .r-input.port-num::-webkit-inner-spin-button,
@@ -359,20 +359,20 @@
     font-size: 11px;
     min-width: 92px;
   }
-  .status .dot { width: 8px; height: 8px; border-radius: 50%; background: #949494; flex: none; }
-  .status .detail { color: #949494; font-variant-numeric: tabular-nums; }
+  .status .dot { width: 8px; height: 8px; border-radius: 50%; background: #8493a8; flex: none; }
+  .status .detail { color: #8493a8; font-variant-numeric: tabular-nums; }
   .status.active .dot { background: #59aa29; box-shadow: 0 0 5px rgba(89, 170, 41, 0.7); }
   .status.active { color: #59aa29; }
   .status.err .dot { background: #d40000; box-shadow: 0 0 5px rgba(212, 0, 0, 0.7); }
   .status.err { color: #d40000; }
   .status.waiting .dot { background: #f5a623; }
   .status.waiting { color: #f5a623; }
-  .status.idle { color: #777; }
+  .status.idle { color: #68788e; }
 
   .remove {
     background: none;
     border: none;
-    color: #777;
+    color: #68788e;
     cursor: pointer;
     font-size: 13px;
     padding: 2px 4px;
@@ -382,13 +382,13 @@
 
   .add {
     margin-top: 4px;
-    background: rgba(55, 168, 219, 0.12);
-    border: 1px solid rgba(55, 168, 219, 0.4);
-    color: #37a8db;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    color: #38bdf8;
     font-size: 12px;
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
   }
-  .add:hover { background: rgba(55, 168, 219, 0.22); }
+  .add:hover { background: rgba(56, 189, 248, 0.22); }
 </style>

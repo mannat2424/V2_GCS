@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Copyright (C) 2026 Marc Hoffmann (b14ckyy)
-"""Analyze a Kite-GC / Mission Planner .tlog (8-byte big-endian epoch-us prefix + raw MAVLink frame).
+"""Analyze a VAYU / Mission Planner .tlog (8-byte big-endian epoch-us prefix + raw MAVLink frame).
 
 Overview pass: senders, per-30s rate + seq-gap loss, GCS traffic, STATUSTEXT, mode/arm
 changes, battery, RADIO_STATUS, position track, and the final seconds before a link cut.

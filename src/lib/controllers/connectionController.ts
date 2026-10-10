@@ -15,7 +15,7 @@ import { loadFenceConfig, clearFence } from '$lib/stores/fence';
 import { loadRallyConfig, clearRally } from '$lib/stores/rally';
 
 /** Session-only memory of the platform-type override, keyed by the FC hardware id (MSP / MAVLink).
- *  RAM only by design: a Kite restart forgets it; passive telemetry has no id and never lands here. */
+ *  RAM only by design: a VAYU restart forgets it; passive telemetry has no id and never lands here. */
 const platformOverrides = new Map<string, number>();
 
 /**

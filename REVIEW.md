@@ -1,11 +1,11 @@
-# Review guidelines for Kite Ground Control
+# Review guidelines for VAYU
 
 Instructions for automated code review (Qodo `REVIEW.md`) and for human reviewers alike. The same
 file lives on every core branch (`master`, `development`, `release/**`) and is kept identical.
 
 ## Project context
 
-Kite Ground Control is a desktop/mobile ground-control station for INAV, ArduPilot and PX4 aircraft:
+VAYU is a desktop/mobile ground-control station for INAV, ArduPilot and PX4 aircraft:
 Tauri 2 with a Rust backend (`src-tauri/`) and a Svelte 5 / SvelteKit / TypeScript frontend (`src/`).
 It is a GPL-3.0-or-later desktop app that talks to the user's own aircraft over serial, Bluetooth, TCP
 or UDP — not a networked service.

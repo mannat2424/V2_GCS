@@ -197,10 +197,10 @@
     width: 38px;
     height: 38px;
     padding: 7px;
-    background: rgba(46, 46, 46, 0.9);
-    border: 2px solid rgba(55, 168, 219, 0.5);
+    background: rgba(18, 26, 36, 0.9);
+    border: 2px solid rgba(56, 189, 248, 0.5);
     border-radius: 6px;
-    color: #37a8db;
+    color: #38bdf8;
     cursor: pointer;
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
@@ -209,7 +209,7 @@
   }
   .dock-btn.open {
     background: var(--btn-active-bg);
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
   /* Video primary: the 2D/3D + follow buttons are hidden (mini map), the map toggle takes their
      corner. */
@@ -241,8 +241,8 @@
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    background: rgba(46, 46, 46, 0.92);
-    border: 1px solid rgba(55, 168, 219, 0.35);
+    background: rgba(18, 26, 36, 0.92);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
@@ -306,16 +306,16 @@
     padding: 2px 0 0 2px;
     background: transparent;
     border: 0;
-    border-top: 4px solid rgba(190, 190, 190, 0.4);
-    border-left: 4px solid rgba(190, 190, 190, 0.4);
+    border-top: 4px solid rgba(180, 188, 202, 0.4);
+    border-left: 4px solid rgba(180, 188, 202, 0.4);
     border-top-left-radius: 8px;
-    color: rgba(190, 190, 190, 0.4);
+    color: rgba(180, 188, 202, 0.4);
     cursor: pointer;
     touch-action: none;
   }
   .dw-size:hover {
-    border-color: rgba(190, 190, 190, 0.6);
-    color: rgba(190, 190, 190, 0.6);
+    border-color: rgba(180, 188, 202, 0.6);
+    color: rgba(180, 188, 202, 0.6);
   }
   .dw-size svg {
     display: block;

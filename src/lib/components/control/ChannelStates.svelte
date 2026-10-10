@@ -58,24 +58,24 @@
 {/if}
 
 <style>
-  .cs-empty { color: #949494; font-size: 12px; font-style: italic; padding: 8px; }
+  .cs-empty { color: #8493a8; font-size: 12px; font-style: italic; padding: 8px; }
   .cs { display: flex; flex-direction: column; gap: 5px; }
-  .cs-source { color: #6f6f6f; font-size: 10px; font-style: italic; margin-bottom: 2px; }
+  .cs-source { color: #4b617c; font-size: 10px; font-style: italic; margin-bottom: 2px; }
   .cs-source.live { color: #7ec850; font-style: normal; font-weight: 700; }
   .cs-group {
-    color: #37a8db; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    margin: 6px 0 2px; padding-bottom: 3px; border-bottom: 1px solid rgba(55, 168, 219, 0.25);
+    color: #38bdf8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    margin: 6px 0 2px; padding-bottom: 3px; border-bottom: 1px solid rgba(56, 189, 248, 0.25);
   }
   .cs-group:first-child { margin-top: 0; }
   .cs-row { display: grid; grid-template-columns: 110px 1fr 42px; align-items: center; gap: 8px; }
   .cs-label { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
-  .cs-num { color: #37a8db; font-weight: 700; font-size: 12px; flex: none; }
-  .cs-name { color: #cfcfcf; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .cs-val { color: #e0e0e0; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
+  .cs-num { color: #38bdf8; font-weight: 700; font-size: 12px; flex: none; }
+  .cs-name { color: #c9d3df; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cs-val { color: #e3eaf3; font-size: 11px; font-variant-numeric: tabular-nums; text-align: right; }
   .cs-bar {
-    position: relative; height: 13px; background: #1f1f1f; border: 1px solid #333;
+    position: relative; height: 13px; background: #0d131b; border: 1px solid #18212d;
     border-radius: 3px; overflow: hidden;
   }
-  .cs-centre { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #4a4a4a; }
-  .cs-fill { position: absolute; left: 0; top: 0; bottom: 0; background: #37a8db; }
+  .cs-centre { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #2b394c; }
+  .cs-fill { position: absolute; left: 0; top: 0; bottom: 0; background: #38bdf8; }
 </style>

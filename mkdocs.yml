@@ -1,15 +1,15 @@
-# MkDocs config for the Kite Ground Control user documentation site.
+# MkDocs config for the VAYU user documentation site.
 # Source = docs/user/ only (dev docs under docs/ are NOT published). See
 # docs/active/USER_DOCS_ARCHITECTURE.md. Local preview: `mkdocs serve` (http://localhost:8000).
 #
 # The published site is VERSIONED with mike (one entry per minor release + "Dev" for the master
 # tip) — see .github/workflows/docs.yml for the deployment model.
 
-site_name: Kite Ground Control
-site_description: User documentation for Kite Ground Control — an INAV / ArduPilot / PX4 ground control station.
-site_url: https://b14ckyy.github.io/Kite-GC/
-repo_url: https://github.com/b14ckyy/Kite-GC
-repo_name: b14ckyy/Kite-GC
+site_name: VAYU
+site_description: User documentation for VAYU — an INAV / ArduPilot / PX4 ground control station.
+site_url: https://mannat2424.github.io/V2_GCS/
+repo_url: https://github.com/mannat2424/V2_GCS
+repo_name: mannat2424/V2_GCS
 edit_uri: edit/master/docs/user/
 docs_dir: docs/user
 site_dir: site
@@ -19,7 +19,7 @@ theme:
   name: material
   language: en
   custom_dir: overrides
-  logo: assets/branding/kitegc-icon-white.svg
+  logo: assets/branding/vayu-icon-white.svg
   favicon: assets/branding/favicon.png
   palette:
     # Dark by default (matches the app's INAV dark theme), with a light toggle.
@@ -65,11 +65,8 @@ extra:
   # Footer icons (Material renders extra.social at the bottom of every page).
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/b14ckyy/Kite-GC
-      name: Kite on GitHub
-    - icon: fontawesome/brands/discord
-      link: https://discord.gg/3FM7EWhkg9
-      name: Kite community on Discord
+      link: https://github.com/mannat2424/V2_GCS
+      name: VAYU on GitHub
   # Header version dropdown (Material's native mike support): reads the versions.json that mike
   # maintains on the gh-pages branch. Old versions get the "outdated" banner (overrides/main.html).
   version:

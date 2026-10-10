@@ -272,14 +272,14 @@ fn set_user_version(conn: &Connection, version: u32) -> SqlResult<()> {
     conn.execute_batch(&format!("PRAGMA user_version = {};", version))
 }
 
-/// Error for a DB written by a NEWER Kite (the user downgraded the app). The `db-newer:` prefix is
+/// Error for a DB written by a NEWER VAYU (the user downgraded the app). The `db-newer:` prefix is
 /// a STABLE marker the frontend matches on to disable the logbook with a targeted message instead
 /// of a generic failure — change it in lockstep with the loadLogbook handler in +page.svelte.
 fn db_newer_error(found: u32) -> rusqlite::Error {
     rusqlite::Error::SqliteFailure(
         rusqlite::ffi::Error::new(rusqlite::ffi::SQLITE_ERROR),
         Some(format!(
-            "db-newer: flight database schema is v{found}, this Kite build supports up to v{CURRENT_SCHEMA_VERSION}"
+            "db-newer: flight database schema is v{found}, this VAYU build supports up to v{CURRENT_SCHEMA_VERSION}"
         )),
     )
 }
@@ -288,7 +288,7 @@ fn migrate(conn: &Connection) -> SqlResult<()> {
     let current = get_user_version(conn)?;
 
     // Downgrade guard: never touch (let alone migrate "up" to an OLDER schema) a DB written by a
-    // newer Kite — refuse with the marker error and leave the file byte-identical. Fires ONLY
+    // newer VAYU — refuse with the marker error and leave the file byte-identical. Fires ONLY
     // on a real schema mismatch; every other open error stays a generic failure.
     if current > CURRENT_SCHEMA_VERSION {
         return Err(db_newer_error(current));
@@ -2824,7 +2824,7 @@ mod tests {
     }
 
     /// Full open/migrate pass over a COPY of a real flight database (Marc's RC2 archive,
-    /// F:\DEVELOPMENT\Kite-GC-testdata\flights-real.db — outside the repo).
+    /// F:\DEVELOPMENT\VAYU-testdata\flights-real.db — outside the repo).
     /// `KITE_TEST_DB=<path> cargo test migrates_the_real_database -- --ignored --nocapture`
     #[test]
     #[ignore]

@@ -144,7 +144,7 @@ kippen — die +66 ms Latenz bleiben aber. Beide Skripte laufen unverändert wie
 
 ---
 
-## Nachtrag (19.08.2026) — Hebel 1 in Kite gemessen: kein Gewinn, verworfen
+## Nachtrag (19.08.2026) — Hebel 1 in VAYU gemessen: kein Gewinn, verworfen
 
 `bitmaprenderer` wurde in Kites Main-Thread-Zeichenpfad eingebaut (Branch
 `feat/mjpeg-bitmaprenderer`) und im laufenden Dev-Build per `git stash`-Wechsel alternierend
@@ -162,10 +162,10 @@ Testvideo wechselt zwischen sehr unterschiedlich komplexen Szenen, sichtbar auch
 ffmpeg-Schwankung).
 
 **Warum der Tabellenwert nicht ankommt:** die „~34 %" oben vergleichen gegen den `img.src`-Pfad
-(136 %) — den benutzt Kite im Worker-Modus gar nicht. Kite sitzt bereits auf
+(136 %) — den benutzt VAYU im Worker-Modus gar nicht. VAYU sitzt bereits auf
 `createImageBitmap` + `drawImage` (98 %); zur Transfer-Variante (90 %) sind es laut eigener
 Messung oben nur **~8 Punkte**, und die verschwinden in der Szenen-Varianz. Der große Sprung der
-Tabelle war in Kite schon eingebaut.
+Tabelle war in VAYU schon eingebaut.
 
 Dazu kommt realer Umbau-Preis: `transferFromImageBitmap` **konsumiert** das Bitmap (danach 0×0,
 Wiederverwendung wirft `InvalidStateError`, im WebView verifiziert) — bei mehreren sichtbaren

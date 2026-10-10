@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 
-//! BLE output sink — Kite acts as the BLE central and writes the encoded telemetry to a device's write
+//! BLE output sink — VAYU acts as the BLE central and writes the encoded telemetry to a device's write
 //! characteristic (e.g. an HM-10 / Nordic-UART serial bridge on a tracker). Reuses the profile-based
 //! `connect_ble` transport, so the target must match a known BLE serial profile.
 

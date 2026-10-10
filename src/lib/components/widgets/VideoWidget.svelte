@@ -168,7 +168,7 @@
   .widget-card {
     box-sizing: border-box;
     position: relative; /* anchor for the reconnect overlay */
-    background: rgba(30, 30, 30, 0.75);
+    background: rgba(12, 17, 24, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
@@ -215,11 +215,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888;
+    color: #7a8aa0;
     font-size: 12px;
   }
   .placeholder.map-here {
-    color: #555; /* faint — the map is drawn on top of this tile */
+    color: #3a4a5f; /* faint — the map is drawn on top of this tile */
   }
   /* Native-sink hole: transparent while this tile holds the hardware video layer (the frame
      border stays as the bezel), an opaque placeholder while another surface has it. */
@@ -233,7 +233,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888;
+    color: #7a8aa0;
     font-size: 12px;
     text-align: center;
   }
@@ -241,7 +241,7 @@
     background: transparent;
     /* Opaque ring in the card's 3 px padding gap — box-shadow paints only OUTSIDE the
        border box, so the hole itself stays transparent. Replaces the card's glass. */
-    box-shadow: 0 0 0 3px rgba(30, 30, 30, 0.9);
+    box-shadow: 0 0 0 3px rgba(12, 17, 24, 0.9);
   }
   /* While this tile holds the native video: no glass — the background would paint behind the
      transparent hole, and clipping it (the old approach) flickered (see markup comment). */

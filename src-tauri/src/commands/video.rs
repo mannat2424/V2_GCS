@@ -268,7 +268,7 @@ pub fn video_native_mjpeg_stop(mjpeg: State<'_, crate::video::MjpegServer>) -> R
     Ok(())
 }
 
-// ── Native RTSP client (Kite's own, in-process — MOBILE_RTSP.md P1) ───────────
+// ── Native RTSP client (VAYU's own, in-process — MOBILE_RTSP.md P1) ───────────
 
 /// Start the in-process native RTSP client on `url` — no MediaMTX, no ffmpeg. An MJPEG
 /// source is served over the local multipart MJPEG port (`mode: "mjpeg"` + `url`); an
@@ -438,7 +438,7 @@ pub fn video_detached_open(
         // exact box is applied below in physical px (the builder only takes logical ones).
         #[allow(unused_mut)]
         let mut builder = WebviewWindowBuilder::new(&app, DETACHED_LABEL, WebviewUrl::App("video".into()))
-            .title("Kite Ground Control — Video")
+            .title("VAYU — Video")
             .decorations(false)
             .transparent(true)
             .resizable(true)
@@ -628,7 +628,7 @@ pub fn video_detached_aspect(app: AppHandle, aspect: f64, ring: f64) {
 /// WebKitGTK's DMABUF renderer paints garbage into the first buffer the Pi's v3d driver hands it —
 /// scanline corruption over the whole page, reproduced on that hardware for months (the Jarvis
 /// dashboard carries the same workaround). It is not permanent: ANY change of the draw area's size
-/// forces the buffer to be built again and the picture is clean from then on. Kite's main window
+/// forces the buffer to be built again and the picture is clean from then on. VAYU's main window
 /// never shows it because it repaints constantly and clears the buffer by itself; the detached
 /// window's page is static and almost entirely transparent, so nothing ever forces a new buffer and
 /// the corruption stays for the life of the window (Marc, Pi 5, 2026-09-08).
@@ -655,7 +655,7 @@ pub fn video_detached_nudge(app: AppHandle) {
             let settle = std::time::Duration::from_millis(200);
             if win.is_fullscreen().unwrap_or(false) {
                 // Leaving fullscreen is not necessarily a SIZE change, and only a size change
-                // rebuilds the buffer. A window that was CREATED fullscreen — Kite restarted with
+                // rebuilds the buffer. A window that was CREATED fullscreen — VAYU restarted with
                 // the picture detached and full screen — has no windowed size to fall back to and
                 // comes out of fullscreen exactly as large as it went in, so the garbage stayed
                 // until Marc resized the window by hand (Pi 5, 2026-09-08). Force the change, then

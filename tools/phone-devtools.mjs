@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Copyright (C) 2026 Marc Hoffmann (b14ckyy)
 //
-// Talk to the running Kite Android debug build's WebView over the Chrome DevTools protocol
+// Talk to the running VAYU Android debug build's WebView over the Chrome DevTools protocol
 // (debug builds enable WebView debugging). Two jobs the phone-UI loop needs:
 //
 //   node tools/phone-devtools.mjs shot out.png            # screenshot of the PAGE pixels
 //   node tools/phone-devtools.mjs eval "innerWidth + 'x' + innerHeight"   # run JS, print result
 //
-// Why not `adb screencap`: Kite's activity window is transparent (native-video hole punch) and the
+// Why not `adb screencap`: VAYU's activity window is transparent (native-video hole punch) and the
 // EMULATOR's screencap returns a black frame for it, while the page itself renders fine.
 // Page.captureScreenshot reads the WebView's own pixels, independent of the compositor.
 // Caveat: the DevTools capture does NOT include WebGL content — in 3D map mode the map area comes
@@ -41,7 +41,7 @@ if (!serial) {
   if (!serial) { console.error('no adb device'); process.exit(1); }
 }
 const pid = adb('shell', 'pidof', 'com.kitegc.app');
-if (!pid) { console.error(`Kite is not running on ${serial}`); process.exit(1); }
+if (!pid) { console.error(`VAYU is not running on ${serial}`); process.exit(1); }
 adb('forward', `tcp:${port}`, `localabstract:webview_devtools_remote_${pid}`);
 
 const pages = await (await fetch(`http://localhost:${port}/json`)).json();

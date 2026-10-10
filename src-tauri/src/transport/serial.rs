@@ -392,7 +392,7 @@ fn log_bt_spp_diagnostics(_target: &str) {}
 /// device's own USB stack (STM32 0x0483, RP2040 0x2E8A, Espressif 0x303A, …). Diagnostic only: a
 /// native CDC's OUT endpoint can NAK while its TX is busy (the Lucid H7 Wing write-stall case), so a
 /// tester's log should say which kind of port a session ran on. NOTE deliberately no behaviour is
-/// keyed off this — an ESP32 Kite-Link node is also a native CDC but bridges to a slow SiK air link,
+/// keyed off this — an ESP32 VAYU-Link node is also a native CDC but bridges to a slow SiK air link,
 /// where narrowing the MSP pipeline would cripple the poll rate.
 const USB_UART_BRIDGE_VIDS: &[u16] = &[
     0x0403, // FTDI

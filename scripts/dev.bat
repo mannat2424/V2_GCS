@@ -1,6 +1,6 @@
 @echo off
 REM ============================================================
-REM Kite Ground Control — Development Server (Windows)
+REM VAYU — Development Server (Windows)
 REM Starts the app in development mode with hot-reload
 REM
 REM Recommended: Use "just dev" instead (see justfile in project root)
@@ -8,7 +8,7 @@ REM ============================================================
 
 echo.
 echo ============================================
-echo  Kite Ground Control — Development Mode
+echo  VAYU — Development Mode
 echo ============================================
 echo.
 

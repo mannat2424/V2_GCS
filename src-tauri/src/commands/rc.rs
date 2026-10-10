@@ -132,7 +132,7 @@ pub fn rc_stream_update(channels: Vec<u16>, state: State<'_, AppState>) -> Resul
     Ok(())
 }
 
-/// Push AUX-RC channel changes (latched overlay). `channels` are 0-based indices (≥16 / CH17+ by Kite
+/// Push AUX-RC channel changes (latched overlay). `channels` are 0-based indices (≥16 / CH17+ by VAYU
 /// policy), `values` the matching target µs. They're accumulated into the pending map; the scheduler
 /// packs the minimal 16-bit run and re-sends at 5 Hz until the FC ACKs. Call only with channels that
 /// actually changed — sending one channel costs one channel, not the whole AUX block.

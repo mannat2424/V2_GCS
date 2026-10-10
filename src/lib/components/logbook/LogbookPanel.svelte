@@ -78,8 +78,8 @@
     onDismissOpenedFlight = (_id: number) => {},
   }: {
     flightLoggingEnabled: boolean;
-    /** Set when the flight DB was written by a NEWER Kite (the `db-newer:` open error) — the
-     *  logbook is disabled until a matching Kite version is installed; the raw error rides
+    /** Set when the flight DB was written by a NEWER VAYU (the `db-newer:` open error) — the
+     *  logbook is disabled until a matching VAYU version is installed; the raw error rides
      *  along as the technical detail line. */
     dbIncompatible?: string | null;
     logbookMinimized: boolean;
@@ -394,7 +394,7 @@
 <!-- Main field: progress + empty states + flight tree. -->
 {#snippet mainBody()}
   {#if dbIncompatible}
-    <!-- The flight DB is from a NEWER Kite (downgrade guard, `db-newer:` marker) — nothing is
+    <!-- The flight DB is from a NEWER VAYU (downgrade guard, `db-newer:` marker) — nothing is
          read or written until a matching version is installed; the file stays untouched. -->
     <div class="panel-empty">
       <span class="panel-empty-icon">⊘</span>
@@ -598,7 +598,7 @@
     justify-content: center;
     gap: 8px;
     padding: 32px 0;
-    color: #555;
+    color: #3a4a5f;
     font-size: 12px;
   }
 
@@ -609,7 +609,7 @@
 
   /* Technical detail under the db-newer notice (the raw open error, incl. both versions). */
   .db-newer-detail {
-    color: #777;
+    color: #68788e;
     font-size: 10px;
     max-width: 90%;
     text-align: center;
@@ -624,7 +624,7 @@
   .logbook-search-clear {
     background: none;
     border: none;
-    color: #777;
+    color: #68788e;
     cursor: pointer;
     font-size: 13px;
     padding: 2px 4px;
@@ -633,7 +633,7 @@
   }
 
   .logbook-search-clear:hover {
-    color: #e0e0e0;
+    color: #e3eaf3;
   }
 
   /* The toolbar slot is a flex row; stack our rows (sort · search · buttons) full-width so each
@@ -669,17 +669,17 @@
 
   .setting-label {
     font-size: 12px;
-    color: #e0e0e0;
+    color: #e3eaf3;
   }
 
   /* Form controls match the md button height (28px) so toolbars align cleanly (no vertical jog). */
   .setting-select {
     height: 28px;
     padding: 0 8px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
     min-width: 70px;
   }
@@ -687,10 +687,10 @@
   .setting-input {
     height: 28px;
     padding: 0 8px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
   }
 
@@ -701,10 +701,10 @@
   .logbook-tree-toggle {
     width: 100%;
     text-align: left;
-    border: 1px solid #555;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    background: #353535;
-    color: #ddd;
+    background: #151e2a;
+    color: #d6dee9;
     cursor: pointer;
     display: grid;
     grid-template-columns: 14px minmax(0, 1fr) auto auto;
@@ -714,7 +714,7 @@
   }
 
   .logbook-tree-toggle:hover {
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
 
   .logbook-tree-toggle-top {
@@ -727,7 +727,7 @@
     margin-left: 12px;
     width: calc(100% - 12px);
     font-size: 11px;
-    background: #303030;
+    background: #131b26;
   }
 
   .logbook-tree-children {
@@ -741,7 +741,7 @@
   }
 
   .logbook-tree-caret {
-    color: #9cc6d9;
+    color: #9adcf9;
     font-size: 11px;
     line-height: 1;
   }
@@ -761,9 +761,9 @@
 
   .logbook-tree-count {
     font-size: 10px;
-    color: #8fb4c5;
-    background: rgba(55, 168, 219, 0.12);
-    border: 1px solid rgba(55, 168, 219, 0.32);
+    color: #8ccbe8;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.32);
     border-radius: 999px;
     padding: 1px 6px;
   }
@@ -771,28 +771,28 @@
   .logbook-item {
     width: 100%;
     text-align: left;
-    border: 1px solid #555;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    background: #383838;
-    color: #ddd;
+    background: #16202d;
+    color: #d6dee9;
     margin-bottom: 4px;
     padding: 6px;
     cursor: pointer;
   }
 
   .logbook-item:hover {
-    border-color: #37a8db;
+    border-color: #38bdf8;
   }
 
   .logbook-item.selected {
-    border-color: #37a8db;
-    background: rgba(55, 168, 219, 0.18);
+    border-color: #38bdf8;
+    background: rgba(56, 189, 248, 0.18);
   }
 
   .logbook-item.multi-selected {
-    border-color: #37a8db;
-    background: rgba(55, 168, 219, 0.12);
-    outline: 1px solid rgba(55, 168, 219, 0.4);
+    border-color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    outline: 1px solid rgba(56, 189, 248, 0.4);
     outline-offset: -1px;
   }
 
@@ -805,14 +805,14 @@
   .logbook-item-id {
     font-size: 10px;
     font-weight: 400;
-    color: #777;
+    color: #68788e;
     margin-left: 4px;
   }
 
   .logbook-item-tz {
     font-size: 10px;
     font-weight: 400;
-    color: #949494;
+    color: #8493a8;
     margin-left: 2px;
   }
 
@@ -822,13 +822,13 @@
     flex-wrap: wrap;
     gap: 4px 10px;
     font-size: 10px;
-    color: #aaa;
+    color: #9eacbf;
   }
 
   .logbook-progress {
-    border: 1px solid rgba(55, 168, 219, 0.35);
+    border: 1px solid rgba(56, 189, 248, 0.35);
     border-radius: 6px;
-    background: rgba(55, 168, 219, 0.08);
+    background: rgba(56, 189, 248, 0.08);
     padding: 8px;
     margin-bottom: 10px;
   }
@@ -850,7 +850,7 @@
 
   .logbook-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #2d8ab8, #37a8db);
+    background: linear-gradient(90deg, #2d8ab8, #38bdf8);
     transition: width 0.2s ease;
   }
 

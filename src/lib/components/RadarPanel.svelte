@@ -428,7 +428,7 @@
       </div>
     </div>
   {:else if activeSys === 'formationFlight'}
-    <!-- FormationFlight (INAV-Radar / ESP32): the serial module Kite talks MSP to as an emulated FC. -->
+    <!-- FormationFlight (INAV-Radar / ESP32): the serial module VAYU talks MSP to as an emulated FC. -->
     <div class="src-block">
       <p class="src-head">{$t('radar.ffModule')}</p>
       <div class="src-row2">
@@ -509,7 +509,7 @@
 {/snippet}
 
 <style>
-  .radar-hint { color: #949494; font-size: 12px; line-height: 1.5; margin: 4px 2px; }
+  .radar-hint { color: #8493a8; font-size: 12px; line-height: 1.5; margin: 4px 2px; }
 
   .rt-right { margin-left: auto; display: flex; }
   /* Info variant: the whole list is clickable to re-expand. */
@@ -519,12 +519,12 @@
   .src-block { display: flex; flex-direction: column; gap: 4px; }
   .src-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 3px 2px; }
   .src-subrow { padding-left: 14px; }
-  .src-head { color: #949494; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 2px 2px; }
+  .src-head { color: #8493a8; font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 2px 2px; }
   .src-label { color: #cdd6da; font-size: 12px; }
   .src-info { margin-left: 5px; color: #6f96a6; cursor: help; font-size: 11px; }
-  .src-info:hover { color: #37a8db; }
+  .src-info:hover { color: #38bdf8; }
   .src-row-right { display: flex; align-items: center; gap: 8px; }
-  .src-name { flex: 1; color: #e0e0e0; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .src-name { flex: 1; color: #e3eaf3; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .src-stat {
     flex-shrink: 0;
     min-width: 22px;
@@ -543,10 +543,10 @@
   .src-select {
     height: 28px;
     padding: 0 8px;
-    background: #434343;
-    border: 1px solid #555;
+    background: #253244;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 12px;
   }
   .src-card {
@@ -555,7 +555,7 @@
     gap: 4px;
     padding: 6px;
     margin-bottom: 6px;
-    border: 1px solid #444;
+    border: 1px solid #273446;
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.03);
   }
@@ -565,30 +565,30 @@
     width: 100%;
     height: 26px;
     padding: 0 7px;
-    background: #1f1f1f;
-    border: 1px solid #444;
+    background: #0d131b;
+    border: 1px solid #273446;
     border-radius: 4px;
-    color: #e0e0e0;
+    color: #e3eaf3;
     font-size: 11px;
     font-family: 'Segoe UI', Tahoma, sans-serif;
   }
   .src-input-name { flex: 1; font-weight: 600; }
-  .src-sub { color: #949494; font-weight: 400; }
+  .src-sub { color: #8493a8; font-weight: 400; }
   .src-row2 { display: flex; gap: 6px; align-items: center; }
   .src-input-port { flex: 1; min-width: 0; }
   .src-refresh {
     flex-shrink: 0;
     width: 26px;
     height: 26px;
-    border: 1px solid #555;
+    border: 1px solid #3a4a5f;
     border-radius: 4px;
-    background: #434343;
+    background: #253244;
     color: #cdd6da;
     cursor: pointer;
     font-size: 14px;
     line-height: 1;
   }
-  .src-refresh:hover { background: #4d4d4d; color: #fff; }
+  .src-refresh:hover { background: #1f2c3e; color: #fff; }
   .src-del {
     flex-shrink: 0;
     width: 24px;
@@ -610,19 +610,19 @@
     align-items: center;
     gap: 6px;
     padding: 2px 2px 4px;
-    border-bottom: 1px solid #3a3a3a;
+    border-bottom: 1px solid #1f2a38;
     margin-bottom: 2px;
   }
-  .radar-group-name { color: #37a8db; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; }
+  .radar-group-name { color: #38bdf8; font-weight: 600; font-size: 12px; letter-spacing: 0.3px; }
   .radar-group-count {
     color: #c7dfe8;
     font-variant-numeric: tabular-nums;
-    background: rgba(55, 168, 219, 0.15);
+    background: rgba(56, 189, 248, 0.15);
     border-radius: 8px;
     padding: 0 7px;
     font-size: 11px;
   }
-  .radar-empty { color: #6f6f6f; font-size: 11px; font-style: italic; margin: 2px 4px 6px; }
+  .radar-empty { color: #4b617c; font-size: 11px; font-style: italic; margin: 2px 4px 6px; }
 
   .radar-row {
     display: grid;
@@ -637,22 +637,22 @@
   }
   .radar-row:nth-child(even) { background: rgba(255, 255, 255, 0.03); }
   .radar-row { cursor: pointer; text-align: left; }
-  .radar-row:hover { background: rgba(55, 168, 219, 0.12); }
-  .radar-row.selected { background: rgba(55, 168, 219, 0.22); box-shadow: inset 0 0 0 1px #37a8db; }
+  .radar-row:hover { background: rgba(56, 189, 248, 0.12); }
+  .radar-row.selected { background: rgba(56, 189, 248, 0.22); box-shadow: inset 0 0 0 1px #38bdf8; }
   /* Info view: call · dist · brg · alt — dist + alt wide enough for 4-digit km / >10 000 m (no wrap). */
   .radar-row.compact { grid-template-columns: 1.15fr 1.1fr 0.55fr 1.1fr; }
-  .r-call { color: #e8e8e8; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .r-type { color: #8fb4c5; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .r-dist, .r-brg, .r-alt, .r-spd, .r-age { color: #b8b8b8; text-align: right; white-space: nowrap; }
+  .r-call { color: #dee6f4; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .r-type { color: #8ccbe8; font-size: 11px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .r-dist, .r-brg, .r-alt, .r-spd, .r-age { color: #afbccc; text-align: right; white-space: nowrap; }
 
   .src-row.disabled .src-label { opacity: 0.45; }
 
   /* ── Map tab: altitude colour legend (horizontal) ── */
   .rt-legend { padding: 4px 2px 2px; }
-  .rt-legend-bar { position: relative; height: 14px; border-radius: 3px; border: 1px solid #272727; }
+  .rt-legend-bar { position: relative; height: 14px; border-radius: 3px; border: 1px solid #1c2633; }
   /* UAV-altitude marker (Δ = 0) tick at 20% of the bar. */
   .rt-legend-tick { position: absolute; top: -2px; bottom: -2px; width: 2px; background: #fff; box-shadow: 0 0 2px #000; transform: translateX(-50%); }
-  .rt-legend-labels { position: relative; height: 14px; margin-top: 2px; color: #b8b8b8; font-size: 11px; }
+  .rt-legend-labels { position: relative; height: 14px; margin-top: 2px; color: #afbccc; font-size: 11px; }
   .rt-legend-labels span { position: absolute; white-space: nowrap; }
   .rt-l-left { left: 0; }
   .rt-l-right { right: 0; }

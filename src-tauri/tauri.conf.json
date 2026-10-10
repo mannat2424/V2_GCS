@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Kite Ground Control",
+  "productName": "VAYU",
   "version": "../package.json",
   "identifier": "com.kitegc.app",
   "build": {
@@ -13,7 +13,7 @@
     "macOSPrivateApi": true,
     "windows": [
       {
-        "title": "Kite Ground Control",
+        "title": "VAYU",
         "width": 1280,
         "height": 800,
         "dragDropEnabled": true,
@@ -28,7 +28,7 @@
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDkyRTI4OTQ0Rjg5NUI0QTUKUldTbHRKWDRSSW5pa2g0SmVXOUZPeFdTYnh3Vkl2UjBjZU1GbGZnVjJPS3prRkZ3RUVaajIzeEUK",
-      "endpoints": ["https://github.com/b14ckyy/Kite-GC/releases/latest/download/latest.json"],
+      "endpoints": ["https://github.com/mannat2424/V2_GCS/releases/latest/download/latest.json"],
       "windows": {
         "installMode": "passive"
       }

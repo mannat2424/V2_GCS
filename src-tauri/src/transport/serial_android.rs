@@ -19,7 +19,7 @@
 //! not driven yet.
 //!
 //! Permissions are per device and per session on Android. `SerialConnection::open` blocks on the
-//! system dialog the first time a device is used; plugging the cable in and choosing Kite from the
+//! system dialog the first time a device is used; plugging the cable in and choosing VAYU from the
 //! system's app picker grants it up front and skips the prompt.
 
 use std::time::Duration;

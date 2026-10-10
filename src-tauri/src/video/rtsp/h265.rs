@@ -8,7 +8,7 @@
 //! is two bytes (`type = (b0 >> 1) & 0x3F`), aggregation packets are type 48 (AP),
 //! fragmentation units type 49 (FU, three header bytes), and the out-of-band parameter
 //! sets arrive as `sprop-vps` / `sprop-sps` / `sprop-pps`. PACI (type 50) is not produced
-//! by the encoders Kite meets and marks the AU damaged.
+//! by the encoders VAYU meets and marks the AU damaged.
 
 use super::h264::{base64_decode, fmtp_param};
 use super::rtp::RtpPacket;

@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset=".github/kitegc-banner-dark.png">
-    <img alt="Kite Ground Control" src=".github/kitegc-banner-light.png" width="560">
+    <source media="(prefers-color-scheme: dark)" srcset=".github/vayu-banner-dark.png">
+    <img alt="VAYU" src=".github/vayu-banner-light.png" width="560">
   </picture>
 </p>
 
@@ -9,17 +9,15 @@
 
 <p align="center">
   <a href="LICENSE"><img alt="License: GPL-3.0-or-later" src="https://img.shields.io/badge/License-GPLv3-blue.svg"></a>
-  <a href="https://b14ckyy.github.io/Kite-GC/"><img alt="Documentation" src="https://img.shields.io/badge/docs-online-37a8db"></a>
+  <a href="https://mannat2424.github.io/V2_GCS/"><img alt="Documentation" src="https://img.shields.io/badge/docs-online-38bdf8"></a>
   <img alt="Platform" src="https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-555">
-  <a href="https://github.com/b14ckyy/Kite-GC/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/b14ckyy/Kite-GC?label=release&color=59aa29"></a>
-  <a href="https://discord.gg/3FM7EWhkg9"><img alt="Discord" src="https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white"></a>
-  <a href="https://paypal.me/b14ckyy"><img alt="Donate via PayPal" src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white"></a>
+  <a href="https://github.com/mannat2424/V2_GCS/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/mannat2424/V2_GCS?label=release&color=59aa29"></a>
 </p>
 
 ---
 ## Development state
 
-**Kite 1.0 is released** — the first stable version, after a summer of betas and release candidates.
+**VAYU 1.0 is released** — the first stable version, after a summer of betas and release candidates.
 Work on 1.1 (mobile, native video decode, and more) continues on the integration trunk:
 
 - **All changes** → pull request against **`development`**, the always-current trunk. Features and
@@ -28,14 +26,14 @@ Work on 1.1 (mobile, native video decode, and more) continues on the integration
 - **A fix for the released 1.0** → pull request against **`release/1.0.x`**, the maintenance branch cut
   from the `v1.0.0` tag. Patch releases are tagged from it, and it is merged forward into `development`.
   1.0 stays maintained until 1.2.0 ships — see
-  **[Release support](https://b14ckyy.github.io/Kite-GC/release-support/)** for the policy.
+  **[Release support](https://mannat2424.github.io/V2_GCS/release-support/)** for the policy.
 
 Nobody commits to either branch directly — see
-**[Contributing](https://b14ckyy.github.io/Kite-GC/for-developers/contributing/)** for the full
+**[Contributing](https://mannat2424.github.io/V2_GCS/for-developers/contributing/)** for the full
 branching model.
 
 --- 
-**Kite Ground Control (Kite GC)** is a modern, cross-platform ground control station for **INAV**,
+**VAYU** is a modern, cross-platform ground control station for **INAV**,
 **ArduPilot** and **PX4** aircraft — planes, multirotors, VTOL, helicopters, rovers and boats. It
 combines everything you expect from a GCS with a fast, intuitive interface and a few things you won't
 find anywhere else — like a full 3D flight view, a fleet & battery manager, and live video right next
@@ -45,15 +43,13 @@ Built with [Tauri 2.0](https://tauri.app/) (Rust backend) and [Svelte 5](https:/
 (TypeScript frontend).
 
 <p align="center">
-  <img alt="Kite Ground Control in 3D mode" src="docs/user/assets/main_interface_3d.png" width="820">
+  <img alt="VAYU in 3D mode" src="docs/user/assets/main_interface_3d.png" width="820">
 </p>
 
 <p align="center">
-  <b><a href="https://b14ckyy.github.io/Kite-GC/">📖 Documentation</a></b>
+  <b><a href="https://mannat2424.github.io/V2_GCS/">📖 Documentation</a></b>
   &nbsp;·&nbsp;
-  <b><a href="https://github.com/b14ckyy/Kite-GC/releases">⬇️ Download</a></b>
-  &nbsp;·&nbsp;
-  <b><a href="https://discord.gg/3FM7EWhkg9">💬 Discord</a></b>
+  <b><a href="https://github.com/mannat2424/V2_GCS/releases">⬇️ Download</a></b>
 </p>
 
 ## Highlights
@@ -81,7 +77,7 @@ Everything you'd expect from a ground station:
 - **Comfort** — a multi-language interface (English, German, French, Bulgarian and Chinese) with persistent
   window, layout and settings between sessions.
 
-## What makes Kite special
+## What makes VAYU special
 
 - **Full 3D mode** — Cesium 3D globe with real terrain, a unified 3D mission overlay, an FPV cockpit
   camera with a conformal HUD, and live day/night lighting.
@@ -117,47 +113,30 @@ Everything you'd expect from a ground station:
 ## Download
 
 Grab the latest installer for your platform from the
-[**Releases**](https://github.com/b14ckyy/Kite-GC/releases) page, or [build from source](#building-from-source)
+[**Releases**](https://github.com/mannat2424/V2_GCS/releases) page, or [build from source](#building-from-source)
 below.
 
 ## Documentation
 
-Full documentation is online at **[b14ckyy.github.io/Kite-GC](https://b14ckyy.github.io/Kite-GC/)**:
+Full documentation is online at **[mannat2424.github.io/V2_GCS](https://mannat2424.github.io/V2_GCS/)**:
 
-- **Getting started:** [Installation](https://b14ckyy.github.io/Kite-GC/getting-started/installation/) ·
-  [First connection](https://b14ckyy.github.io/Kite-GC/getting-started/first-connection/) ·
-  [Quick tour](https://b14ckyy.github.io/Kite-GC/getting-started/quick-tour/)
-- **Guides:** [Missions](https://b14ckyy.github.io/Kite-GC/guides/missions/) ·
-  [Telemetry & display](https://b14ckyy.github.io/Kite-GC/guides/telemetry-and-display/) ·
-  [Logbook](https://b14ckyy.github.io/Kite-GC/guides/logbook/) · [Safety](https://b14ckyy.github.io/Kite-GC/guides/safety/) ·
-  [3D map](https://b14ckyy.github.io/Kite-GC/guides/map-3d/) · [Video](https://b14ckyy.github.io/Kite-GC/guides/video/)
-- **Trouble connecting?** [Troubleshooting → Connection](https://b14ckyy.github.io/Kite-GC/troubleshooting/connection/)
-- **For developers:** [Overview](https://b14ckyy.github.io/Kite-GC/for-developers/) ·
-  [Architecture](https://b14ckyy.github.io/Kite-GC/for-developers/architecture/) ·
-  [Building from source](https://b14ckyy.github.io/Kite-GC/for-developers/building/) ·
-  [Contributing](https://b14ckyy.github.io/Kite-GC/for-developers/contributing/)
+- **Getting started:** [Installation](https://mannat2424.github.io/V2_GCS/getting-started/installation/) ·
+  [First connection](https://mannat2424.github.io/V2_GCS/getting-started/first-connection/) ·
+  [Quick tour](https://mannat2424.github.io/V2_GCS/getting-started/quick-tour/)
+- **Guides:** [Missions](https://mannat2424.github.io/V2_GCS/guides/missions/) ·
+  [Telemetry & display](https://mannat2424.github.io/V2_GCS/guides/telemetry-and-display/) ·
+  [Logbook](https://mannat2424.github.io/V2_GCS/guides/logbook/) · [Safety](https://mannat2424.github.io/V2_GCS/guides/safety/) ·
+  [3D map](https://mannat2424.github.io/V2_GCS/guides/map-3d/) · [Video](https://mannat2424.github.io/V2_GCS/guides/video/)
+- **Trouble connecting?** [Troubleshooting → Connection](https://mannat2424.github.io/V2_GCS/troubleshooting/connection/)
+- **For developers:** [Overview](https://mannat2424.github.io/V2_GCS/for-developers/) ·
+  [Architecture](https://mannat2424.github.io/V2_GCS/for-developers/architecture/) ·
+  [Building from source](https://mannat2424.github.io/V2_GCS/for-developers/building/) ·
+  [Contributing](https://mannat2424.github.io/V2_GCS/for-developers/contributing/)
 
-## Community
+## Reporting a problem
 
-Questions, setups, flight videos, or just want to talk ground stations? The Kite community meets on
-Discord (English):
-
-<p align="center">
-  <a href="https://discord.gg/3FM7EWhkg9"><img alt="Join the Kite Discord" src="https://img.shields.io/badge/Discord-join%20the%20Kite%20server-5865F2?logo=discord&logoColor=white&style=for-the-badge"></a>
-</p>
-
-Ask in `#help` when something does not work — a confirmed bug then becomes a
-[GitHub issue](https://github.com/b14ckyy/Kite-GC/issues) (see
-[Reporting a problem](https://b14ckyy.github.io/Kite-GC/troubleshooting/reporting-issues/) for what to include).
-
-## Support development
-
-Kite GC is free, open-source software built in my spare time. If it's useful to you and you'd like to
-support its development, a donation is hugely appreciated — thank you! 💛
-
-<p align="center">
-  <a href="https://paypal.me/b14ckyy"><img alt="Donate via PayPal" src="https://img.shields.io/badge/Donate%20via-PayPal-00457C?logo=paypal&logoColor=white&style=for-the-badge"></a>
-</p>
+Found a bug or have an idea? Open a [GitHub issue](https://github.com/mannat2424/V2_GCS/issues) — see
+[Reporting a problem](https://mannat2424.github.io/V2_GCS/troubleshooting/reporting-issues/) for what to include.
 
 ## Building from source
 
@@ -165,7 +144,7 @@ support its development, a donation is hugely appreciated — thank you! 💛
 - [Node.js](https://nodejs.org/) LTS (v20 or v24)
 - [Rust](https://rustup.rs/) (via rustup)
 - [just](https://github.com/casey/just) — the primary task runner
-- Platform toolchain & system dependencies — see the [Build Guide](https://b14ckyy.github.io/Kite-GC/for-developers/building/)
+- Platform toolchain & system dependencies — see the [Build Guide](https://mannat2424.github.io/V2_GCS/for-developers/building/)
 
 ### Develop
 ```bash
@@ -183,20 +162,19 @@ just build-linux     # Linux release (on Linux)
 
 > **Tip:** install `just` for the best developer experience (see the `justfile` in the project root).
 > More detail — setup, troubleshooting and CI — is in the
-> [Building from source](https://b14ckyy.github.io/Kite-GC/for-developers/building/) guide, and the
-> [Architecture overview](https://b14ckyy.github.io/Kite-GC/for-developers/architecture/) explains how Kite fits together.
+> [Building from source](https://mannat2424.github.io/V2_GCS/for-developers/building/) guide, and the
+> [Architecture overview](https://mannat2424.github.io/V2_GCS/for-developers/architecture/) explains how VAYU fits together.
 
 ## Contributing
 
 Issues and pull requests are welcome — see
-**[Contributing](https://b14ckyy.github.io/Kite-GC/for-developers/contributing/)** for the branching
+**[Contributing](https://mannat2424.github.io/V2_GCS/for-developers/contributing/)** for the branching
 model and coding conventions. CI runs `svelte-check`, `cargo check`, clippy and the Rust tests on
 Windows, macOS and Linux for every pull request. Recommended IDE:
 [VS Code](https://code.visualstudio.com/) with the
 [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode),
 [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) and
 [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) extensions.
-Contributors meet in `#development` on the [Discord](https://discord.gg/3FM7EWhkg9).
 
 ## License
 

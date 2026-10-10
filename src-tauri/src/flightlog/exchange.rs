@@ -118,7 +118,7 @@ fn write_export_info_sidecar(output_path: &Path, flights: &[Flight]) -> Result<(
     let txt_path = output_path.with_extension("txt");
     let mut text = String::new();
 
-    writeln!(&mut text, "KiteGC Flight Export Info").ok();
+    writeln!(&mut text, "VAYU Flight Export Info").ok();
     writeln!(&mut text, "=======================").ok();
     writeln!(&mut text, "Export file: {}", output_path.display()).ok();
     writeln!(&mut text, "Exported at (UTC): {}", chrono::Utc::now().to_rfc3339()).ok();

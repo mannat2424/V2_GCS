@@ -20,7 +20,7 @@ REDIRECT = """<!doctype html>
 <meta charset="utf-8">
 <meta http-equiv="refresh" content="0; url={target}">
 <link rel="canonical" href="{target}">
-<title>Changelog — Kite Ground Control</title>
+<title>Changelog — VAYU</title>
 </head>
 <body>
 <p>The changelog is kept once for every version — <a href="{target}">open it</a>.</p>

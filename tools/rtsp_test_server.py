@@ -1,4 +1,4 @@
-"""Minimal RTSP test server for benching the Kite native RTSP client.
+"""Minimal RTSP test server for benching the VAYU native RTSP client.
 
 Serves ONE client (OPTIONS/DESCRIBE/SETUP/PLAY over TCP), then streams RTP via UDP (to the
 SETUP client_port) or TCP-interleaved — whichever the client asked for. Three payloads:

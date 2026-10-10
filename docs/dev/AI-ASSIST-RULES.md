@@ -1,6 +1,6 @@
 # AI assistant rules
 
-Ready-to-use rules for an **AI coding assistant** working on **Kite Ground Control**. Written for any
+Ready-to-use rules for an **AI coding assistant** working on **VAYU**. Written for any
 agent (primarily **Claude Code**, but also Cursor, Copilot-style agents, …) — save it under whatever
 filename your tool auto-loads (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`, …).
 

@@ -1,5 +1,5 @@
 name: Feature request
-description: Suggest an idea or improvement for Kite Ground Control
+description: Suggest an idea or improvement for VAYU
 title: "[Feature]: "
 labels: ["enhancement"]
 body:
@@ -7,8 +7,8 @@ body:
     attributes:
       value: |
         Thanks for the suggestion! Please describe what you'd like and why. Check the
-        [documentation](https://b14ckyy.github.io/Kite-GC/) and the
-        [existing issues](https://github.com/b14ckyy/Kite-GC/issues) first, in case it's already planned.
+        [documentation](https://mannat2424.github.io/V2_GCS/) and the
+        [existing issues](https://github.com/mannat2424/V2_GCS/issues) first, in case it's already planned.
 
   - type: checkboxes
     id: preflight
@@ -47,7 +47,7 @@ body:
     id: area
     attributes:
       label: Area
-      description: Which part of Kite does this touch?
+      description: Which part of VAYU does this touch?
       options:
         - Mission planning
         - Telemetry & HUD / widgets

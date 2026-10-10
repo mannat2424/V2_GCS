@@ -1,4 +1,4 @@
-# Kite Ground Control - Continuous Integration
+# VAYU - Continuous Integration
 #
 # Runs on every push and pull request.
 # Goal: Catch problems early (especially important for an AI-heavy codebase).
