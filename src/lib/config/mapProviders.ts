@@ -19,9 +19,30 @@ export interface MapProvider {
   /** Run over-zoom placeholder detection on this base layer (ESRI satellite
    *  returns a fixed blank tile instead of a 404 above the available zoom). */
   detectPlaceholders?: boolean;
+  /** Tint the tiles into the app's midnight-navy palette (neutral dark canvases only). */
+  tint?: boolean;
 }
 
 export const MAP_PROVIDERS: MapProvider[] = [
+  {
+    // The default: a dark canvas basemap with its labels as an overlay, tinted navy in Map.svelte.
+    id: "esri-dark",
+    label: "Dark Tactical (ESRI Dark Gray)",
+    url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+    attribution: '&copy; <a href="https://www.esri.com/">Esri</a>, HERE, Garmin, &copy; OpenStreetMap contributors',
+    maxZoom: 16,
+    cesiumMaxZoom: 16,
+    dark: true,
+    tint: true,
+    overlays: [
+      {
+        url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Reference/MapServer/tile/{z}/{y}/{x}",
+        attribution: "",
+        maxZoom: 16,
+        cesiumMaxZoom: 16,
+      },
+    ],
+  },
   {
     id: "osm",
     label: "OpenStreetMap",

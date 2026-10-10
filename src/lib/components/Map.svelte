@@ -242,6 +242,10 @@
   // Cesium darkens its globe's night side to ×0.3 brightness (GlobeFS: lambert*0.9 +
   // vertexShadowDarkness 0.3 → floor 0.3). We mirror that on the Leaflet imagery only.
   let nightDimFactor = 1.0;                    // current applied imagery brightness (1 = none)
+  // Dark basemaps (CARTO Dark Matter) are a neutral charcoal; this nudges them into the app's
+  // midnight-navy palette so the map reads as part of the UI. Imagery providers stay untouched.
+  const DARK_MAP_TINT = 'sepia(0.45) hue-rotate(172deg) saturate(1.9) brightness(1.08) contrast(1.05)';
+  let providerTint = '';
   let nightTimer: ReturnType<typeof setInterval> | undefined; // auto re-check (live time drift)
   let unsubUserGeo: (() => void) | undefined;  // recompute when OS geolocation resolves
   let unsubGeoCenter: (() => void) | undefined; // mobile-only one-shot: center map on first OS fix
@@ -1850,6 +1854,7 @@
 
   function applyProvider(provider: MapProvider) {
     if (!map) return;
+    providerTint = provider.tint ? DARK_MAP_TINT : '';
 
     // Remove existing layers
     if (currentBase) map.removeLayer(currentBase);
@@ -1895,7 +1900,9 @@
   function applyNightDim(factor: number, force = false) {
     if (!force && Math.abs(factor - nightDimFactor) < 0.005) return;
     nightDimFactor = factor;
-    const filter = factor < 0.999 ? `brightness(${factor.toFixed(3)})` : '';
+    const filter = [providerTint, factor < 0.999 ? `brightness(${factor.toFixed(3)})` : '']
+      .filter(Boolean)
+      .join(' ');
     const setF = (layer?: L.TileLayer) => {
       const el = layer?.getContainer?.();
       if (el) {

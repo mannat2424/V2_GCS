@@ -31,6 +31,8 @@ export interface FloatFrame {
   height: number;
   vw: number;
   vh: number;
+  /** Width of a column on the left the window snaps beside (the cockpit sidebar); 0 = none. */
+  leftInset?: number;
 }
 
 const SNAP_THRESHOLD = 56;
@@ -62,7 +64,7 @@ function beginFloatMove(cx: number, cy: number, frame: FloatFrame): { moveTo(cx:
     },
     end() {
       if (!moved) return;
-      const nearLeft = curX <= FLOAT_MARGIN_PX + SNAP_THRESHOLD;
+      const nearLeft = curX <= (frame.leftInset ?? 0) + FLOAT_MARGIN_PX + SNAP_THRESHOLD;
       const nearBottom = curY + height >= vh - FLOAT_SNAP_BOTTOM_PX - SNAP_THRESHOLD;
       if (nearLeft && nearBottom) setFloatSnapped(true);
     },

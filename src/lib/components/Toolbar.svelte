@@ -5,6 +5,7 @@
 
 <script lang="ts">
   import { t } from 'svelte-i18n';
+  import type { Snippet } from 'svelte';
   import { getCurrentWindow } from '@tauri-apps/api/window';
   import WindowControls from '$lib/components/WindowControls.svelte';
   import ConnectionControls from '$lib/components/ConnectionControls.svelte';
@@ -40,6 +41,8 @@
     onOpenRaw,
     onOpenRc,
     onRescanBle,
+    linkMode = false,
+    tabs,
   }: {
     appVersion: string;
     telem: TelemetryData;
@@ -67,7 +70,32 @@
     onOpenRc?: () => void;
     /** Trigger a fresh bounded BLE scan window — called when the device dropdown is opened. */
     onRescanBle?: () => void;
+    /** Cockpit layout: the connection controls fold into a compact "Link" pill with a popover. */
+    linkMode?: boolean;
+    /** Title-bar tabs, drawn between the logo and the status group (flexible, never measured). */
+    tabs?: Snippet;
   } = $props();
+
+  // ── Link pill (cockpit layout) ──
+  let linkOpen = $state(false);
+  let linkEl = $state<HTMLDivElement>();
+  $effect(() => {
+    if (!linkOpen) return;
+    const onDown = (e: PointerEvent) => {
+      if (linkEl && !linkEl.contains(e.target as Node)) linkOpen = false;
+    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') linkOpen = false; };
+    window.addEventListener('pointerdown', onDown, true);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('pointerdown', onDown, true);
+      window.removeEventListener('keydown', onKey);
+    };
+  });
+  // A finished connect closes the popover — the pill itself then shows the link.
+  $effect(() => {
+    if (connStatus === 'connected') linkOpen = false;
+  });
 
   // Sensor-health bar: one tile per sensor the airframe reports (helpers/sensorHealth.ts — shared
   // with the phone's warning chip). EKF tile is ArduPilot only (INAV never sets ekfStatus).
@@ -113,7 +141,8 @@
     // second row is positioned out of flow and must not count towards the row it left.
     let needed = 0;
     for (const child of headerEl.children) {
-      if (child.classList.contains('conn-row')) continue;
+      // The tab strip is flexible (it scrolls), so it never asks for room of its own.
+      if (child.classList.contains('conn-row') || child.classList.contains('toolbar-tabs')) continue;
       needed += (child as HTMLElement).scrollWidth;
     }
     const avail = headerEl.clientWidth - H_PAD;
@@ -204,7 +233,7 @@
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<header class="toolbar" class:collapsed={toolbarCollapsed} bind:this={headerEl} data-tauri-drag-region ondblclick={onTitlebarDblClick}>
+<header class="toolbar" class:link-mode={linkMode} class:collapsed={toolbarCollapsed} bind:this={headerEl} data-tauri-drag-region ondblclick={onTitlebarDblClick}>
   {#if isMacOS}
     <!-- macOS: window controls live at top-left (native traffic-light placement). -->
     <WindowControls />
@@ -227,6 +256,9 @@
       {/if}
     </span>
   </div>
+  {#if tabs}
+    <div class="toolbar-tabs" data-tauri-drag-region>{@render tabs()}</div>
+  {/if}
   <div class="toolbar-center" data-tauri-drag-region>
     {#if $rcEngaged.on}
       <button class="rc-active-pill" onclick={onOpenRc} title={$t('rc.activeBadgeHint')}>
@@ -280,7 +312,49 @@
   {/snippet}
 
   <div class="toolbar-right" data-tauri-drag-region>
-    {#if !connOnSecondRow}
+    {#if linkMode}
+      <div class="link-root" bind:this={linkEl}>
+        <button
+          class="link-pill"
+          class:open={linkOpen}
+          class:connected={connStatus === 'connected'}
+          class:connecting={isConnecting && connStatus !== 'connected'}
+          onclick={() => (linkOpen = !linkOpen)}
+          title={$t('connection.panelTitle')}
+          aria-expanded={linkOpen}
+        >
+          <span class="link-dot"></span>
+          <span class="link-text">{connLabel}</span>
+          <span class="link-proto">{protoLabel}</span>
+          <svg class="link-caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" /></svg>
+        </button>
+        {#if linkOpen}
+          <div class="link-pop">
+            <div class="link-pop-title">{$t('connection.panelTitle')}</div>
+            <ConnectionControls
+              stacked
+              {telem}
+              {ports}
+              {bleDeviceList}
+              {isBleScanning}
+              {connStatus}
+              {isConnecting}
+              bind:selectedTransport
+              bind:selectedProtocol
+              bind:selectedPort
+              bind:selectedBaud
+              bind:tcpHost
+              bind:tcpPort
+              bind:portIsAuto
+              bind:selectedBleDevice
+              {baudRates}
+              {onConnect}
+              {onRescanBle}
+            />
+          </div>
+        {/if}
+      </div>
+    {:else if !connOnSecondRow}
       <div class="port-controls">{@render connectionControls()}</div>
     {/if}
     <button
@@ -315,7 +389,7 @@
     aria-label={toolbarCollapsed ? $t('connection.expandBar') : $t('connection.collapseBar')}
     title={toolbarCollapsed ? $t('connection.expandBar') : $t('connection.collapseBar')}
   >{toolbarCollapsed ? '⌄' : '⌃'}</button>
-  {#if connOnSecondRow}
+  {#if connOnSecondRow && !linkMode}
     <!-- Floats below the bar rather than growing it: the app grid pins the toolbar row to 53 px and
          the map/panel overlays offset against that same number, so a taller header would drag four
          unrelated surfaces with it. Only ever visible while disconnected. -->
@@ -592,6 +666,105 @@
   }
 
   /* Relay dropdown toggle — always visible, right of the connection controls. */
+  /* ── Cockpit layout: title-bar tabs + Link pill ── */
+  .toolbar.link-mode .toolbar-left {
+    margin-right: 0;
+  }
+  .toolbar.link-mode .toolbar-center {
+    margin: 0 12px;
+  }
+  .toolbar-tabs {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-self: stretch;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 18px;
+  }
+  .link-root {
+    position: relative;
+  }
+  .link-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    height: 30px;
+    padding: 0 10px 0 11px;
+    border-radius: 15px;
+    border: 1px solid rgba(148, 178, 214, 0.22);
+    background: rgba(148, 178, 214, 0.06);
+    color: #d6dee9;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s, border-color 0.15s;
+  }
+  .link-pill:hover,
+  .link-pill.open {
+    background: rgba(56, 189, 248, 0.14);
+    border-color: rgba(56, 189, 248, 0.6);
+  }
+  .link-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.7);
+  }
+  .link-pill.connecting .link-dot {
+    background: #f59e0b;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.8);
+    animation: link-blink 1s ease-in-out infinite;
+  }
+  .link-pill.connected .link-dot {
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+  }
+  @keyframes link-blink {
+    50% { opacity: 0.35; }
+  }
+  .link-proto {
+    color: #7f8da2;
+    font-weight: 500;
+  }
+  .link-caret {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.7;
+    transition: transform 0.15s;
+  }
+  .link-pill.open .link-caret {
+    transform: rotate(180deg);
+  }
+  .link-pop {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 400;
+    width: max-content;
+    max-width: min(600px, calc(100vw - 24px));
+    padding: 12px;
+    background: rgba(12, 18, 26, 0.98);
+    border: 1px solid rgba(148, 178, 214, 0.16);
+    border-top: 2px solid #38bdf8;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+  }
+  .link-pop-title {
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #7f8da2;
+  }
+
   .relay-toggle {
     height: 28px;
     box-sizing: border-box;

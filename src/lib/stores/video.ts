@@ -2006,13 +2006,14 @@ export const FLOAT_BTN_GAP_PX = 8;
  *  for the window itself and for +page, which places the swapped-in map and the dock reserve by it.
  *  The picture's box is the inner one (outer minus the bezel), and THAT carries the stream's aspect
  *  ratio exactly — sized from the inside out, or the bezel's 8 px would leave hairline bars. */
-export function floatFrameRect(s: VideoState, vw: number, vh: number): { left: number; top: number; width: number; height: number } {
+export function floatFrameRect(s: VideoState, vw: number, vh: number, leftInset = 0): { left: number; top: number; width: number; height: number } {
   const aspect = s.aspect || 16 / 9;
   const height = Math.min(Math.round(FLOAT_FRAC_MAX * vh), Math.max(FLOAT_MIN_H_PX, Math.round(s.floatHeightFrac * vh)));
   const innerH = height - 2 * FLOAT_BEZEL_PX;
   const innerW = Math.min(Math.round(innerH * aspect), Math.round(vw * FLOAT_MAX_W_FRAC) - 2 * FLOAT_BEZEL_PX);
   const width = innerW + 2 * FLOAT_BEZEL_PX;
-  const left = s.floatSnapped ? FLOAT_MARGIN_PX : s.floatX;
+  // `leftInset`: a column the window must keep clear of (the cockpit instrument sidebar).
+  const left = s.floatSnapped ? leftInset + FLOAT_MARGIN_PX : Math.max(leftInset, s.floatX);
   const top = s.floatSnapped ? vh - height - FLOAT_SNAP_BOTTOM_PX : s.floatY;
   return { left, top, width, height };
 }

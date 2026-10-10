@@ -180,6 +180,7 @@
     "videoRetry": "Retry",
     "dev": "DEV Playground",
     "closeTab": "Close tab",
+    "instruments": "Flight data",
     "startTitle": "No tabs open",
     "startHint": "Pick the map, the video or any tool to open it in a tab."
   },

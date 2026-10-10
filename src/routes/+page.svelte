@@ -102,7 +102,7 @@
   import type { TileCacheStats } from "$lib/cache/tileCache";
   import WidgetPanel from "$lib/components/WidgetPanel.svelte";
   import VideoBackdropMap from "$lib/components/video/VideoBackdropMap.svelte";
-  import { LARGE_BASE_VMIN } from "$lib/config/widgetRegistry";
+  import { LARGE_BASE_VMIN, effectiveWidgetSize } from "$lib/config/widgetRegistry";
   import FloatingVideoWindow from "$lib/components/video/FloatingVideoWindow.svelte";
   import { startDetachedVideo, stopDetachedVideo } from "$lib/controllers/detachedVideo";
   import PhoneVideoDock from "$lib/components/phone/PhoneVideoDock.svelte";
@@ -139,8 +139,8 @@
   import { modeCategory } from "$lib/helpers/flightModeRegistry";
 
   // ── Layout zone CSS custom properties (driven by layout store) ──
-  const gridSideWidth = $derived(
-    $layout.sideDock.sizeOverride ?? GRID_DEFAULTS.sideDockWidth
+  const gridSideWidth = $derived.by(() =>
+    useDock ? '0px' : $layout.sideDock.sizeOverride ?? GRID_DEFAULTS.sideDockWidth
   );
 
   // Map view mode: 2D (Leaflet) or 3D (CesiumJS)
@@ -236,7 +236,12 @@
   const useDock = !phoneUi;
   const appDockH = useDock ? APP_DOCK_PX : 0;
   /** Height of the browser-style tab bar under the toolbar (0 on the phone). */
-  const tabBarH = useDock ? TAB_BAR_PX : 0;
+  // The tabs live in the toolbar (title-bar tabs) — no separate row; TAB_BAR_PX stays exported for
+  // the other layout code that still offsets by --tabbar-h (0 now).
+  const tabBarH = 0;
+  // Cockpit layout (desktop + tablet): the flight instruments live in a solid left sidebar instead of
+  // floating over the map, and the connection controls fold into the toolbar's Link pill.
+  const cockpit = useDock;
   /** Width of the grid's left column: the nav rail where it exists, a plain margin otherwise. */
   const railColW = useDock ? 8 : 62;
   // Main view (the dock's view tabs). The phone always shows the map view.
@@ -282,7 +287,7 @@
   const bottomRows = $derived(isPhonePortrait ? 2 : 1);
   // Phone gets a taller dock (room for two HUD rows); otherwise the layout store override or default.
   const gridBottomHeight = $derived(
-    $layout.bottomDock.sizeOverride ??
+    useDock ? '0px' : $layout.bottomDock.sizeOverride ??
       (isPhonePortrait ? 'clamp(230px, 40vh, 380px)' : GRID_DEFAULTS.bottomDockHeight)
   );
 
@@ -319,7 +324,7 @@
   // uiScale. The desktop frame has a glass bezel: the map goes into the INNER box.
   const logicalW = $derived(winW / uiScale);
   const logicalH = $derived(winH / uiScale);
-  const floatFrame = $derived(floatFrameRect($videoState, logicalW, logicalH));
+  const floatFrame = $derived.by(() => floatFrameRect($videoState, logicalW, logicalH, contentLeft));
   // Phone (PHONE_VIDEO.md D2): the DOCKED frame instead — the stream aspect fitted into 40 % of the
   // map-area height / 50 % of its width, whichever binds — or 2/3 of that with the frame's corner
   // toggle (`phoneDockCompact`); bottom-right of the map area, left of the corner-control column
@@ -380,11 +385,18 @@
     phoneUi
       ? 'top:0; bottom:0;' // the whole screen — the map runs on under the widget column's glass
       : `top:${Math.round((53 + tabBarH) * uiScale)}px; bottom:${Math.round(24 * uiScale)}px;` +
-        (shownView === 'split'
-          ? `left:${Math.round(splitMapPane.left * winW)}px; width:${Math.round((splitMapPane.right - splitMapPane.left) * winW)}px; right:auto;`
-          : layoutMode === 'side'
-            ? `left:${Math.round($viewMode.sideFrac * winW)}px; width:${Math.round((1 - $viewMode.sideFrac) * winW)}px; right:auto;`
-            : ''),
+        (() => {
+          // The content area starts right of the cockpit sidebar; the panes are fractions of it.
+          const cl = contentLeft * uiScale;
+          const cw = winW - cl;
+          const [l, r] =
+            shownView === 'split'
+              ? [splitMapPane.left, splitMapPane.right]
+              : layoutMode === 'side'
+                ? [$viewMode.sideFrac, 1]
+                : [0, 1];
+          return `left:${Math.round(cl + l * cw)}px; width:${Math.round((r - l) * cw)}px; right:auto;`;
+        })(),
   );
   const mapFloating = $derived($videoState.mapLocation === 'floating');
   const mapInWidget = $derived($videoState.mapLocation === 'widget');
@@ -780,12 +792,12 @@
   // Not on the phone: there is no dock to retreat from, the video runs under the widget column.
   const ufActive = $derived($videoState.unobstructedFullscreen && mapInFrame && !phoneUi);
   const ufRight = $derived(
-    ufActive && $layout.sideDock.visible && panels.right.length > 0
+    ufActive && !cockpit && $layout.sideDock.visible && panels.right.length > 0
       ? Math.min(sideDockW, sidePanelCrossPx + 2 * DOCK_PAD)
       : 0
   );
   const ufBottomExtra = $derived(
-    ufActive && $layout.bottomDock.visible && panels.bottom.length > 0
+    ufActive && !cockpit && $layout.bottomDock.visible && panels.bottom.length > 0
       ? Math.min(bottomDockH, bottomPanelCrossPx + 2 * DOCK_PAD)
       : 0
   );
@@ -988,7 +1000,50 @@
   /** The Video tab is in front: the picture gets the whole zone, the widget docks step aside. */
   const videoTabActive = $derived(layoutMode === 'view' && shownView === 'video');
   /** Side-by-side: the panel pane's width (logical px, the zoomed chrome's units). */
-  const sidePaneW = $derived(Math.round($viewMode.sideFrac * logicalW));
+  // ── Cockpit sidebar ──
+  // Shown with the map (Map / Split tabs and the side-by-side tools); the Video tab and full pages
+  // take the whole screen. `contentLeft` = where the map/video content area starts (logical px).
+  const SIDEBAR_PAD = 12;
+  const GRID_GAP = 8; // = WidgetPanel's GRID_GAP_PX
+  const SIDEBAR_PANEL_GAP = 14;
+  const SIDEBAR_HEAD = 26;
+  const sidebarW = $derived(cockpit ? Math.round(Math.min(330, Math.max(236, logicalW * 0.17))) : 0);
+  const sidebarShown = $derived(
+    cockpit && (layoutMode === 'side' || (layoutMode === 'view' && shownView !== 'video')),
+  );
+  const contentLeft = $derived(sidebarShown ? sidebarW : 0);
+  /** The grid's large-tile edge: as wide as the column, unless the stacked rows need less height. */
+  const gridUnit = $derived.by(() => {
+    const innerW = sidebarW - 2 * SIDEBAR_PAD;
+    const lists = [panels.bottom, panels.right].filter((l) => l.length > 0);
+    let a = 0; // height in units of U
+    let b = 0; // fixed px
+    for (const ids of lists) {
+      let half = false;
+      let rows = 0;
+      for (const id of ids) {
+        const st = effectiveWidgetSize(id, panels.sizes);
+        if (st === 'S') {
+          if (half) { half = false; continue; }
+          half = true;
+          a += 0.5;
+          b -= GRID_GAP / 2;
+          rows++;
+        } else {
+          half = false;
+          a += st === 'W' ? 0.5 : 1;
+          rows++;
+        }
+      }
+      b += Math.max(0, rows - 1) * GRID_GAP;
+    }
+    b += Math.max(0, lists.length - 1) * SIDEBAR_PANEL_GAP;
+    const availH = logicalH - toolbarH - 24 - 2 * SIDEBAR_PAD - SIDEBAR_HEAD;
+    const fit = a > 0 ? Math.floor((availH - b) / a) : innerW;
+    return Math.max(96, Math.min(innerW, fit));
+  });
+  /** Side-by-side: the panel pane's width (logical px), a fraction of the content area. */
+  const sidePaneW = $derived(Math.round($viewMode.sideFrac * (logicalW - contentLeft)));
 
   const tabBarItems = $derived<TabBarItem[]>(
     openTabKeys.map((key) => {
@@ -1170,7 +1225,7 @@
     const el = e.currentTarget as HTMLElement;
     el.setPointerCapture(e.pointerId);
     splitDragging = true;
-    const move = (ev: PointerEvent) => setFrac(ev.clientX / winW);
+    const move = (ev: PointerEvent) => setFrac((ev.clientX / uiScale - contentLeft) / (logicalW - contentLeft));
     const up = () => {
       splitDragging = false;
       el.removeEventListener('pointermove', move);
@@ -1320,7 +1375,38 @@
     temperatureUnit: 'c',
   };
   // Sanitised: a stored layout may still name a widget the registry no longer has.
-  panels = widgetCtrl.sanitizePanels(saved.panels ?? defaultPanels);
+  const restoredPanels = widgetCtrl.sanitizePanels(saved.panels ?? defaultPanels);
+  panels = restoredPanels;
+  // First start of the cockpit layout: arrange the instruments for the sidebar grid once — large
+  // dials first, then the small tiles in reading pairs (speed + altitude, battery + GPS, …) — and
+  // switch the map to the dark tactical style if it is still on the old default. The pilot's own
+  // arrangement wins from then on (edit mode works in the sidebar as before).
+  if (useDock) {
+    try {
+      if (!localStorage.getItem('vayu-cockpit-v1')) {
+        const SMALL_ORDER = ['speed', 'altitude', 'battery', 'gps', 'rcLink', 'home', 'flightMode', 'battery2'];
+        const all = [...restoredPanels.bottom, ...restoredPanels.right];
+        const big = all.filter((id) => effectiveWidgetSize(id, restoredPanels.sizes) !== 'S');
+        const small = all
+          .filter((id) => effectiveWidgetSize(id, restoredPanels.sizes) === 'S')
+          .sort((x, y) => (SMALL_ORDER.indexOf(x) + 99) % 99 - (SMALL_ORDER.indexOf(y) + 99) % 99);
+        const arranged = { ...restoredPanels, bottom: [...big, ...small.slice(0, 2)], right: small.slice(2) };
+        panels = arranged;
+        settings.patch({ panels: arranged });
+        localStorage.setItem('vayu-cockpit-v1', '1');
+      }
+      // The cockpit migration briefly switched the map to CARTO Dark (whose tiles now need an API
+      // key); the pilot wants the satellite map back — restore it once. Dark stays in Settings.
+      if (!localStorage.getItem('vayu-map-restore-v1')) {
+        if (saved.mapProvider === 'cartodb-dark' || saved.mapProvider === 'esri-dark') {
+          settings.patch({ mapProvider: 'esri-hybrid' });
+        }
+        localStorage.setItem('vayu-map-restore-v1', '1');
+      }
+    } catch {
+      /* storage unavailable — keep the stored arrangement */
+    }
+  }
   if (phoneUi) {
     // Same for the phone grid: registry drift, sizes, overflow → deactivate.
     const normalized = phoneCtrl.normalizePhoneWidgets(saved.phoneWidgets ?? phoneCtrl.DEFAULT_PHONE_WIDGETS);
@@ -3645,6 +3731,11 @@
 
 <svelte:window bind:innerWidth={winW} bind:innerHeight={winH} />
 
+<!-- Title-bar tabs (cockpit layout): rendered by the Toolbar between the logo and the status group. -->
+{#snippet titleTabs()}
+  <TabBar embedded tabs={tabBarItems} {activeKey} onActivate={activateTabKey} onClose={closeTabKey} />
+{/snippet}
+
 <div
   class="ui-root"
   style:--ui-scale={uiScale}
@@ -3767,7 +3858,7 @@
       <div
         class="mf-corner mf-grip"
         style="top:{3 * uiScale}px; right:{3 * uiScale}px; width:{26 * uiScale}px; height:{26 * uiScale}px; border-width:{floatBezel * uiScale}px; border-top-right-radius:{8 * uiScale}px;"
-        onpointerdown={(e) => startFloatResize(e, { left: floatLeft, top: floatTop, width: floatW, height: floatH, vw: logicalW, vh: logicalH })}
+        onpointerdown={(e) => startFloatResize(e, { left: floatLeft, top: floatTop, width: floatW, height: floatH, vw: logicalW, vh: logicalH, leftInset: contentLeft })}
         title={$t('video.resizeWindow')}
       ></div>
       <!-- The window's move handle, redrawn above the map in the picture's bottom-left corner — the
@@ -3776,7 +3867,7 @@
       <div
         class="mf-corner mf-move"
         style="bottom:{3 * uiScale}px; left:{3 * uiScale}px; width:{26 * uiScale}px; height:{26 * uiScale}px; padding:{uiScale}px; border-width:{floatBezel * uiScale}px; border-radius:{8 * uiScale}px;"
-        onpointerdown={(e) => startFloatMove(e, { left: floatLeft, top: floatTop, width: floatW, height: floatH, vw: logicalW, vh: logicalH })}
+        onpointerdown={(e) => startFloatMove(e, { left: floatLeft, top: floatTop, width: floatW, height: floatH, vw: logicalW, vh: logicalH, leftInset: contentLeft })}
         title={$t('video.moveWindow')}
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -3910,17 +4001,13 @@
     onOpenRaw={() => (rawTelemetryOpen = true)}
     onOpenRc={() => selectTab('rc-control')}
     onRescanBle={bleScanWindow}
+    linkMode={cockpit}
+    tabs={useDock ? titleTabs : undefined}
   />
     <RelayPanel open={relayPanelOpen} />
   </div>
   {/if}
 
-  {#if useDock}
-    <!-- ======= TAB BAR (browser-style: pinned views + one tab per open panel) ======= -->
-    <div class="zone-tabbar">
-      <TabBar tabs={tabBarItems} {activeKey} onActivate={activateTabKey} onClose={closeTabKey} />
-    </div>
-  {/if}
 
   {#if useDock && activeKey === 'none'}
     <!-- ======= START PAGE (every tab closed) ======= -->
@@ -3953,7 +4040,9 @@
       class:split-pane={shownView === 'split'}
       class:nv-active={videoLive && $activeNativeSurfaces.has('main')}
       class:unobstructed={ufActive}
-      style={shownView === 'split' ? `left:${splitVideoPane.left * 100}%; right:${(1 - splitVideoPane.right) * 100}%;` : ''}
+      style={shownView === 'split'
+        ? `left:${contentLeft + splitVideoPane.left * (logicalW - contentLeft)}px; right:${(1 - splitVideoPane.right) * (logicalW - contentLeft)}px;`
+        : `left:${contentLeft}px;`}
       bind:clientWidth={ufWrapW}
       bind:clientHeight={ufWrapH}
     >
@@ -4032,12 +4121,12 @@
     <div
       class="split-divider"
       class:dragging={splitDragging}
-      style:left="{$viewMode.splitFrac * 100}%"
+      style:left="{contentLeft + $viewMode.splitFrac * (logicalW - contentLeft)}px"
       role="separator"
       aria-orientation="vertical"
       aria-valuenow={Math.round($viewMode.splitFrac * 100)}
       title={$t('dock.resizeSplit')}
-      onpointerdown={startSplitDrag}
+      onpointerdown={(e) => startSplitDrag(e, setSplitFrac)}
     >
       <span class="split-line"></span>
       <button
@@ -4109,8 +4198,46 @@
     />
   {/if}
 
+  {#if sidebarShown}
+    <!-- ======= COCKPIT SIDEBAR — the flight instruments in a solid column beside the map ======= -->
+    <aside class="cockpit-sidebar" style:width="{sidebarW}px" style:padding="{SIDEBAR_PAD}px">
+      <div class="cs-head" style:height="{SIDEBAR_HEAD}px">{$t('dock.instruments')}</div>
+      <div class="cs-panels" style:gap="{SIDEBAR_PANEL_GAP}px">
+        <WidgetPanel
+          widgetIds={panels.bottom}
+          orientation="grid"
+          gridUnitPx={gridUnit}
+          availableVmin={0}
+          sizes={panels.sizes ?? {}}
+          {telem}
+          bind:editing={widgetEditMode}
+          {interfaceSettings}
+          onreorder={handleReorder}
+          onreceive={handleReceive}
+          onresize={handleResize}
+          panelId="bottom"
+        />
+        <WidgetPanel
+          widgetIds={panels.right}
+          orientation="grid"
+          gridUnitPx={gridUnit}
+          availableVmin={0}
+          sizes={panels.sizes ?? {}}
+          {telem}
+          bind:editing={widgetEditMode}
+          {interfaceSettings}
+          onreorder={handleReorder}
+          onreceive={handleReceive}
+          onresize={handleResize}
+          panelId="right"
+        />
+      </div>
+    </aside>
+  {/if}
+
   {#if !phoneUi}
   <!-- ======= BOTTOM WIDGET PANEL ======= -->
+  {#if !cockpit}
   <div class="zone-bottom-dock" class:zone-hidden={!$layout.bottomDock.visible || videoTabActive} class:panel-editing={widgetEditMode} bind:clientWidth={bottomDockW} bind:clientHeight={bottomDockH} style:padding-left="{bottomLeftReserve}px">
     <div class="panel-bottom-wrap">
       <!-- Edit mode (both docks share it): entered by a long-press on a widget, left by a click
@@ -4134,12 +4261,14 @@
     </div>
   </div>
 
+  {/if}
   <!-- ======= FLOATING VIDEO WINDOW (+ its show/hide toggle) ======= -->
   {#if shownView !== 'split'}
-    <FloatingVideoWindow left={floatLeft} top={floatTop} width={floatW} height={floatH} vw={logicalW} vh={logicalH} />
+    <FloatingVideoWindow left={floatLeft} top={floatTop} width={floatW} height={floatH} vw={logicalW} vh={logicalH} leftInset={contentLeft} />
   {/if}
 
   <!-- ======= RIGHT WIDGET PANEL ======= -->
+  {#if !cockpit}
   <div class="zone-side-dock" class:zone-hidden={!$layout.sideDock.visible || videoTabActive} class:panel-editing={widgetEditMode} bind:clientWidth={sideDockW} bind:clientHeight={sideDockH}>
     <WidgetPanel
       widgetIds={panels.right}
@@ -4159,6 +4288,7 @@
     />
   </div>
 
+  {/if}
   <!-- ======= MAP CONTROLS RESERVED AREA ======= -->
   <div class="zone-map-controls">
     <!-- reserved for map control buttons (zoom, 3D toggle etc.) -->
@@ -4207,6 +4337,7 @@
       <div
         class="page-ground"
         class:side={layoutMode === 'side'}
+        style:left={layoutMode === 'side' ? `${contentLeft}px` : null}
         style:width={layoutMode === 'side' ? `${sidePaneW}px` : null}
       ></div>
     {/if}
@@ -4216,6 +4347,7 @@
       class:layout-page={layoutMode === 'page'}
       class:layout-side={layoutMode === 'side'}
       style:--side-w="{sidePaneW}px"
+      style:--content-left="{contentLeft}px"
       style:--app-dock-h="{appDockH}px"
       style:--rail-w="{useDock ? 12 : 62}px"
       style:--app-dock-clear="{useDock ? 24 + appDockH + 6 : 62}px"
@@ -4374,7 +4506,7 @@
       <div
         class="split-divider side-divider"
         class:dragging={splitDragging}
-        style:left="{sidePaneW}px"
+        style:left="{contentLeft + sidePaneW}px"
         role="separator"
         aria-orientation="vertical"
         aria-valuenow={Math.round($viewMode.sideFrac * 100)}
@@ -4388,7 +4520,7 @@
       <!-- ======= APP DOCK (iOS-style shelf: views · panel apps · utilities) =======
            In the panels layer so it (and its hover names) stay above full pages and panels.
            Tucked away on the start page, whose launcher grid already shows every app. -->
-      <div class="dock-float" class:tucked={layoutMode === 'start'} style:height="{appDockH}px">
+      <div class="dock-float" class:tucked={layoutMode === 'start'} style:height="{appDockH}px" style:left="{contentLeft}px">
         <AppDock groups={dockGroups} onSelect={onDockSelect} />
       </div>
     {/if}
@@ -4952,11 +5084,48 @@
     pointer-events: none;
   }
 
-  /* ── Tab bar row ──────────────────────────────────────────────── */
-  .zone-tabbar {
-    grid-area: tabbar;
-    z-index: 190;
-    min-width: 0;
+  /* ── Cockpit sidebar ───────────────────────────────────────────
+     A solid instrument column from the toolbar to the status bar; the map / video content area
+     starts at its right edge (contentLeft). Widgets keep their own glass cards inside it. */
+  .cockpit-sidebar {
+    position: absolute;
+    top: 53px;
+    bottom: 24px;
+    left: 0;
+    z-index: 100;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background:
+      radial-gradient(120% 40% at 50% 0%, rgba(56, 189, 248, 0.06), transparent 70%),
+      linear-gradient(180deg, #0d141e, #090d14);
+    border-right: 1px solid #1c2633;
+    box-shadow: 4px 0 18px rgba(0, 0, 0, 0.35);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+  }
+  .cockpit-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  :global(html.is-mobile) .cockpit-sidebar {
+    top: var(--toolbar-h, 53px);
+  }
+  .cs-head {
+    align-self: stretch;
+    display: flex;
+    align-items: flex-start;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: #5f6f86;
+  }
+  .cs-panels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* ── Start page (every tab closed) ─────────────────────────────
@@ -5116,6 +5285,7 @@
     top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px) + 10px);
   }
   .panels-host.layout-side :global(.ps) {
+    left: calc(var(--content-left, 0px) + 12px);
     right: auto;
     width: calc(var(--side-w) - 12px - 7px);
   }

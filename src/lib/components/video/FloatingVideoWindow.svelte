@@ -61,7 +61,8 @@
     /** Logical viewport (the zoomed chrome layer's box) — drag clamping + the parked button corner. */
     vw,
     vh,
-  }: { left: number; top: number; width: number; height: number; vw: number; vh: number } = $props();
+    leftInset = 0,
+  }: { left: number; top: number; width: number; height: number; vw: number; vh: number; leftInset?: number } = $props();
 
   /** A source is active (Start pressed): the window may show, the toggle button exists. While the
    *  picture is in the DETACHED window there is nothing here to show or park (D6), so the frame and
@@ -131,7 +132,7 @@
   // the bottom-left screen corner (parked window, or a window moved away from the corner). Its
   // left/top transition is the "swipe" between the two.
   const btnAtFrame = $derived(open && $videoState.floatSnapped);
-  const btnLeft = $derived(btnAtFrame ? left + width + FLOAT_BTN_GAP_PX : FLOAT_MARGIN_PX);
+  const btnLeft = $derived(btnAtFrame ? left + width + FLOAT_BTN_GAP_PX : leftInset + FLOAT_MARGIN_PX);
   const btnTop = $derived(btnAtFrame ? top + height - FLOAT_BTN_PX : vh - FLOAT_SNAP_BOTTOM_PX - FLOAT_BTN_PX);
   const btnLabel = $derived(
     mapHere
@@ -145,7 +146,7 @@
   });
 
   // ── Gestures (helpers/floatWindowGestures — +page's mini-frame corners share both) ──
-  const frame = () => ({ left, top, width, height, vw, vh });
+  const frame = () => ({ left, top, width, height, vw, vh, leftInset });
   function onMovePointerDown(e: PointerEvent) {
     startFloatMove(e, frame());
   }

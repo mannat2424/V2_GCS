@@ -30,9 +30,15 @@
     onreceive,
     onresize,
     panelId,
+    gridUnitPx = 0,
   }: {
     widgetIds: string[];
-    orientation: 'horizontal' | 'vertical';
+    /** `grid`: the cockpit sidebar — a fixed-width column (`gridUnitPx`) where large / wide tiles
+     *  take a full row and small tiles pair up two per row. Sizes come from `gridUnitPx`, not from
+     *  the vmin budget. */
+    orientation: 'horizontal' | 'vertical' | 'grid';
+    /** Grid mode: the column's inner width = a large tile's edge (px). */
+    gridUnitPx?: number;
     availableVmin: number;
     maxWidgetVmin?: number;
     pxPerVmin?: number;
@@ -248,7 +254,7 @@
     const idxAttr = slot.getAttribute('data-slot-idx');
     const idx = idxAttr != null ? Number(idxAttr) : widgetIds.length;
     const rect = slot.getBoundingClientRect();
-    const pastMid = orientation === 'horizontal'
+    const pastMid = orientation !== 'vertical'
       ? x > rect.left + rect.width / 2
       : y > rect.top + rect.height / 2;
     return pastMid ? idx + 1 : idx;
@@ -339,7 +345,10 @@
 
   // Convert vmin sizes → px for container-relative rendering. `sizePx` is the cross-axis extent;
   // `wPx`/`hPx` the widget's own box (squares are sizePx², a W tile is 2:1 along the main axis).
-  let items = $derived(computeSizes().map(s => {
+  /** Gap between grid tiles (px) — +page sizes the column with the same number. */
+  const GRID_GAP_PX = 8;
+
+  let items = $derived(orientation === 'grid' ? gridItems() : computeSizes().map(s => {
     const sizePx = s.size * pxPerVmin;
     const wide = s.state === 'W';
     return {
@@ -349,7 +358,18 @@
       hPx: wide && orientation === 'vertical' ? sizePx / 2 : sizePx,
     };
   }));
-  const gapPx = $derived(0.5 * pxPerVmin);
+  // Grid: L = a full row (U × U), W = a full row at half height, S = half a row (two per row).
+  function gridItems() {
+    const U = Math.max(0, gridUnitPx);
+    const half = Math.floor((U - GRID_GAP_PX) / 2);
+    return widgetIds.map((id) => {
+      const state = effectiveWidgetSize(id, sizes);
+      const wPx = state === 'S' ? half : U;
+      const hPx = state === 'S' ? half : state === 'W' ? Math.round(U / 2) : U;
+      return { id, state, size: 0, sizePx: hPx, wPx, hPx };
+    });
+  }
+  const gapPx = $derived(orientation === 'grid' ? GRID_GAP_PX : 0.5 * pxPerVmin);
 
   // Report the cross-axis extent (= the largest widget) — see the `crossPx` prop.
   $effect(() => {
@@ -359,6 +379,7 @@
 
   // Check if panel can accept `widgetId` (in its current size state) as one more widget
   function canAcceptMore(widgetId: string): boolean {
+    if (orientation === 'grid') return true; // the sidebar re-fits its unit to whatever it holds
     const effBase = Math.min(maxWidgetVmin, LARGE_BASE_VMIN);
     let totalUnits = unitsFor(effectiveWidgetSize(widgetId, sizes));
     for (const id of widgetIds) totalUnits += unitsFor(effectiveWidgetSize(id, sizes));
@@ -480,7 +501,7 @@
 
     // Determine insertion side based on cursor position vs slot midpoint
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-    const pastMid = orientation === 'horizontal'
+    const pastMid = orientation !== 'vertical'
       ? e.clientX > rect.left + rect.width / 2
       : e.clientY > rect.top + rect.height / 2;
     insertIdx = pastMid ? idx + 1 : idx;
@@ -563,7 +584,7 @@
   class:editing
   class:empty={widgetIds.length === 0}
   class:drag-hover={externalDragOver}
-  style="gap: {gapPx}px;"
+  style="gap: {gapPx}px;{orientation === 'grid' ? ` width: ${gridUnitPx}px;` : ''}"
   oncontextmenu={(e) => { if (pressTimer || editing) e.preventDefault(); }}
 >
   {#each items as item, idx (item.id)}
@@ -641,6 +662,14 @@
     :global(html.is-mobile) .widget-panel.vertical {
       justify-content: flex-start;
     }
+  }
+
+  /* Cockpit sidebar grid: rows of one large tile or two small ones (width set inline). */
+  .widget-panel.grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-between;
   }
 
   .widget-panel.vertical {
@@ -760,12 +789,14 @@
   }
 
   /* Horizontal: vertical insertion lines */
-  .widget-panel.horizontal .widget-slot.insert-before::before {
+  .widget-panel.horizontal .widget-slot.insert-before::before,
+  .widget-panel.grid .widget-slot.insert-before::before {
     left: -3px;
     top: 0; bottom: 0;
     width: 3px;
   }
-  .widget-panel.horizontal .widget-slot.insert-after::after {
+  .widget-panel.horizontal .widget-slot.insert-after::after,
+  .widget-panel.grid .widget-slot.insert-after::after {
     right: -3px;
     top: 0; bottom: 0;
     width: 3px;

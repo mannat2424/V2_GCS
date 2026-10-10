@@ -29,11 +29,14 @@
     activeKey,
     onActivate,
     onClose,
+    embedded = false,
   }: {
     tabs: TabBarItem[];
     activeKey: string;
     onActivate: (key: string) => void;
     onClose: (key: string) => void;
+    /** Drawn inside the toolbar (title-bar tabs, like a browser): no own ground, border or shadow. */
+    embedded?: boolean;
   } = $props();
 
   const pinned = $derived(tabs.filter((tab) => tab.pinned));
@@ -89,7 +92,7 @@
   </div>
 {/snippet}
 
-<div class="tab-bar" role="tablist" aria-label="Tabs">
+<div class="tab-bar" class:embedded role="tablist" aria-label="Tabs">
   <div class="tb-pinned">
     {#each pinned as tab (tab.key)}{@render tabEl(tab)}{/each}
   </div>
@@ -111,6 +114,20 @@
     border-bottom: 1px solid #1c2633;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     min-width: 0;
+  }
+
+  .tab-bar.embedded {
+    padding: 0;
+    background: none;
+    border-bottom: none;
+    box-shadow: none;
+  }
+  .tab-bar.embedded .tb-tab {
+    height: 32px;
+  }
+  /* Title-bar tabs open into the accent line under the toolbar. */
+  .tab-bar.embedded .tb-tab.active::after {
+    display: none;
   }
 
   .tb-pinned,
