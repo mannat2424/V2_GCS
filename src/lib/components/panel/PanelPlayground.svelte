@@ -22,7 +22,7 @@
   // overrides locally until the next tab switch.
   $effect(() => { variant = initial; });
 
-  const variants: PanelVariant[] = ['info', 'compact', 'advanced', 'wide-compact', 'fullscreen'];
+  const variants: PanelVariant[] = ['info', 'compact', 'advanced', 'fullscreen'];
 
   let segVal = $state('rec'); // segmented-toggle demo
   let togVal = $state(true); // toggle demo

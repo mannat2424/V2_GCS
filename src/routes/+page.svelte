@@ -46,7 +46,7 @@
   import AppDock, { type DockItem } from "$lib/components/AppDock.svelte";
   import TabBar, { type TabBarItem } from "$lib/components/TabBar.svelte";
   import VideoEmptyState from "$lib/components/video/VideoEmptyState.svelte";
-  import { viewMode, setViewMode, setSplitFrac, commitSplit, swapSplitSides, addOpenTab, removeOpenTab, APP_DOCK_PX, TAB_BAR_PX, type ViewMode } from "$lib/stores/viewMode";
+  import { viewMode, setViewMode, setSplitFrac, setSideFrac, commitSplit, swapSplitSides, addOpenTab, removeOpenTab, APP_DOCK_PX, TAB_BAR_PX, type ViewMode } from "$lib/stores/viewMode";
   import { getCurrentWindow } from "@tauri-apps/api/window";
   import PanelPlayground from "$lib/components/panel/PanelPlayground.svelte";
   import UavInfoPanel from "$lib/components/UavInfoPanel.svelte";
@@ -343,8 +343,9 @@
   // Width the bottom dock must yield to the bottom-left video window + its toggle button: the
   // snapped window with the button on its right while it is out, the button alone in the corner
   // while it is parked or moved away. Nothing while no source is active (no window, no button).
-  const videoReserve = $derived(
-    !$videoState.enabled || $videoState.undocked || view === 'split'
+  // (`.by` closures here and below: they read the tab layout, which is declared further down.)
+  const videoReserve = $derived.by(() =>
+    !$videoState.enabled || $videoState.undocked || shownView === 'split'
       ? 0
       : ($videoState.floating && $videoState.floatSnapped ? floatW + FLOAT_BTN_GAP_PX : 0) +
         FLOAT_MARGIN_PX + FLOAT_BTN_PX + FLOAT_BTN_GAP_PX,
@@ -374,13 +375,15 @@
   // see mapFrameStyle above for the mechanism. The map sliding ≤ half a px under the toolbar edge
   // is invisible (chrome z1 covers map z0); Map.svelte's ResizeObserver re-invalidates on the
   // resulting size change by itself.
-  const mapLayerStyle = $derived(
+  const mapLayerStyle = $derived.by(() =>
     phoneUi
       ? 'top:0; bottom:0;' // the whole screen — the map runs on under the widget column's glass
       : `top:${Math.round((53 + tabBarH) * uiScale)}px; bottom:${Math.round(24 * uiScale)}px;` +
-        (view === 'split'
+        (shownView === 'split'
           ? `left:${Math.round(splitMapPane.left * winW)}px; width:${Math.round((splitMapPane.right - splitMapPane.left) * winW)}px; right:auto;`
-          : ''),
+          : layoutMode === 'side'
+            ? `left:${Math.round($viewMode.sideFrac * winW)}px; width:${Math.round((1 - $viewMode.sideFrac) * winW)}px; right:auto;`
+            : ''),
   );
   const mapFloating = $derived($videoState.mapLocation === 'floating');
   const mapInWidget = $derived($videoState.mapLocation === 'widget');
@@ -458,7 +461,9 @@
   // Bottom: subtract edit button (28px) + wrapper gap (6px) + zone padding (12px). Multiply by the row
   // count so the sizing algorithm (which lays out in one line) budgets for two rows on phone and keeps
   // the tiles a readable size; flex-wrap then splits them across the rows.
-  const bottomAvailUnits = $derived(Math.max(0, ((bottomDockW - 34 - 2 * DOCK_PAD - videoReserve) / bottomPxPerUnit) * bottomRows));
+  /** Left inset of the bottom widget dock: the floating-video reserve, or the side pane. */
+  const bottomLeftReserve = $derived.by(() => layoutMode === 'side' ? Math.max(0, sidePaneW - railColW) : videoReserve);
+  const bottomAvailUnits = $derived(Math.max(0, ((bottomDockW - 34 - 2 * DOCK_PAD - bottomLeftReserve) / bottomPxPerUnit) * bottomRows));
   const rightAvailUnits  = $derived(Math.max(0, (sideDockH - 2 * DOCK_PAD) / sidePxPerUnit));
 
   let appVersion = $state("...");
@@ -989,6 +994,24 @@
         ? `view:${view}`
         : 'none',
   );
+  // How the active tab is laid out:
+  //   'view'  — Map / Video / Split
+  //   'page'  — a full page, nothing behind it (UAV Info, Settings, Video source, RC, DEV)
+  //   'side'  — the panel on the left, the map on the right (tools that work on the map)
+  //   'start' — every tab closed
+  const MAP_TABS = new Set(['mission', 'terrain', 'logbook', 'radar', 'airspace', 'control']);
+  const layoutMode = $derived<'view' | 'page' | 'side' | 'start'>(
+    activeKey === 'none'
+      ? 'start'
+      : activeKey.startsWith('tab:')
+        ? MAP_TABS.has(activeKey.slice(4)) ? 'side' : 'page'
+        : 'view',
+  );
+  /** The view laid out on screen: a side-by-side tab always shows the map beside its panel. */
+  const shownView = $derived<ViewMode>(layoutMode === 'side' ? 'map' : view);
+  /** Side-by-side: the panel pane's width (logical px, the zoomed chrome's units). */
+  const sidePaneW = $derived(Math.round($viewMode.sideFrac * logicalW));
+
   const tabBarItems = $derived<TabBarItem[]>(
     openTabKeys.map((key) => {
       const [kind, id] = key.split(':');
@@ -1137,7 +1160,7 @@
   $effect(() => {
     const loc = $videoState.mapLocation;
     const live = videoLive;
-    const v = view;
+    const v = shownView;
     untrack(() => {
       if (useDock) {
         if (v === 'video') {
@@ -1164,12 +1187,12 @@
 
   // Split divider drag (fractions of the window width; the map re-fits on release).
   let splitDragging = $state(false);
-  function startSplitDrag(e: PointerEvent) {
+  function startSplitDrag(e: PointerEvent, setFrac: (f: number) => void = setSplitFrac) {
     if (e.button !== 0) return;
     const el = e.currentTarget as HTMLElement;
     el.setPointerCapture(e.pointerId);
     splitDragging = true;
-    const move = (ev: PointerEvent) => setSplitFrac(ev.clientX / winW);
+    const move = (ev: PointerEvent) => setFrac(ev.clientX / winW);
     const up = () => {
       splitDragging = false;
       el.removeEventListener('pointermove', move);
@@ -3944,15 +3967,15 @@
        Double-click brings the map back to the main full-screen view. -->
   <!-- The same zone is the Video view (dock) — with a "no video" placeholder until a stream is
        live — and the video pane of the Split view, placed beside the map's pane. -->
-  {#if mapInFrame || view === 'video' || view === 'split'}
+  {#if mapInFrame || shownView === 'video' || shownView === 'split'}
     <!-- Wrapper carries the inset + black backdrop; the video fills it with object-fit: contain so
          it scales to the window (full height/width) without distortion — bars where aspect differs. -->
     <div
       class="map-video-wrap"
-      class:split-pane={view === 'split'}
+      class:split-pane={shownView === 'split'}
       class:nv-active={videoLive && $activeNativeSurfaces.has('main')}
       class:unobstructed={ufActive}
-      style={view === 'split' ? `left:${splitVideoPane.left * 100}%; right:${(1 - splitVideoPane.right) * 100}%;` : ''}
+      style={shownView === 'split' ? `left:${splitVideoPane.left * 100}%; right:${(1 - splitVideoPane.right) * 100}%;` : ''}
       bind:clientWidth={ufWrapW}
       bind:clientHeight={ufWrapH}
     >
@@ -4027,7 +4050,7 @@
   {/if}
 
   <!-- Split view divider: drag to resize the panes, the round button swaps map and video. -->
-  {#if view === 'split'}
+  {#if shownView === 'split'}
     <div
       class="split-divider"
       class:dragging={splitDragging}
@@ -4097,12 +4120,7 @@
   <!-- ======= FLOATING NAV PANEL SYSTEM ======= -->
   <!-- The rail lives here in .app; the panels themselves render in the panels layer AFTER
        .ui-scale so they stack above the in-frame mini-map — see that layer's comment. -->
-  {#if useDock}
-    <!-- ======= APP DOCK (iOS-style shelf: views · panel apps · utilities) ======= -->
-    <div class="zone-app-dock">
-      <AppDock groups={dockGroups} onSelect={onDockSelect} />
-    </div>
-  {:else}
+  {#if !useDock}
     <NavRail
       open={navPanelOpen}
       activeTab={railActiveTab}
@@ -4115,7 +4133,7 @@
 
   {#if !phoneUi}
   <!-- ======= BOTTOM WIDGET PANEL ======= -->
-  <div class="zone-bottom-dock" class:zone-hidden={!$layout.bottomDock.visible} class:panel-editing={widgetEditMode} bind:clientWidth={bottomDockW} bind:clientHeight={bottomDockH} style:padding-left="{videoReserve}px">
+  <div class="zone-bottom-dock" class:zone-hidden={!$layout.bottomDock.visible} class:panel-editing={widgetEditMode} bind:clientWidth={bottomDockW} bind:clientHeight={bottomDockH} style:padding-left="{bottomLeftReserve}px">
     <div class="panel-bottom-wrap">
       <!-- Edit mode (both docks share it): entered by a long-press on a widget, left by a click
            outside the docks or Escape — the panels own the gesture, the flag lives here. -->
@@ -4139,7 +4157,7 @@
   </div>
 
   <!-- ======= FLOATING VIDEO WINDOW (+ its show/hide toggle) ======= -->
-  {#if view !== 'split'}
+  {#if shownView !== 'split'}
     <FloatingVideoWindow left={floatLeft} top={floatTop} width={floatW} height={floatH} vw={logicalW} vh={logicalH} />
   {/if}
 
@@ -4205,9 +4223,22 @@
        exactly like they cover the floating video window. The host replicates .app's positioning
        context and grid vars so PanelShell geometry is untouched. -->
   <div class="ui-scale panels-layer">
+    <!-- Full page / side pane ground: covers the map, video and widget docks behind the page (or
+         beside the map pane). Sits under the panel, above everything in .ui-scale. -->
+    {#if layoutMode === 'page' || layoutMode === 'side'}
+      <div
+        class="page-ground"
+        class:side={layoutMode === 'side'}
+        style:width={layoutMode === 'side' ? `${sidePaneW}px` : null}
+      ></div>
+    {/if}
     <div
       class="panels-host"
       class:panels-hidden={panelHidden}
+      class:layout-page={layoutMode === 'page'}
+      class:layout-side={layoutMode === 'side'}
+      style:--side-w="{sidePaneW}px"
+      style:--app-dock-h="{appDockH}px"
       style:--rail-w="{useDock ? 12 : 62}px"
       style:--app-dock-clear="{useDock ? 24 + appDockH + 6 : 62}px"
       style:--grid-bottom-height={gridBottomHeight}
@@ -4360,6 +4391,28 @@
         <TerrainAnalysisPanel track={selectedTrackWithPosition} live={isPrimaryConnected} {interfaceSettings} confirm={showDialog} />
       {/if}
     </div>
+    {#if layoutMode === 'side'}
+      <!-- Side-by-side divider: drag to resize the panel pane against the map. -->
+      <div
+        class="split-divider side-divider"
+        class:dragging={splitDragging}
+        style:left="{sidePaneW}px"
+        role="separator"
+        aria-orientation="vertical"
+        aria-valuenow={Math.round($viewMode.sideFrac * 100)}
+        title={$t('dock.resizeSplit')}
+        onpointerdown={(e) => startSplitDrag(e, setSideFrac)}
+      >
+        <span class="split-line"></span>
+      </div>
+    {/if}
+    {#if useDock}
+      <!-- ======= APP DOCK (iOS-style shelf: views · panel apps · utilities) =======
+           In the panels layer so it (and its hover names) stay above full pages and panels. -->
+      <div class="dock-float" style:height="{appDockH}px">
+        <AppDock groups={dockGroups} onSelect={onDockSelect} />
+      </div>
+    {/if}
     <!-- Phone: the dev Debug toggle lives in the PANELS layer so it stays reachable over an open
          panel (a developer tool); the arming / sensor chips stay in .app under the panels (Marc:
          a panel may cover them, they still peek out left of it). Dialogs keep their higher z-index. -->
@@ -4515,8 +4568,7 @@
   }
   .app > :global(.zone-bottom-dock),
   .app > :global(.zone-side-dock),
-  .app > :global(.zone-map-controls),
-  .app > :global(.zone-app-dock) {
+  .app > :global(.zone-map-controls) {
     pointer-events: none;
   }
 
@@ -5013,19 +5065,73 @@
     line-height: 1.25;
   }
 
-  /* ── App Dock row ─────────────────────────────────────────────
-     The shelf floats centred over the map (which runs on underneath, like iOS); the side gutters
-     stay free for the floating-video toggle (left) and the map's corner controls (right). */
-  .zone-app-dock {
-    grid-area: app-dock;
-    z-index: 110;
+  /* ── App Dock ─────────────────────────────────────────────────
+     Drawn in the panels layer over the .app grid's (empty) dock row. The shelf floats centred
+     over the map (which runs on underneath, like iOS); the side gutters stay free for the
+     floating-video toggle (left) and the map's corner controls (right). Only the shelf itself
+     takes pointer events. */
+  .panels-layer > .dock-float {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    z-index: 200;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     padding: 0 64px 6px;
-    min-width: 0;
+    box-sizing: border-box;
+    pointer-events: none;
   }
-  .zone-app-dock > :global(*) {
+  .dock-float > :global(*) {
+    pointer-events: auto;
+  }
+
+  /* ── Full-page and side-by-side tabs ───────────────────────────
+     The ground hides what is behind a full page (map, video, widget docks); in side-by-side it is
+     only the left pane. The panel itself is stretched over the page / pane, whatever variant it
+     asked for (these selectors outrank PanelShell's own variant + device rules). */
+  .panels-layer > .page-ground {
+    position: absolute;
+    top: calc(53px + var(--tabbar-h, 0px));
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    pointer-events: auto;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(55, 168, 219, 0.08), transparent 55%),
+      linear-gradient(180deg, #202328, #17191c);
+  }
+  .panels-layer > .page-ground.side {
+    right: auto;
+    bottom: 24px;
+  }
+  :global(html.is-mobile) .panels-layer > .page-ground {
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px));
+  }
+  .panels-host.layout-page :global(.ps),
+  .panels-host.layout-side :global(.ps) {
+    top: calc(53px + var(--tabbar-h, 0px) + 10px);
+    bottom: calc(24px + var(--app-dock-h, 0px) + 4px);
+    left: 12px;
+    right: 12px;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    border-radius: 10px;
+  }
+  :global(html.is-mobile) .panels-host.layout-page :global(.ps),
+  :global(html.is-mobile) .panels-host.layout-side :global(.ps) {
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px) + 10px);
+  }
+  .panels-host.layout-side :global(.ps) {
+    right: auto;
+    width: calc(var(--side-w) - 12px - 7px);
+  }
+  /* The resize divider of the side-by-side tabs reuses the split view's look. */
+  .split-divider.side-divider {
+    z-index: 170;
     pointer-events: auto;
   }
 

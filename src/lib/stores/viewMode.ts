@@ -17,6 +17,8 @@ export interface ViewModeState {
   splitFrac: number;
   /** Split view: the map is the LEFT pane (true) or the right one (false). */
   mapLeft: boolean;
+  /** Side-by-side tabs (Mission, Terrain, …): the panel pane's width as a fraction of the window. */
+  sideFrac: number;
   /** Tabs open in the tab bar, in bar order: `view:<mode>` (Map / Video / Split) and
    *  `tab:<panel id>` ('tab:uav-info', 'tab:mission', …). */
   openTabs: string[];
@@ -31,7 +33,12 @@ export const SPLIT_FRAC_MAX = 0.8;
 /** Height of the browser-style tab bar under the toolbar (logical px, desktop + tablet). */
 export const TAB_BAR_PX = 34;
 
-const DEFAULTS: ViewModeState = { mode: 'map', splitFrac: 0.5, mapLeft: true, openTabs: ['view:map'] };
+const DEFAULTS: ViewModeState = { mode: 'map', splitFrac: 0.5, mapLeft: true, sideFrac: 0.4, openTabs: ['view:map'] };
+export const SIDE_FRAC_MIN = 0.25;
+export const SIDE_FRAC_MAX = 0.65;
+function clampSide(f: number): number {
+  return Math.min(SIDE_FRAC_MAX, Math.max(SIDE_FRAC_MIN, f));
+}
 const VIEW_KEYS = ['view:map', 'view:video', 'view:split'];
 
 /** Stored tab list → keys. The first tab-bar version stored bare panel ids next to three pinned
@@ -56,6 +63,7 @@ function load(): ViewModeState {
       mode: p.mode === 'video' || p.mode === 'split' ? p.mode : 'map',
       splitFrac: clampFrac(typeof p.splitFrac === 'number' ? p.splitFrac : DEFAULTS.splitFrac),
       mapLeft: p.mapLeft !== false,
+      sideFrac: clampSide(typeof p.sideFrac === 'number' ? p.sideFrac : DEFAULTS.sideFrac),
       openTabs: loadTabs(p.openTabs),
     };
   } catch {
@@ -91,6 +99,11 @@ export function setViewMode(mode: ViewMode): void {
 /** Divider drag — not persisted per move (see commitSplit). */
 export function setSplitFrac(frac: number): void {
   viewMode.update((s) => ({ ...s, splitFrac: clampFrac(frac) }));
+}
+
+/** Side-by-side divider drag — not persisted per move (see commitSplit). */
+export function setSideFrac(frac: number): void {
+  viewMode.update((s) => ({ ...s, sideFrac: clampSide(frac) }));
 }
 
 /** End of a divider drag: persist + one resize for the map. */
