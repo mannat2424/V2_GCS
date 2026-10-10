@@ -103,7 +103,7 @@
 <style>
   .pg-switcher {
     position: fixed;
-    top: 58px;
+    top: calc(58px + var(--tabbar-h, 0px)); /* below the tab bar (+page) */
     left: 50%;
     transform: translateX(-50%);
     z-index: 300;

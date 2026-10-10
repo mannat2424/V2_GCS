@@ -163,6 +163,26 @@
     "closePanel": "Close panel",
     "openPanel": "Open panel"
   },
+  "dock": {
+    "viewMap": "Map",
+    "viewVideo": "Video",
+    "viewSplit": "Split view",
+    "videoSource": "Video source",
+    "widgets": "Widgets",
+    "fullscreen": "Fullscreen",
+    "swapSides": "Swap sides",
+    "resizeSplit": "Drag to resize",
+    "videoNone": "No video",
+    "videoStarting": "Starting video…",
+    "videoFailed": "Video failed",
+    "videoHint": "Start the last video source, or set one up in the Video source panel.",
+    "videoStart": "Start video",
+    "videoRetry": "Retry",
+    "dev": "DEV Playground",
+    "closeTab": "Close tab",
+    "startTitle": "No tabs open",
+    "startHint": "Open the map, the video or any tool — from here or from the dock."
+  },
   "rc": {
     "title": "RC Control",
     "config": "Configuration",

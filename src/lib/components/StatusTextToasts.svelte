@@ -41,7 +41,7 @@
 <style>
   .msg-banner {
     position: absolute;
-    top: 56px;
+    top: calc(56px + var(--tabbar-h, 0px));
     /* Centre within the area to the RIGHT of any open left-docked panel (issue #10). --toast-dock-inset
        is the panel's viewport right edge (0 when none); left + right + margin:auto centres the
        fixed-width banner in that band, and the max-width cap keeps it inside the band on narrow screens
@@ -68,7 +68,7 @@
      offset by --safe-top and --toolbar-h includes that same inset (the toolbar pads itself down into
      the visible strip), so subtract it here or the status-bar strip is counted twice. */
   :global(html.is-mobile) .msg-banner {
-    top: calc(var(--toolbar-h, 53px) - var(--safe-top, 0px) + 8px);
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px) - var(--safe-top, 0px) + 8px);
   }
   /* Phone: the parent .app-toasts IS the band between the corner buttons and already sits at
      --safe-top, so start in the buttons' row and let the band — not the viewport — cap the width.

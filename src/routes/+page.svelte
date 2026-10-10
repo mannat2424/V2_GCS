@@ -43,6 +43,11 @@
   import StatusBar from "$lib/components/StatusBar.svelte";
   import "$lib/stores/rcSession"; // global RC session (keeps engage alive across navigation; involuntary-loss guard)
   import NavRail from "$lib/components/NavRail.svelte";
+  import AppDock, { type DockItem } from "$lib/components/AppDock.svelte";
+  import TabBar, { type TabBarItem } from "$lib/components/TabBar.svelte";
+  import VideoEmptyState from "$lib/components/video/VideoEmptyState.svelte";
+  import { viewMode, setViewMode, setSplitFrac, commitSplit, swapSplitSides, addOpenTab, removeOpenTab, APP_DOCK_PX, TAB_BAR_PX, type ViewMode } from "$lib/stores/viewMode";
+  import { getCurrentWindow } from "@tauri-apps/api/window";
   import PanelPlayground from "$lib/components/panel/PanelPlayground.svelte";
   import UavInfoPanel from "$lib/components/UavInfoPanel.svelte";
   import LogbookPanel from "$lib/components/logbook/LogbookPanel.svelte";
@@ -105,7 +110,7 @@
   import { setNativeRightBound } from "$lib/controllers/nativeVideo";
   import { doubleTap, mouseDoubleClick } from "$lib/helpers/doubleTap";
   import { startFloatMove, startFloatResize } from "$lib/helpers/floatWindowGestures";
-  import { initVideo, videoState, videoStream, bindVideoEl, setMapLocation, reportMjpegError, setVideoWidgetActive, floatFrameRect, togglePhoneDockCompact, PHONE_DOCK_COMPACT, FLOAT_BEZEL_PX, FLOAT_MARGIN_PX, FLOAT_BTN_PX, FLOAT_BTN_GAP_PX } from "$lib/stores/video";
+  import { initVideo, videoState, videoStream, bindVideoEl, setMapLocation, reportMjpegError, setVideoWidgetActive, floatFrameRect, toggleFloating, togglePhoneDockCompact, PHONE_DOCK_COMPACT, FLOAT_BEZEL_PX, FLOAT_MARGIN_PX, FLOAT_BTN_PX, FLOAT_BTN_GAP_PX } from "$lib/stores/video";
   import { canvasSink, mjpegSink } from "$lib/controllers/mjpegSink";
   import { nativeSurface, activeNativeSurfaces } from "$lib/controllers/nativeVideo";
   import { lowPowerActive } from "$lib/stores/lowPower";
@@ -224,6 +229,25 @@
   // the connection popout, the right-hand widget column and a bottom-left status strip.
   const phoneUi = isPhoneDevice;
   let toolbarH = $state(phoneUi ? 0 : 53);
+  // App Dock (desktop + tablet): the iOS-style shelf at the bottom replaces the left nav rail, so
+  // the rail's grid column shrinks to a margin and a dock row opens above the status bar. The
+  // phone keeps its burger rail (no room for a shelf next to the widget column).
+  const useDock = !phoneUi;
+  const appDockH = useDock ? APP_DOCK_PX : 0;
+  /** Height of the browser-style tab bar under the toolbar (0 on the phone). */
+  const tabBarH = useDock ? TAB_BAR_PX : 0;
+  /** Width of the grid's left column: the nav rail where it exists, a plain margin otherwise. */
+  const railColW = useDock ? 8 : 62;
+  // Main view (the dock's view tabs). The phone always shows the map view.
+  const view = $derived<ViewMode>(useDock ? $viewMode.mode : 'map');
+  const videoLive = $derived($videoState.status === 'live');
+  /** Split view panes as [left, right] fractions of the window width. */
+  const splitMapPane = $derived(
+    $viewMode.mapLeft ? { left: 0, right: $viewMode.splitFrac } : { left: $viewMode.splitFrac, right: 1 },
+  );
+  const splitVideoPane = $derived(
+    $viewMode.mapLeft ? { left: $viewMode.splitFrac, right: 1 } : { left: 0, right: $viewMode.splitFrac },
+  );
   /** Rendered width of the phone widget column (reported by PhoneWidgetPanel) → the grid column. */
   let phonePanelW = $state(0);
   let sideDockW = $state(200);
@@ -282,7 +306,9 @@
   // desktop, taller on the iPad where the bar carries the status-bar inset), so the tablet uses the
   // same rule (PanelShell's tablet block reads the reserve too).
   const panelBottomReserve = $derived(
-    winH / uiScale - toolbarH - bottomDockH - 24 - 12 < NAV_RAIL_FULL_HEIGHT ? '6px' : gridBottomHeight
+    winH / uiScale - toolbarH - tabBarH - bottomDockH - 24 - appDockH - 12 < NAV_RAIL_FULL_HEIGHT
+      ? `${6 + appDockH}px`
+      : `calc(${gridBottomHeight} + ${appDockH}px)`
   );
 
   // Floating-window rect — ONE computation (`floatFrameRect`, store) for the window itself (it gets
@@ -318,7 +344,7 @@
   // snapped window with the button on its right while it is out, the button alone in the corner
   // while it is parked or moved away. Nothing while no source is active (no window, no button).
   const videoReserve = $derived(
-    !$videoState.enabled || $videoState.undocked
+    !$videoState.enabled || $videoState.undocked || view === 'split'
       ? 0
       : ($videoState.floating && $videoState.floatSnapped ? floatW + FLOAT_BTN_GAP_PX : 0) +
         FLOAT_MARGIN_PX + FLOAT_BTN_PX + FLOAT_BTN_GAP_PX,
@@ -351,7 +377,10 @@
   const mapLayerStyle = $derived(
     phoneUi
       ? 'top:0; bottom:0;' // the whole screen — the map runs on under the widget column's glass
-      : `top:${Math.round(53 * uiScale)}px; bottom:${Math.round(24 * uiScale)}px;`,
+      : `top:${Math.round((53 + tabBarH) * uiScale)}px; bottom:${Math.round(24 * uiScale)}px;` +
+        (view === 'split'
+          ? `left:${Math.round(splitMapPane.left * winW)}px; width:${Math.round((splitMapPane.right - splitMapPane.left) * winW)}px; right:auto;`
+          : ''),
   );
   const mapFloating = $derived($videoState.mapLocation === 'floating');
   const mapInWidget = $derived($videoState.mapLocation === 'widget');
@@ -765,13 +794,13 @@
   let ufWrapH = $state(0);
   const ufBox = $derived.by(() => {
     if (!ufActive) return null;
-    const availW = ufWrapW - 62 - ufRight;
+    const availW = ufWrapW - railColW - ufRight;
     const availH = ufWrapH - ufBottomExtra;
     if (availW <= 0 || availH <= 0) return null;
     const aspect = $videoState.aspect || 16 / 9;
     const w = Math.min(availW, availH * aspect);
     return {
-      left: Math.round(62 + (availW - w) / 2),
+      left: Math.round(railColW + (availW - w) / 2),
       top: Math.round((availH - w / aspect) / 2),
       w: Math.round(w),
       h: Math.round(w / aspect),
@@ -878,6 +907,280 @@
 
   // Highlight the terrain rail button while its overlay is open
   const railActiveTab = $derived(terrainOpen ? 'terrain' : activeTab);
+
+  // ── App Dock ────────────────────────────────────────────────────────────────────────────────
+  // View tabs (new) + the panel apps (the former rail tabs) + utilities, iOS-style tiles.
+  const ICON_VIEW_MAP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 6.2 8.7 4l6.6 2.4L21 4.2v13.6L15.3 20l-6.6-2.4L3 19.8Z" fill="currentColor" fill-opacity="0.18"/><path d="M8.7 4v13.6M15.3 6.4V20"/></svg>';
+  const ICON_VIEW_VIDEO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><path d="M10 8.8v6.4l5.4-3.2Z" fill="currentColor" stroke="none"/></svg>';
+  const ICON_VIEW_SPLIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/><rect x="2.5" y="4.5" width="9.5" height="15" rx="2.5" fill="currentColor" fill-opacity="0.3" stroke="none"/><path d="M12 4.5v15"/></svg>';
+  const ICON_WIDGETS = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.2 17.5a8.5 8.5 0 1 1 15.6 0"/><path d="M12 13.5 15.8 8.6"/><circle cx="12" cy="13.5" r="1.4" fill="currentColor"/><path d="M5.5 12h1.3M17.2 12h1.3M12 5.8v1.3"/></svg>';
+  const ICON_FULLSCREEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>';
+  const ICON_FULLSCREEN_EXIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
+
+  /** Tile gradients per app (iOS-like: each app keeps its own colour). */
+  const DOCK_TINTS: Record<string, [string, string]> = {
+    'view:map': ['#4cd964', '#1f9a3c'],
+    'view:video': ['#ff6b5e', '#d1281c'],
+    'view:split': ['#7d7bff', '#4a47d6'],
+    'uav-info': ['#7f8fa6', '#4b586c'],
+    mission: ['#ffb340', '#e07b00'],
+    control: ['#bf7dff', '#8a3fd1'],
+    'rc-control': ['#ff6fa8', '#d6336f'],
+    terrain: ['#c79a63', '#8c6230'],
+    logbook: ['#ffd84d', '#d9a400'],
+    radar: ['#44e08a', '#119a52'],
+    airspace: ['#5ac8fa', '#0a7bd9'],
+    video: ['#ff8a50', '#d44d14'],
+    settings: ['#a0a0a8', '#5f5f68'],
+    'dev-playground': ['#6b6b6b', '#3a3a3a'],
+    'util:widgets': ['#4fd1c5', '#16897f'],
+    'util:fullscreen': ['#5c6470', '#30353d'],
+  };
+  const FALLBACK_TINT: [string, string] = ['#6b7a8c', '#3e4957'];
+
+  const widgetsVisible = $derived($layout.bottomDock.visible || $layout.sideDock.visible);
+  let isFullscreen = $state(false);
+
+  // ── Tabs ────────────────────────────────────────────────────────────────────────────────────
+  // Browser-style tabs for everything: Map / Video / Split and every panel are tabs that open from
+  // the dock and close with ×. Keys: `view:<mode>` and `tab:<panel id>`. A view tab parks the open
+  // panel (slid out, state kept); a panel tab shows its panel over the current view (the map tools
+  // need it). With no tab left, a start page covers the screen until something is opened.
+  /** The panel currently shown (or parked), if any. */
+  const activePanelId = $derived(terrainOpen ? 'terrain' : navPanelOpen ? activeTab : null);
+  /** Panel metadata (label / icon / tint) by id, for the dock and the tab bar. */
+  const panelMeta = $derived(
+    Object.fromEntries(
+      railTabs
+        .filter((tab) => tab.id !== '__sep__')
+        .map((tab) => [
+          tab.id,
+          {
+            // The Video *panel* configures the source; "Video" is the view tab.
+            label: tab.id === 'video' ? $t('dock.videoSource') : tab.label(),
+            icon: tab.id === 'dev-playground' ? 'DEV' : tab.icon,
+            tint: DOCK_TINTS[tab.id] ?? FALLBACK_TINT,
+          },
+        ]),
+    ) as Record<string, { label: string; icon: string; tint: [string, string] }>,
+  );
+  const VIEW_TABS: { mode: ViewMode; label: () => string; icon: string }[] = [
+    { mode: 'map', label: () => $t('dock.viewMap'), icon: ICON_VIEW_MAP },
+    { mode: 'video', label: () => $t('dock.viewVideo'), icon: ICON_VIEW_VIDEO },
+    { mode: 'split', label: () => $t('dock.viewSplit'), icon: ICON_VIEW_SPLIT },
+  ];
+  const viewMeta = $derived(
+    Object.fromEntries(
+      VIEW_TABS.map((v) => [v.mode, { label: v.label(), icon: v.icon, tint: DOCK_TINTS[`view:${v.mode}`] }]),
+    ) as Record<ViewMode, { label: string; icon: string; tint: [string, string] }>,
+  );
+  /** Open tabs that are currently available (e.g. Control hides while not on MAVLink), bar order. */
+  const openTabKeys = $derived(
+    [...new Set($viewMode.openTabs)].filter((key) => {
+      const [kind, id] = key.split(':');
+      return kind === 'view' ? id in viewMeta : id in panelMeta;
+    }),
+  );
+  /** The active tab: the shown panel, else the current view if its tab is open, else none. */
+  const activeKey = $derived(
+    activePanelId && !panelHidden
+      ? `tab:${activePanelId}`
+      : openTabKeys.includes(`view:${view}`)
+        ? `view:${view}`
+        : 'none',
+  );
+  const tabBarItems = $derived<TabBarItem[]>(
+    openTabKeys.map((key) => {
+      const [kind, id] = key.split(':');
+      return kind === 'view'
+        ? { key, ...viewMeta[id as ViewMode], live: id === 'video' && videoLive }
+        : { key, ...panelMeta[id] };
+    }),
+  );
+
+  // Every way a panel can come up (dock, toolbar RC button, "open vehicle" links, the restored
+  // session …) gets its tab: whatever panel is shown is in the bar.
+  $effect(() => {
+    const id = activePanelId;
+    if (useDock && id && !panelHidden) untrack(() => addOpenTab(`tab:${id}`));
+  });
+
+  const dockGroups = $derived.by<DockItem[][]>(() => {
+    const views = VIEW_TABS.map((v): DockItem => ({
+      id: `view:${v.mode}`,
+      ...viewMeta[v.mode],
+      active: activeKey === `view:${v.mode}`,
+      running: openTabKeys.includes(`view:${v.mode}`),
+      badge: v.mode === 'video' && videoLive ? 'live' : null,
+    }));
+    const apps = Object.entries(panelMeta).map(([id, meta]): DockItem => ({
+      id: `tab:${id}`,
+      ...meta,
+      active: activeKey === `tab:${id}`,
+      running: openTabKeys.includes(`tab:${id}`),
+    }));
+    const utils: DockItem[] = [
+      { id: 'util:widgets', label: $t('dock.widgets'), icon: ICON_WIDGETS, tint: DOCK_TINTS['util:widgets'], active: widgetsVisible },
+    ];
+    if (!isMobile) {
+      utils.push({
+        id: 'util:fullscreen',
+        label: $t('dock.fullscreen'),
+        icon: isFullscreen ? ICON_FULLSCREEN_EXIT : ICON_FULLSCREEN,
+        tint: DOCK_TINTS['util:fullscreen'],
+        active: isFullscreen,
+      });
+    }
+    return [views, apps, utils];
+  });
+  /** Start-page launcher tiles: every view and panel (the utilities stay in the dock). */
+  const startItems = $derived(dockGroups.slice(0, 2).flat());
+
+  async function toggleFullscreen() {
+    try {
+      const win = getCurrentWindow();
+      const next = !(await win.isFullscreen());
+      await win.setFullscreen(next);
+      isFullscreen = next;
+    } catch (e) {
+      console.warn('[dock] fullscreen toggle failed', e);
+    }
+  }
+
+  /** Open a panel (never toggles it away — for buttons that mean "show me X"). */
+  function openTab(tabId: string) {
+    const shown = tabId === 'terrain' ? terrainOpen : navPanelOpen && !terrainOpen && activeTab === tabId;
+    if (shown && !panelHidden) return;
+    selectTab(tabId);
+  }
+
+  /** Park the shown panel (slides out, state kept) — a view tab or the start page is in front. */
+  function parkPanel() {
+    if (activePanelId && !panelHidden) {
+      panelHidden = true;
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 320);
+    }
+  }
+
+  /** Activate (opening if needed) a view tab: switch the view and park whatever panel is open. */
+  function activateView(mode: ViewMode) {
+    addOpenTab(`view:${mode}`);
+    setViewMode(mode);
+    parkPanel();
+  }
+
+  function activateTabKey(key: string) {
+    const [kind, id] = key.split(':') as [string, string];
+    if (kind === 'view') activateView(id as ViewMode);
+    else {
+      addOpenTab(key);
+      openTab(id);
+    }
+  }
+
+  /** Close a tab; closing the active one moves to its neighbour, like a browser. */
+  function closeTabKey(key: string) {
+    const [kind, id] = key.split(':') as [string, string];
+    const list = openTabKeys;
+    const idx = list.indexOf(key);
+    const wasActive = activeKey === key;
+    const rest = list.filter((k) => k !== key);
+    removeOpenTab(key);
+    if (kind === 'tab' && activePanelId === id) {
+      if (id === 'terrain') {
+        patchTerrainAnalysis({ open: false });
+        // The panel under the terrain overlay would resurface — only if its tab is still open.
+        if (navPanelOpen && !rest.includes(`tab:${activeTab}`)) navPanelOpen = false;
+      } else {
+        if (id === 'mission') editMode.set(false);
+        navPanelOpen = false;
+      }
+      settings.patch({ navPanelOpen });
+      panelHidden = false;
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 320);
+    }
+    if (kind === 'view' && view === id) {
+      // The view under everything goes with its tab: fall back to another open view, else the map
+      // (it stays the ground for the map tools, and the Video view's PiP map comes back home).
+      const other = rest.find((k) => k.startsWith('view:'));
+      setViewMode(other ? (other.slice(5) as ViewMode) : 'map');
+    }
+    if (wasActive) {
+      const next = list[idx + 1] ?? list[idx - 1];
+      if (next && next !== key) activateTabKey(next);
+      else parkPanel(); // last tab closed → start page
+    }
+  }
+
+  function onDockSelect(id: string) {
+    const [kind, key] = id.split(':') as [string, string];
+    if (kind === 'view' || kind === 'tab') {
+      activateTabKey(id);
+    } else if (key === 'widgets') {
+      const show = !widgetsVisible;
+      layout.setBottomDockVisible(show);
+      layout.setSideDockVisible(show);
+    } else if (key === 'fullscreen') {
+      void toggleFullscreen();
+    }
+  }
+
+  // ── View ⇄ map placement ────────────────────────────────────────────────────────────────────
+  // The Video view reuses the existing map⇄video swap: the video takes the main zone and the map
+  // jumps into the floating window as a PiP. The swap gestures stay live and keep the tabs honest —
+  // double-clicking a video surface in the Map view switches the tab to Video, double-clicking the
+  // full-screen video in the Video view switches back to Map. Split keeps the map in the main layer
+  // (it is placed into its pane) and shows the video in the other pane.
+  let prevMapLoc = get(videoState).mapLocation;
+  let prevLive = get(videoState).status === 'live';
+  let prevView: ViewMode = useDock ? get(viewMode).mode : 'map';
+  $effect(() => {
+    const loc = $videoState.mapLocation;
+    const live = videoLive;
+    const v = view;
+    untrack(() => {
+      if (useDock) {
+        if (v === 'video') {
+          if (live && loc === 'main' && !$videoState.undocked && (!prevLive || prevView !== 'video')) {
+            // Entered the Video view, or the stream just came up while on it: map → PiP.
+            if (!$videoState.floating) toggleFloating();
+            setMapLocation('floating');
+          } else if (live && prevMapLoc !== 'main' && loc === 'main') {
+            // Double-click on the full-screen video brought the map back.
+            activateView('map');
+          }
+        } else if (v === 'map') {
+          if (prevView !== 'map' && loc !== 'main') setMapLocation('main');
+          else if (prevMapLoc === 'main' && loc !== 'main') activateView('video');
+        } else if (loc !== 'main') {
+          setMapLocation('main');
+        }
+      }
+      prevMapLoc = get(videoState).mapLocation;
+      prevLive = live;
+      prevView = v;
+    });
+  });
+
+  // Split divider drag (fractions of the window width; the map re-fits on release).
+  let splitDragging = $state(false);
+  function startSplitDrag(e: PointerEvent) {
+    if (e.button !== 0) return;
+    const el = e.currentTarget as HTMLElement;
+    el.setPointerCapture(e.pointerId);
+    splitDragging = true;
+    const move = (ev: PointerEvent) => setSplitFrac(ev.clientX / winW);
+    const up = () => {
+      splitDragging = false;
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', up);
+      el.removeEventListener('pointercancel', up);
+      commitSplit();
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', up);
+    el.addEventListener('pointercancel', up);
+  }
 
   let ports: PortInfo[] = $state([]);
   let connStatus: string = $state("disconnected");
@@ -3345,6 +3648,7 @@
   class="ui-root"
   style:--ui-scale={uiScale}
   style:--toolbar-h="{toolbarH}px"
+  style:--tabbar-h="{tabBarH}px"
   style:--phone-panel-w="{phonePanelW}px"
   style:--phone-shift="{phoneShift}px"
 >
@@ -3512,6 +3816,8 @@
 <main
   class="app"
   class:rc-sticks-active={isMobile && activeTab === 'rc-control'}
+  style:--app-dock-h="{appDockH}px"
+  style:--rail-col="{railColW}px"
   style:--grid-bottom-height={gridBottomHeight}
   style:--grid-side-width={gridSideWidth}
   style:--panel-bottom-reserve={panelBottomReserve}
@@ -3608,18 +3914,45 @@
   </div>
   {/if}
 
+  {#if useDock}
+    <!-- ======= TAB BAR (browser-style: pinned views + one tab per open panel) ======= -->
+    <div class="zone-tabbar">
+      <TabBar tabs={tabBarItems} {activeKey} onActivate={activateTabKey} onClose={closeTabKey} />
+    </div>
+  {/if}
+
+  {#if useDock && activeKey === 'none'}
+    <!-- ======= START PAGE (every tab closed) ======= -->
+    <div class="start-page">
+      <div class="sp-title">{$t('dock.startTitle')}</div>
+      <div class="sp-hint">{$t('dock.startHint')}</div>
+      <div class="sp-grid">
+        {#each startItems as item (item.id)}
+          <button class="sp-app" onclick={() => onDockSelect(item.id)}>
+            <span class="sp-tile" style:--t1={item.tint[0]} style:--t2={item.tint[1]}>{@html item.icon}</span>
+            <span class="sp-label">{item.label}</span>
+          </button>
+        {/each}
+      </div>
+    </div>
+  {/if}
+
   <!-- ======= MAP (always fullscreen behind everything) ======= -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <!-- Full-size video shown in the main map zone whenever the map has jumped to another surface.
        Double-click brings the map back to the main full-screen view. -->
-  {#if mapInFrame}
+  <!-- The same zone is the Video view (dock) — with a "no video" placeholder until a stream is
+       live — and the video pane of the Split view, placed beside the map's pane. -->
+  {#if mapInFrame || view === 'video' || view === 'split'}
     <!-- Wrapper carries the inset + black backdrop; the video fills it with object-fit: contain so
          it scales to the window (full height/width) without distortion — bars where aspect differs. -->
     <div
       class="map-video-wrap"
-      class:nv-active={$activeNativeSurfaces.has('main')}
+      class:split-pane={view === 'split'}
+      class:nv-active={videoLive && $activeNativeSurfaces.has('main')}
       class:unobstructed={ufActive}
+      style={view === 'split' ? `left:${splitVideoPane.left * 100}%; right:${(1 - splitVideoPane.right) * 100}%;` : ''}
       bind:clientWidth={ufWrapW}
       bind:clientHeight={ufWrapH}
     >
@@ -3635,7 +3968,9 @@
         class="map-video-box"
         style={ufBox ? `left:${ufBox.left}px;top:${ufBox.top}px;width:${ufBox.w}px;height:${ufBox.h}px;` : ''}
       >
-      {#if $videoState.nativeSink}
+      {#if !videoLive}
+        <VideoEmptyState onOpenSource={() => openTab('video')} />
+      {:else if $videoState.nativeSink}
         <!-- Native decode sink (hole punch): the video is a hardware layer BELOW the WebView; this
              div is the transparent hole it shows through. Highest surface priority — full-screen
              video beats every other surface. See controllers/nativeVideo. -->
@@ -3691,6 +4026,31 @@
     </div>
   {/if}
 
+  <!-- Split view divider: drag to resize the panes, the round button swaps map and video. -->
+  {#if view === 'split'}
+    <div
+      class="split-divider"
+      class:dragging={splitDragging}
+      style:left="{$viewMode.splitFrac * 100}%"
+      role="separator"
+      aria-orientation="vertical"
+      aria-valuenow={Math.round($viewMode.splitFrac * 100)}
+      title={$t('dock.resizeSplit')}
+      onpointerdown={startSplitDrag}
+    >
+      <span class="split-line"></span>
+      <button
+        class="split-swap"
+        title={$t('dock.swapSides')}
+        aria-label={$t('dock.swapSides')}
+        onpointerdown={(e) => e.stopPropagation()}
+        onclick={swapSplitSides}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7H20M16 3l4 4-4 4M16 17H4M8 13l-4 4 4 4" /></svg>
+      </button>
+    </div>
+  {/if}
+
   <!-- Map lives in the unzoomed `.layer-map` above (see docs/archive/UI_SCALING.md). -->
 
   <LogPlayer
@@ -3737,14 +4097,21 @@
   <!-- ======= FLOATING NAV PANEL SYSTEM ======= -->
   <!-- The rail lives here in .app; the panels themselves render in the panels layer AFTER
        .ui-scale so they stack above the in-frame mini-map — see that layer's comment. -->
-  <NavRail
-    open={navPanelOpen}
-    activeTab={railActiveTab}
-    activeHidden={panelHidden}
-    tabs={railTabs}
-    onToggle={toggleNavPanel}
-    onSelectTab={selectTab}
-  />
+  {#if useDock}
+    <!-- ======= APP DOCK (iOS-style shelf: views · panel apps · utilities) ======= -->
+    <div class="zone-app-dock">
+      <AppDock groups={dockGroups} onSelect={onDockSelect} />
+    </div>
+  {:else}
+    <NavRail
+      open={navPanelOpen}
+      activeTab={railActiveTab}
+      activeHidden={panelHidden}
+      tabs={railTabs}
+      onToggle={toggleNavPanel}
+      onSelectTab={selectTab}
+    />
+  {/if}
 
   {#if !phoneUi}
   <!-- ======= BOTTOM WIDGET PANEL ======= -->
@@ -3772,7 +4139,9 @@
   </div>
 
   <!-- ======= FLOATING VIDEO WINDOW (+ its show/hide toggle) ======= -->
-  <FloatingVideoWindow left={floatLeft} top={floatTop} width={floatW} height={floatH} vw={logicalW} vh={logicalH} />
+  {#if view !== 'split'}
+    <FloatingVideoWindow left={floatLeft} top={floatTop} width={floatW} height={floatH} vw={logicalW} vh={logicalH} />
+  {/if}
 
   <!-- ======= RIGHT WIDGET PANEL ======= -->
   <div class="zone-side-dock" class:zone-hidden={!$layout.sideDock.visible} class:panel-editing={widgetEditMode} bind:clientWidth={sideDockW} bind:clientHeight={sideDockH}>
@@ -3839,6 +4208,8 @@
     <div
       class="panels-host"
       class:panels-hidden={panelHidden}
+      style:--rail-w="{useDock ? 12 : 62}px"
+      style:--app-dock-clear="{useDock ? 24 + appDockH + 6 : 62}px"
       style:--grid-bottom-height={gridBottomHeight}
       style:--grid-side-width={gridSideWidth}
       style:--panel-bottom-reserve={panelBottomReserve}
@@ -4023,7 +4394,7 @@
   /* Continue-on-reconnect status banner (recovery, ADR-042) */
   .resume-banner {
     position: fixed;
-    bottom: 36px;
+    bottom: 108px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9000;
@@ -4113,12 +4484,14 @@
     display: grid;
     height: 100%;
     position: relative;
-    grid-template-rows: 53px 1fr var(--grid-bottom-height) 24px;
-    grid-template-columns: 62px 1fr var(--grid-side-width) 54px;
+    grid-template-rows: 53px var(--tabbar-h, 0px) 1fr var(--grid-bottom-height) var(--app-dock-h, 0px) 24px;
+    grid-template-columns: var(--rail-col, 62px) 1fr var(--grid-side-width) 54px;
     grid-template-areas:
       "toolbar      toolbar      toolbar      toolbar"
+      "tabbar       tabbar       tabbar       tabbar"
       "nav-rail     panel        side-dock    side-dock"
       "nav-rail     bottom-dock  bottom-dock  map-controls"
+      "app-dock     app-dock     app-dock     app-dock"
       "status-bar   status-bar   status-bar   status-bar";
   }
 
@@ -4142,7 +4515,8 @@
   }
   .app > :global(.zone-bottom-dock),
   .app > :global(.zone-side-dock),
-  .app > :global(.zone-map-controls) {
+  .app > :global(.zone-map-controls),
+  .app > :global(.zone-app-dock) {
     pointer-events: none;
   }
 
@@ -4156,7 +4530,7 @@
      toolbar grid row by the safe-area inset, pad the toolbar content down into the visible strip, and
      push the top-anchored map/video/toast layers down to match so nothing hides under the status bar. */
   :global(html.is-mobile) .app {
-    grid-template-rows: calc(53px + var(--safe-top, 0px)) 1fr var(--grid-bottom-height) 24px;
+    grid-template-rows: calc(53px + var(--safe-top, 0px)) var(--tabbar-h, 0px) 1fr var(--grid-bottom-height) var(--app-dock-h, 0px) 24px;
   }
   :global(html.is-mobile) .zone-toolbar {
     padding-top: var(--safe-top, 0px);
@@ -4165,7 +4539,7 @@
   :global(html.is-mobile) .layer-map {
     /* Track the live toolbar height (includes the status-bar inset) so the map starts exactly at the
        bar's bottom edge, with no grey strip below the blue divider when the bar is collapsed/short. */
-    top: calc(var(--toolbar-h, 53px) * var(--ui-scale, 1));
+    top: calc((var(--toolbar-h, 53px) + var(--tabbar-h, 0px)) * var(--ui-scale, 1));
   }
   /* Mobile (phone + tablet): hand all touch gestures on the map to Leaflet (pan + pinch). Without
      touch-action:none the iOS WebView swallows the single-finger drag (only pinch/zoom-buttons work).
@@ -4175,7 +4549,7 @@
     touch-action: none;
   }
   :global(html.is-mobile) .map-video-wrap {
-    top: var(--toolbar-h, 53px);
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px));
   }
   /* Phone: no toolbar / status bar — the swapped-in video fills the MAP AREA (it ends at the widget
      column and rides along when the replay player pushes the column aside), so the picture is
@@ -4255,14 +4629,16 @@
       /* Bottom bar hidden on phone (redundant with the collapsed top strip; arming moves into it). The
          last row is kept as a thin strip (home-indicator inset + room for the Leaflet label) so the HUD
          sits above it and the label is not covered; the map runs full-height behind it. */
-      grid-template-rows: auto 1fr var(--grid-bottom-height) calc(var(--safe-bottom, 0px) + 20px);
+      grid-template-rows: auto var(--tabbar-h, 0px) 1fr var(--grid-bottom-height) var(--app-dock-h, 0px) calc(var(--safe-bottom, 0px) + 20px);
       /* Reclaim the left nav-rail column for the bottom dock (NavRail is absolutely positioned, so its
          grid cell is empty): gives the HUD tiles the full left-to-right width on phone and uses the
          empty space on the left. Map controls keep the right column. */
       grid-template-areas:
         "toolbar      toolbar      toolbar      toolbar"
+        "tabbar       tabbar       tabbar       tabbar"
         "nav-rail     panel        side-dock    side-dock"
         "bottom-dock  bottom-dock  bottom-dock  map-controls"
+        "app-dock     app-dock     app-dock     app-dock"
         "status-bar   status-bar   status-bar   status-bar";
     }
     /* Redundant on phone (same status as the top strip); hidden. */
@@ -4417,7 +4793,7 @@
      chrome inset + black backdrop; the video fills it. */
   .map-video-wrap {
     position: absolute;
-    top: 53px;
+    top: calc(53px + var(--tabbar-h, 0px));
     left: 0;
     right: 0;
     bottom: 24px;
@@ -4543,6 +4919,182 @@
     grid-area: map-controls;
     z-index: 90;
     pointer-events: none;
+  }
+
+  /* ── Tab bar row ──────────────────────────────────────────────── */
+  .zone-tabbar {
+    grid-area: tabbar;
+    z-index: 190;
+    min-width: 0;
+  }
+
+  /* ── Start page (every tab closed) ─────────────────────────────
+     Covers the content area — map, video and widget docks (z100) — but not the tab bar (z190)
+     or the App Dock (z110), so either can open something again. */
+  .start-page {
+    position: absolute;
+    top: calc(53px + var(--tabbar-h, 0px));
+    left: 0;
+    right: 0;
+    bottom: 24px;
+    z-index: 105;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 24px calc(var(--app-dock-h, 0px) + 24px);
+    box-sizing: border-box;
+    background:
+      radial-gradient(ellipse at 50% 35%, rgba(55, 168, 219, 0.12), transparent 60%),
+      linear-gradient(180deg, #202328, #16181b);
+  }
+  :global(html.is-mobile) .start-page {
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px));
+  }
+  .sp-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #eef0f2;
+  }
+  .sp-hint {
+    font-size: 13px;
+    color: #949494;
+    margin-bottom: 18px;
+  }
+  .sp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 92px);
+    justify-content: center;
+    gap: 18px 10px;
+    width: min(760px, 100%);
+  }
+  .sp-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 0;
+    border: none;
+    border-radius: 12px;
+    background: none;
+    color: #d6d8db;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .sp-app:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  .sp-tile {
+    width: 56px;
+    height: 56px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    background: linear-gradient(180deg, var(--t1), var(--t2));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease;
+  }
+  .sp-app:hover .sp-tile {
+    transform: translateY(-3px) scale(1.06);
+  }
+  .sp-tile :global(svg) {
+    width: 34px;
+    height: 34px;
+    display: block;
+  }
+  .sp-label {
+    max-width: 92px;
+    text-align: center;
+    line-height: 1.25;
+  }
+
+  /* ── App Dock row ─────────────────────────────────────────────
+     The shelf floats centred over the map (which runs on underneath, like iOS); the side gutters
+     stay free for the floating-video toggle (left) and the map's corner controls (right). */
+  .zone-app-dock {
+    grid-area: app-dock;
+    z-index: 110;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 0 64px 6px;
+    min-width: 0;
+  }
+  .zone-app-dock > :global(*) {
+    pointer-events: auto;
+  }
+
+  /* ── Split view ───────────────────────────────────────────────
+     The video pane is the main video zone with an inline left/right; the divider sits on the seam
+     above both panes (map z0 in the unzoomed layer, this chrome z1). */
+  .map-video-wrap.split-pane {
+    background: #0b0c0e;
+  }
+  .split-divider {
+    position: absolute;
+    top: calc(53px + var(--tabbar-h, 0px));
+    bottom: 24px;
+    width: 14px;
+    margin-left: -7px;
+    z-index: 60;
+    cursor: col-resize;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  :global(html.is-mobile) .split-divider {
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px));
+  }
+  .split-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    transform: translateX(-50%);
+    background: rgba(20, 22, 26, 0.95);
+    box-shadow: 0 0 0 1px rgba(55, 168, 219, 0.25), 0 0 10px rgba(0, 0, 0, 0.6);
+    transition: background-color 0.15s, box-shadow 0.15s;
+  }
+  .split-divider:hover .split-line,
+  .split-divider.dragging .split-line {
+    background: #37a8db;
+    box-shadow: 0 0 12px rgba(55, 168, 219, 0.7);
+  }
+  .split-swap {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    padding: 7px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(30, 32, 36, 0.85);
+    backdrop-filter: var(--glass-blur, blur(8px));
+    color: #e6e6e6;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+    transition: background-color 0.15s, transform 0.15s;
+  }
+  .split-swap:hover {
+    background: #37a8db;
+    transform: scale(1.08);
+  }
+  .split-swap svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   /* ── Phone chrome (Dev-Docs active/PHONE_UI.md) ──────────────────────────────────────────
@@ -4708,7 +5260,7 @@
   /* --- Error Bar --- */
   .error-bar {
     position: absolute;
-    bottom: 24px;
+    bottom: calc(24px + var(--app-dock-h, 0px));
     left: 0;
     right: 0;
     display: flex;

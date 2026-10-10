@@ -116,8 +116,9 @@
 
   .ps {
     position: absolute;
-    top: 65px;
-    left: 62px;
+    /* --tabbar-h: the browser-style tab bar under the toolbar (+page; 0 where there is none). */
+    top: calc(65px + var(--tabbar-h, 0px));
+    left: var(--rail-w, 62px);
     z-index: 150;
     display: flex;
     overflow: hidden;
@@ -156,20 +157,20 @@
   }
   .ps-compact,
   .ps-advanced {
-    height: calc(100% - 53px - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 12px);
+    height: calc(100% - 53px - var(--tabbar-h, 0px) - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 12px);
   }
 
   .ps-info {
     width: max-content;
     max-width: 360px;
     height: auto;
-    max-height: calc(100% - 53px - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 12px);
+    max-height: calc(100% - 53px - var(--tabbar-h, 0px) - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 12px);
   }
 
   /* Mobile, any orientation: shift panels clear of a landscape side-notch. Harmless on iPad / portrait
      (--safe-left is 0), so it does not change those layouts. */
   :global(html.is-mobile) .ps {
-    left: calc(62px + var(--safe-left, 0px));
+    left: calc(var(--rail-w, 62px) + var(--safe-left, 0px));
   }
   /* Portrait phone only: the toolbar collapses/expands, so the panel tracks its live height. iPad and
      landscape phone keep the fixed top (single-row bar). */
@@ -184,14 +185,14 @@
      the phone which overlays the dock). Same `--panel-bottom-reserve` rule as the desktop: on a
      window too short for the nav rail the panel may overlay the dock instead of being squeezed. */
   :global(html.is-tablet) .ps {
-    top: calc(var(--toolbar-h, 65px) + 8px);
+    top: calc(var(--toolbar-h, 65px) + var(--tabbar-h, 0px) + 8px);
   }
   :global(html.is-tablet) .ps-compact,
   :global(html.is-tablet) .ps-advanced {
-    height: calc(100% - var(--toolbar-h, 65px) - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 20px);
+    height: calc(100% - var(--toolbar-h, 65px) - var(--tabbar-h, 0px) - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 20px);
   }
   :global(html.is-tablet) .ps-info {
-    max-height: calc(100% - var(--toolbar-h, 65px) - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 20px);
+    max-height: calc(100% - var(--toolbar-h, 65px) - var(--tabbar-h, 0px) - var(--panel-bottom-reserve, var(--grid-bottom-height)) - 24px - 20px);
   }
   /* iPhone (any orientation): the screen is small, so
      - width is capped to the viewport (minus the rail + a margin) so the panel never clips off-screen;
@@ -231,7 +232,7 @@
   .ps-advanced {
     flex-direction: row;
     width: 914px;
-    max-width: calc(100% - 62px - var(--grid-side-width) - 54px - 12px);
+    max-width: calc(100% - var(--rail-w, 62px) - var(--grid-side-width) - 54px - 12px);
   }
 
   /* Fullscreen + Wide-Compact: floating overlays (terrain-analyzer style), NOT edge-to-edge.
@@ -240,8 +241,8 @@
      top strip that stops before the side widget dock so the map stays visible for comparison. */
   .ps-fullscreen,
   .ps-wide-compact {
-    top: 62px;
-    left: 62px;
+    top: calc(62px + var(--tabbar-h, 0px));
+    left: var(--rail-w, 62px);
     z-index: 160;
     flex-direction: column;
     border-radius: 10px;
@@ -251,11 +252,11 @@
     backdrop-filter: var(--panel-blur, blur(10px));
   }
   .ps-fullscreen {
-    width: calc(100% - 124px);
-    height: calc(100% - 124px);
+    width: calc(100% - 2 * var(--rail-w, 62px));
+    height: calc(100% - 62px - var(--tabbar-h, 0px) - var(--app-dock-clear, 62px));
   }
   .ps-wide-compact {
-    width: calc(100% - 62px - var(--grid-side-width) - 54px - 6px);
+    width: calc(100% - var(--rail-w, 62px) - var(--grid-side-width) - 54px - 6px);
     height: max(20vh, 160px);
   }
   /* Phone (PHONE_UI.md): no toolbar / status bar / side dock — the fullscreen panel spans from the

@@ -1122,7 +1122,7 @@
   }
   .debug-panel {
     position: absolute;
-    top: 65px;
+    top: calc(65px + var(--tabbar-h, 0px));
     right: 12px;
     width: 540px;
     max-height: calc(100vh - 53px - 24px - 30px);

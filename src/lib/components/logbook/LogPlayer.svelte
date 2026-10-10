@@ -438,7 +438,7 @@
 <style>
   .log-player {
     position: absolute;
-    top: 62px;
+    top: calc(62px + var(--tabbar-h, 0px));
     left: 50%;
     transform: translateX(-50%);
     width: var(--log-player-w, 640px);
@@ -463,7 +463,7 @@
      exactly where the collapsed strip hangs and where users instinctively aim. */
   .log-player-zone {
     position: absolute;
-    top: 53px;
+    top: calc(53px + var(--tabbar-h, 0px)); /* hangs from the tab bar */
     left: 50%;
     transform: translateX(-50%);
     width: var(--log-player-w, 640px);
@@ -507,7 +507,7 @@
      top bar). Starts hidden under the bar and slides down while the full panel is collapsed. */
   .log-player-compact {
     position: absolute;
-    top: 53px;
+    top: calc(53px + var(--tabbar-h, 0px)); /* hangs from the tab bar */
     left: 50%;
     width: var(--log-player-w, 640px);
     max-width: calc(100vw - 40px);

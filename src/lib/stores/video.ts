@@ -22,6 +22,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { t } from 'svelte-i18n';
 import { isLinux, isAndroid } from '$lib/platform';
+import { APP_DOCK_PX } from '$lib/stores/viewMode';
 import {
   type NativeDevice,
   type CaptureMode,
@@ -1994,9 +1995,9 @@ export const FLOAT_FRAC_MAX = 0.3;
 /** Widest the window may get (fraction of the viewport width). */
 export const FLOAT_MAX_W_FRAC = 0.7;
 /** Snapped position: this far from the left edge, and this far above the viewport bottom (the
- *  24 px status bar + the widget dock's 6 px gap). */
+ *  24 px status bar + the App Dock row + the widget dock's 6 px gap). */
 export const FLOAT_MARGIN_PX = 8;
-export const FLOAT_SNAP_BOTTOM_PX = 30;
+export const FLOAT_SNAP_BOTTOM_PX = 30 + APP_DOCK_PX;
 /** The show/hide toggle button (square) and its gap to the frame. */
 export const FLOAT_BTN_PX = 38;
 export const FLOAT_BTN_GAP_PX = 8;

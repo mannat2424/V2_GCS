@@ -99,7 +99,7 @@
 <style>
   .alert-stack {
     position: absolute;
-    top: 56px;
+    top: calc(56px + var(--tabbar-h, 0px));
     left: 50%;
     transform: translateX(-50%);
     z-index: 500;
@@ -116,7 +116,7 @@
      nav-rail follow); the parent .app-toasts layer is already offset by --safe-top, which --toolbar-h
      also includes, so subtract it to avoid counting the status-bar strip twice. */
   :global(html.is-mobile) .alert-stack {
-    top: calc(var(--toolbar-h, 53px) - var(--safe-top, 0px) + 8px);
+    top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px) - var(--safe-top, 0px) + 8px);
   }
   /* Phone: the parent .app-toasts is the band between the corner buttons at --safe-top — start in
      the buttons' row and never grow past the band (the rows wrap; an alert is not ellipsized). */
