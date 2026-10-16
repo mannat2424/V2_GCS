@@ -1,0 +1,64 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+/* VAYU instrument skin — the shared look of every telemetry tile (speed, altitude, battery, GPS,
+   link, home, flight mode …). Each widget keeps its own layout in its scoped styles; this sheet
+   only replaces the surface and typography. `:root` + the doubled class outrank the widgets'
+   scoped rules (one class + the Svelte hash) without !important. Sizes stay relative to the tile
+   edge (--ws), so the skin scales with the widget. */
+
+:root .widget-card.widget-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 70% at 50% -10%, rgba(56, 189, 248, 0.10), transparent 60%),
+    linear-gradient(165deg, rgba(23, 35, 51, 0.96) 0%, rgba(9, 14, 22, 0.97) 75%);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  border-radius: calc(var(--ws) * 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 6px 16px rgba(0, 0, 0, 0.35);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* A thin accent beam along the top edge of every tile. */
+:root .widget-card.widget-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 18%;
+  right: 18%;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, transparent, #38bdf8, transparent);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+/* Label → a small pill chip. */
+:root .w-label.w-label {
+  font-size: calc(var(--ws) * 0.095);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #7dd3fc;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-radius: 999px;
+  padding: 0.12em 0.75em 0.1em;
+  line-height: 1.35;
+}
+
+/* Readouts → DIN-style numerals with a faint glow. */
+:root .w-value.w-value {
+  font-family: 'Bahnschrift', 'DIN Alternate', 'Segoe UI', sans-serif;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 calc(var(--ws) * 0.07) rgba(56, 189, 248, 0.35);
+}
+
+:root .w-unit.w-unit {
+  color: #64748b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

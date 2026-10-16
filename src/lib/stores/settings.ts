@@ -367,6 +367,8 @@ export interface AppSettings {
   flightLogRawPath: string;
   flightLogRawEnabled: boolean;
   flightLogRawAlways: boolean;
+  /** After every saved flight, also write it as KML (track) + CSV (telemetry) to <raw-log dir>/Flights. */
+  autoExportTracks: boolean;
   // Mission Control
   defaultWpAltitudeM: number;
   defaultPhTimeSec: number;
@@ -467,6 +469,7 @@ const defaults: AppSettings = {
   flightLogRawPath: '',
   flightLogRawEnabled: false,
   flightLogRawAlways: false,
+  autoExportTracks: true,
   defaultWpAltitudeM: 50,
   defaultPhTimeSec: 30,
   lastAutopilotSystem: 'inav',

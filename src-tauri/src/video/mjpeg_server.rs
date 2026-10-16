@@ -17,6 +17,7 @@
 
 use std::io::{BufRead, BufReader, Read, Write};
 use std::net::{TcpListener, TcpStream};
+use std::path::PathBuf;
 use std::process::{Child, ChildStderr, Command, Stdio};
 use std::sync::mpsc::{Receiver, RecvTimeoutError, Sender};
 use std::sync::{Arc, atomic::{AtomicBool, Ordering}, Mutex};
@@ -69,6 +70,13 @@ const HW_FAILURE_MARKERS: [&str; 3] = [
 /// Prefixed to a start failure the hardware caused, so the caller can tell a driver's verdict from an
 /// unreachable source without parsing ffmpeg's prose. Kept in sync with `stores/video.ts`.
 pub const HW_FAILURE_PREFIX: &str = "hardware transcode failed — ";
+
+/// Filter chain applied to the recorded leg only (never the live view) when a native-capture
+/// recording is on: `hqdn3d` denoises, `unsharp` sharpens what the denoise softened, `eq` lifts
+/// contrast/brightness/saturation a touch. Plain ffmpeg filters — cheap enough to run alongside the
+/// live encode, no ML/GPU dependency.
+const RECORD_ENHANCE_FILTERS: &str =
+    "hqdn3d=4:3:6:4.5,unsharp=5:5:0.8:5:5:0.0,eq=contrast=1.05:brightness=0.02:saturation=1.1";
 
 /// The multipart HTTP response preamble sent once per client before the frame stream.
 /// `Access-Control-Allow-Origin` is required because the WebView reads this stream with `fetch` from
@@ -170,7 +178,18 @@ impl MjpegServer {
     ///
     /// `on_ended` fires only for a source that dies while live — never for a start that failed, which
     /// is reported through the return value instead.
-    pub fn start(&self, on_ended: EndedHook, source: &MjpegSource) -> Result<u16, String> {
+    ///
+    /// `record_path`: when `Some`, a **second** ffmpeg output writes an enhanced
+    /// (`RECORD_ENHANCE_FILTERS`) H.264/Matroska copy of the feed to this path — the live MJPEG output
+    /// is unaffected. Only wired up for `MjpegSource::Device` (native/USB capture); `Rtsp` ignores it.
+    /// A capture device is locked by whichever ffmpeg has it open, so recording can't be a second
+    /// process — it is a second *output* of this one, and toggling it restarts the capture.
+    pub fn start(
+        &self,
+        on_ended: EndedHook,
+        source: &MjpegSource,
+        record_path: Option<PathBuf>,
+    ) -> Result<u16, String> {
         self.stop();
 
         let listener = TcpListener::bind("127.0.0.1:0").map_err(|e| format!("bind: {e}"))?;
@@ -188,11 +207,43 @@ impl MjpegServer {
         // packet). `-fflags nobuffer` and the hardware decoder selection are INPUT options, so they
         // precede the demuxer / `-i`.
         let mut args: Vec<String> = vec!["-loglevel".into(), "error".into()];
+        // Second (recording) output, appended after the live sink below.
+        let mut record_tail: Option<Vec<String>> = None;
         match source {
             MjpegSource::Device(spec) => {
                 args.extend(["-fflags".into(), "nobuffer".into()]);
                 args.extend(super::native::input_args(spec));
-                if super::native::needs_transcode(&spec.codec) {
+                if let Some(rec_path) = &record_path {
+                    // Splitting for a second (enhanced) output needs decoded frames, so recording
+                    // always sends the live leg through the MJPEG encode too (no stream-copy).
+                    args.extend([
+                        "-filter_complex".into(),
+                        format!("[0:v]split=2[live][rec];[rec]{RECORD_ENHANCE_FILTERS}[recf]"),
+                        "-map".into(),
+                        "[live]".into(),
+                        "-c:v".into(),
+                        "mjpeg".into(),
+                        "-q:v".into(),
+                        "5".into(),
+                    ]);
+                    record_tail = Some(vec![
+                        "-map".into(),
+                        "[recf]".into(),
+                        "-c:v".into(),
+                        "libx264".into(),
+                        "-preset".into(),
+                        "veryfast".into(),
+                        "-crf".into(),
+                        "20".into(),
+                        "-pix_fmt".into(),
+                        "yuv420p".into(),
+                        // Matroska, not MP4: `stop()` kills ffmpeg outright, and MP4 only writes its
+                        // index at a clean close — a killed MKV still plays up to the last frame.
+                        "-f".into(),
+                        "matroska".into(),
+                        rec_path.to_string_lossy().into_owned(),
+                    ]);
+                } else if super::native::needs_transcode(&spec.codec) {
                     // Raw / H.264 / auto → re-encode to MJPEG for the multipart sink.
                     args.extend(["-c:v".into(), "mjpeg".into(), "-q:v".into(), "5".into()]);
                 } else {
@@ -269,6 +320,10 @@ impl MjpegServer {
         }
         // Emit each packet immediately (no output buffering) → even, low-jitter frame delivery.
         args.extend(["-flush_packets".into(), "1".into(), "-f".into(), "mpjpeg".into(), "-".into()]);
+        // The recording's output comes after the live sink (ffmpeg reads outputs in order).
+        if let Some(tail) = record_tail {
+            args.extend(tail);
+        }
 
         let mut cmd = Command::new(&ffmpeg_bin);
         crate::child_env::sanitize(&mut cmd);

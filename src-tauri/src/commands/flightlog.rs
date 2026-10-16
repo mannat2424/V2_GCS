@@ -884,6 +884,48 @@ pub fn flightlog_export_track(
     })
 }
 
+/// Auto-save a flight as KML (track) + CSV (telemetry) into `<raw-log dir>/Flights/` — called
+/// after every committed live flight when "Save flights as KML + CSV" is on. `raw_dir` is the
+/// user's raw-log folder override (empty = the default `Documents/KiteGC`). Returns the written
+/// paths. Files are named `<UTC start>_<craft>.kml|csv`; an existing pair is overwritten.
+#[tauri::command]
+pub fn flightlog_autosave_track(
+    flight_id: i64,
+    db_path: Option<String>,
+    raw_dir: Option<String>,
+) -> Result<Vec<String>, String> {
+    let conn = open_db(&db_path.unwrap_or_default())?;
+    let flight = db::get_flight(&conn, flight_id)
+        .map_err(|e| format!("DB error: {}", e))?
+        .ok_or_else(|| "Flight not found".to_string())?;
+    let track = db::get_flight_track(&conn, flight_id)
+        .map_err(|e| format!("DB error: {}", e))?;
+
+    let dir = db::resolve_raw_log_dir(&raw_dir.unwrap_or_default(), portable_mode()).join("Flights");
+    std::fs::create_dir_all(&dir)
+        .map_err(|e| format!("Cannot create {}: {}", dir.display(), e))?;
+
+    let craft: String = flight
+        .craft_name
+        .chars()
+        .map(|c| if c.is_ascii_alphanumeric() || c == '-' || c == '_' { c } else { '_' })
+        .collect();
+    let stem = format!(
+        "{}_{}",
+        flight.start_time.format("%Y-%m-%d_%H-%M-%S"),
+        if craft.trim_matches('_').is_empty() { format!("flight{}", flight_id) } else { craft }
+    );
+
+    let mut written = Vec::new();
+    for ext in ["kml", "csv"] {
+        let path = dir.join(format!("{}.{}", stem, ext));
+        crate::flightlog::track_export::export_track(&flight, &track, &path)?;
+        written.push(path.to_string_lossy().to_string());
+    }
+    log::info!("Flight {} auto-saved: {}", flight_id, written.join(", "));
+    Ok(written)
+}
+
 /// Export the raw blackbox binary file for a flight
 #[tauri::command]
 pub fn flightlog_export_blackbox(

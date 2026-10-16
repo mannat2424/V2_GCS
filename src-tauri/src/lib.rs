@@ -45,7 +45,7 @@ use commands::flightlog::{
     flightlog_update_notes, flightlog_update_craft_name, flightlog_update_platform_type, flightlog_update_pilot, flightlog_update_weather, flightlog_geocode, flightlog_fetch_weather,
     flightlog_default_db_path, flightlog_default_raw_log_path, flightlog_import_blackbox,
     flightlog_blackbox_log_count,
-    flightlog_export, flightlog_export_blackbox, flightlog_blackbox_file_info, flightlog_delete_blackbox_file, flightlog_compact_db, flightlog_export_track, flightlog_import_kflight,
+    flightlog_export, flightlog_export_blackbox, flightlog_blackbox_file_info, flightlog_delete_blackbox_file, flightlog_compact_db, flightlog_export_track, flightlog_autosave_track, flightlog_import_kflight,
     flightlog_backup_info, flightlog_backup_delete,
     flightlog_kflight_list, flightlog_kflight_get, flightlog_kflight_track,
     flightlog_probe_ardupilot, flightlog_decode_ardupilot_csv,
@@ -93,6 +93,7 @@ use commands::video::{
     video_webrtc_stop,
     video_list_native_devices, video_probe_device,
     video_native_mjpeg_start, video_native_mjpeg_stop, video_rtsp_mjpeg_start,
+    video_list_recordings, video_recordings_dir,
     video_rtsp_native_start, video_rtsp_native_stop,
     video_rtsp_native_sink_surfaces, video_rtsp_native_stats,
     video_linux_hole_spike,
@@ -385,6 +386,41 @@ pub fn setup_portable_mode() {
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
+/// Keep the main window inside the screen it is on. The window-state plugin restores the last
+/// size/position — so a window last used on a big display (a TV) comes back larger than the current
+/// screen, its status bar / edges cut off or even off-screen. Shrinks it to the monitor's usable area
+/// (taskbar excluded) and nudges it back inside. A maximized / full-screen window is left alone.
+#[cfg(desktop)]
+fn fit_window_to_screen(window: &tauri::WebviewWindow) {
+    if window.is_maximized().unwrap_or(false) || window.is_fullscreen().unwrap_or(false) {
+        return;
+    }
+    let monitor = match window.current_monitor() {
+        Ok(Some(m)) => m,
+        _ => match window.primary_monitor() {
+            Ok(Some(m)) => m,
+            _ => return,
+        },
+    };
+    let area = monitor.work_area();
+    let (ax, ay) = (area.position.x, area.position.y);
+    let (aw, ah) = (area.size.width as i32, area.size.height as i32);
+    let (Ok(size), Ok(pos)) = (window.outer_size(), window.outer_position()) else {
+        return;
+    };
+    let w = (size.width as i32).min(aw);
+    let h = (size.height as i32).min(ah);
+    let x = pos.x.min(ax + aw - w).max(ax);
+    let y = pos.y.min(ay + ah - h).max(ay);
+    if w != size.width as i32 || h != size.height as i32 {
+        let _ = window.set_size(tauri::PhysicalSize::new(w as u32, h as u32));
+    }
+    if x != pos.x || y != pos.y {
+        let _ = window.set_position(tauri::PhysicalPosition::new(x, y));
+    }
+    log::info!("[window] fitted to screen work area: {w}x{h} at {x},{y}");
+}
+
 pub fn run() {
     // `--debug` (release builds) turns on the in-app Debug Monitor + verbose logging at runtime. Debug
     // builds default to on (see debug_mode). Parse it before anything else.
@@ -462,6 +498,19 @@ pub fn run() {
 
     builder
         .setup(|_app| {
+            // Fit the (possibly restored) window to the current screen, once the window-state
+            // plugin's saved geometry has settled.
+            #[cfg(desktop)]
+            {
+                use tauri::Manager;
+                if let Some(window) = _app.get_webview_window("main") {
+                    tauri::async_runtime::spawn(async move {
+                        tokio::time::sleep(std::time::Duration::from_millis(500)).await;
+                        fit_window_to_screen(&window);
+                    });
+                }
+            }
+
             // Android: record where app data actually landed, and flag any disagreement with Tauri's
             // own idea of it (see `android::log_resolved_dirs`).
             #[cfg(target_os = "android")]
@@ -737,6 +786,7 @@ pub fn run() {
             flightlog_backup_info,
             flightlog_backup_delete,
             flightlog_export_track,
+            flightlog_autosave_track,
             flightlog_import_kflight,
             flightlog_kflight_list,
             flightlog_kflight_get,
@@ -786,6 +836,8 @@ pub fn run() {
             video_list_native_devices,
             video_probe_device,
             video_native_mjpeg_start,
+            video_list_recordings,
+            video_recordings_dir,
             video_rtsp_mjpeg_start,
             video_rtsp_native_start,
             video_rtsp_native_stop,

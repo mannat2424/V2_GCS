@@ -25,6 +25,10 @@
     setVideoResolution,
     setCameraFps,
     setVideoMirror,
+    setDisplayRatio,
+    setVideoZoom,
+    VIDEO_ZOOM_LEVELS,
+    type DisplayRatio,
     setVideoRotate180,
     setUnobstructedFullscreen,
     setDisableHwAccel,
@@ -45,6 +49,7 @@
     setNativeDevice,
     setNativeResolution,
     setNativeFramerate,
+    setNativeRecording,
     setNativeCodec,
   } from '$lib/stores/video';
   import { canvasSink, mjpegStats } from '$lib/controllers/mjpegSink';
@@ -60,6 +65,8 @@
   import Button from '$lib/components/panel/Button.svelte';
   import NumberStepper from '$lib/components/NumberStepper.svelte';
   import Toggle from '$lib/components/panel/Toggle.svelte';
+  import SegmentedToggle from '$lib/components/panel/SegmentedToggle.svelte';
+  const zoomOptions = VIDEO_ZOOM_LEVELS.map((z) => ({ value: String(z), label: `${z}×` }));
   import { isLinux, isMobile, isAndroid, isIOS, isPhone } from '$lib/platform';
 
   // Which saved RTSP connection is being edited inline (null = none).
@@ -389,8 +396,9 @@
           onchange={(e) => setVideoDevice((e.currentTarget as HTMLSelectElement).value || null)}
         >
           <option value="">{$t('video.defaultDevice')}</option>
-          {#each $videoState.devices as d}
-            <option value={d.deviceId}>{d.label}</option>
+          {#each $videoState.devices as d, i}
+            <!-- The hardware name (e.g. the capture card's model) is deliberately not shown. -->
+            <option value={d.deviceId}>{$t('video.genericDeviceLabel', { values: { n: i + 1 } })}</option>
           {/each}
         </select>
       </label>
@@ -429,8 +437,10 @@
           value={$videoState.nativeDevice ?? ''}
           onchange={(e) => setNativeDevice((e.currentTarget as HTMLSelectElement).value || null)}
         >
-          {#each $videoState.nativeDevices as d}
-            <option value={d.id}>{d.name}</option>
+          {#each $videoState.nativeDevices as d, i}
+            <!-- A generic label, not the real hardware name — cosmetic only: selection still uses the
+                 real id, and re-matching after a replug still keys off the real name in the store. -->
+            <option value={d.id}>{$t('video.genericDeviceLabel', { values: { n: i + 1 } })}</option>
           {/each}
         </select>
       </label>
@@ -476,6 +486,15 @@
             {/each}
           </select>
         </label>
+      {/if}
+
+      <div class="field-row">
+        <Toggle checked={$videoState.recording} onchange={(c) => void setNativeRecording(c)} id="vp-record" />
+        <span class="label">{$t('video.record')}</span>
+      </div>
+      <p class="hint">{$t('video.recordHint')}</p>
+      {#if $videoState.recording && $videoState.recordingPath}
+        <p class="hint rec-live">● {$t('video.recordingTo', { values: { path: $videoState.recordingPath } })}</p>
       {/if}
 
       <!-- Native capture needs ffmpeg (no engine). -->
@@ -659,6 +678,30 @@
       <span class="label">{$t('video.rotate180')}</span>
     </div>
 
+    <!-- Display ratio: the shape the picture is shown at on every surface (analog goggles = 4:3). -->
+    <label class="field">
+      <span class="label">{$t('video.displayRatio')}</span>
+      <select
+        value={$videoState.displayRatio}
+        onchange={(e) => setDisplayRatio((e.currentTarget as HTMLSelectElement).value as DisplayRatio)}
+      >
+        <option value="auto">{$t('video.ratioAuto')}</option>
+        <option value="4:3">4:3</option>
+        <option value="16:9">16:9</option>
+        <option value="fill">{$t('video.ratioFill')}</option>
+      </select>
+    </label>
+    <p class="hint">{$t('video.displayRatioHint')}</p>
+
+    <!-- Digital zoom: one level for every video surface; wheel over the video steps it too. -->
+    <div class="field-row">
+      <span class="label">{$t('video.zoom')}</span>
+      <SegmentedToggle size="sm" options={zoomOptions} value={String($videoState.zoom)} onchange={(v) => setVideoZoom(Number(v))} />
+    </div>
+    {#if $videoState.zoom > 1}
+      <p class="hint">{$t('video.zoomHint')}</p>
+    {/if}
+
     <!-- Unobstructed fullscreen: the map-swap video shrinks so occupied widget panels and the
          nav rail stay clear of the picture; an empty/hidden panel releases its edge. Off = the
          video fills the whole map zone as before. Layout math lives in +page.svelte. -->
@@ -785,6 +828,7 @@
 
   .field { display: flex; flex-direction: column; gap: 4px; }
   .field-row { display: flex; align-items: center; gap: 8px; }
+  .rec-live { color: #ff6b6b; word-break: break-all; }
   .label { font-size: 12px; color: #9eacbf; }
   .label.muted { color: #4b5b71; }
   /* Match the framework form-control height (md button = 28px). */

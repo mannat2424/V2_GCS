@@ -17,7 +17,7 @@
 // `getUserMedia` works in WebView2 (Windows) and WebKitGTK (Linux) and, with the camera entitlement,
 // WKWebView (macOS), so the camera path needs no backend. rtsp + native use the Rust backend.
 
-import { writable, get } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { t } from 'svelte-i18n';
@@ -59,6 +59,11 @@ export interface RtspConnection {
 }
 /** Where the single map instance currently lives (the inverse of which surfaces show video). */
 export type MapLocation = 'main' | 'floating' | 'widget';
+/** How the picture is shaped on screen. `auto` = the source's own shape, except analog SD (goggles
+ *  through an AV capture card), which is shown at its true 4:3; `4:3` / `16:9` force that shape;
+ *  `fill` additionally stretches the full-screen view over the whole area (no black bars). */
+export type DisplayRatio = 'auto' | '4:3' | '16:9' | 'fill';
+const DISPLAY_RATIOS: readonly DisplayRatio[] = ['auto', '4:3', '16:9', 'fill'];
 
 /** The detached video window's box, in PHYSICAL px (its own coordinates on the desktop), plus its
  *  fullscreen state. Ours to persist rather than the window-state plugin's: the plugin restores a
@@ -134,6 +139,15 @@ export interface VideoState {
   /** Mirror horizontally (front-facing cams) — applied by the display sinks. */
   mirror: boolean;
   /** Rotate the picture 180° (upside-down camera mounts) — applied by the display sinks. */
+  /** Display ratio mode — see `DisplayRatio` / `resolveDisplayAspect`. Persisted. */
+  displayRatio: DisplayRatio;
+  /** Digital zoom (one of `VIDEO_ZOOM_LEVELS`), shared by every DOM video surface. Runtime-only. */
+  zoom: number;
+  /** Pan of the zoomed picture, -1…1 of the available travel per axis (0 = centred). */
+  panX: number;
+  panY: number;
+  /** The floating window is maximized to the whole content area (see `floatFrameRect`). Runtime-only. */
+  floatFull: boolean;
   rotate180: boolean;
   /** Source aspect ratio (w/h); drives the widget / floating-window sizing. */
   aspect: number;
@@ -174,6 +188,11 @@ export interface VideoState {
    *  full-screen map; `floating`/`widget` = the map jumped into that video surface (which double-
    *  clicked), and every other surface shows video. Double-clicking a video moves the map there. */
   mapLocation: MapLocation;
+  /** Native capture only: also write an enhanced (denoised / sharpened / colour-corrected) copy of
+   *  the feed to disk. Runtime-only — never persisted, never auto-resumes on launch. */
+  recording: boolean;
+  /** Where that recording is being written; null when not recording. */
+  recordingPath: string | null;
   /** Screen rect (px) of the video widget tile, published by the widget — used to overlay the map
    *  onto it when `mapLocation === 'widget'`. Null until measured. */
   widgetRect: { x: number; y: number; w: number; h: number } | null;
@@ -204,6 +223,7 @@ interface VideoPrefs {
   nativeFps: number;
   disableHwAccel: boolean;
   mirror: boolean;
+  displayRatio: DisplayRatio;
   rotate180: boolean;
   floating: boolean;
   floatSnapped: boolean;
@@ -236,6 +256,7 @@ const PREF_DEFAULTS: VideoPrefs = {
   disableHwAccel: false,
   mirror: false,
   rotate180: false,
+  displayRatio: 'auto',
   // Shown by default: since the Video panel lost its preview, the floating window (the docked
   // window on the phone) is where a freshly started source appears.
   floating: true,
@@ -278,6 +299,7 @@ function loadPrefs(): VideoPrefs {
         disableHwAccel: p.disableHwAccel ?? false,
         undocked: p.undocked ?? false,
         detachBox: p.detachBox ?? null,
+        displayRatio: DISPLAY_RATIOS.includes(p.displayRatio as DisplayRatio) ? (p.displayRatio as DisplayRatio) : 'auto',
       };
     }
   } catch {
@@ -312,6 +334,7 @@ function savePrefs(): void {
         disableHwAccel: s.disableHwAccel,
         mirror: s.mirror,
         rotate180: s.rotate180,
+        displayRatio: s.displayRatio,
         floating: s.floating,
         floatSnapped: s.floatSnapped,
         floatX: s.floatX,
@@ -366,6 +389,11 @@ const INITIAL: VideoState = {
   disableHwAccel: boot.disableHwAccel,
   mirror: boot.mirror,
   rotate180: boot.rotate180,
+  displayRatio: boot.displayRatio,
+  zoom: 1,
+  panX: 0,
+  panY: 0,
+  floatFull: false,
   aspect: 16 / 9,
   width: null,
   height: null,
@@ -382,6 +410,8 @@ const INITIAL: VideoState = {
   undocked: boot.undocked,
   detachBox: boot.detachBox,
   mapLocation: 'main',
+  recording: false,
+  recordingPath: null,
   widgetRect: null,
 };
 
@@ -651,9 +681,11 @@ export function isWebrtcAvailable(): boolean {
 async function startNativeMjpeg(
   sel: NativeSelection,
   id: string,
-): Promise<{ url: string; transcode: string }> {
-  return await invoke<{ url: string; transcode: string }>('video_native_mjpeg_start', {
+  record: boolean,
+): Promise<{ url: string; transcode: string; recordingPath: string | null }> {
+  return await invoke<{ url: string; transcode: string; recordingPath: string | null }>('video_native_mjpeg_start', {
     id,
+    record,
     codec: sel.codec,
     width: sel.width,
     height: sel.height,
@@ -1702,7 +1734,7 @@ export async function startNative(): Promise<void> {
   savePrefs();
   const sel = st.nativeSel;
   try {
-    const { url, transcode } = await startNativeMjpeg(sel, id);
+    const { url, transcode, recordingPath } = await startNativeMjpeg(sel, id, st.recording);
     // Same straddled-Stop hazard as the RTSP path: the backend holds this call until the capture
     // produces its first bytes, so a Stop in between runs its `stopNativeMjpeg` before this server
     // even exists. Undo it rather than announcing a feed nobody asked for any more.
@@ -1719,6 +1751,7 @@ export async function startNative(): Promise<void> {
       width: sel.width,
       height: sel.height,
       aspect: sel.width / sel.height,
+      recordingPath,
     });
   } catch (e) {
     patch({ status: 'error', error: e instanceof Error ? e.message : String(e), mjpegUrl: null });
@@ -1743,8 +1776,47 @@ export function stopVideo(): void {
     void stopNativeMjpeg();
     stopKiteRtsp();
   }
-  patch({ enabled: false, status: 'off', error: null, rtspEngine: null, mjpegUrl: null, activeTranscode: null, reconnecting: false, reconnectAttempt: 0 });
+  patch({ enabled: false, status: 'off', error: null, rtspEngine: null, mjpegUrl: null, activeTranscode: null, reconnecting: false, reconnectAttempt: 0, recording: false, recordingPath: null, zoom: 1, panX: 0, panY: 0, floatFull: false });
   savePrefs();
+  if (wasBackend) void refreshRecordings(); // a just-finished recording shows up at once
+}
+
+/** Toggle the enhanced recording (native capture only). Like any capture-spec change it restarts
+ *  the capture (the device is locked by one ffmpeg, so the recording is a second output of it).
+ *  While no native feed is live the flag is just remembered for the next start. */
+export async function setNativeRecording(recording: boolean): Promise<void> {
+  const st = get(videoState);
+  if (st.recording === recording) return;
+  patch({ recording });
+  if (st.enabled && st.kind === 'native') await startNative();
+}
+
+// ── Enhanced recordings list (what setNativeRecording writes — see video::recording) ──
+export interface RecordingInfo {
+  name: string;
+  path: string;
+  sizeBytes: number;
+  modifiedMs: number;
+}
+export const recordingsList = writable<RecordingInfo[]>([]);
+export const recordingsLoading = writable(false);
+/** `Documents/VAYU/Recordings` (platform-appropriate) — shown as a hint in the panel. */
+export const recordingsDir = writable<string>('');
+
+export async function refreshRecordings(): Promise<void> {
+  recordingsLoading.set(true);
+  try {
+    const [list, dir] = await Promise.all([
+      invoke<RecordingInfo[]>('video_list_recordings'),
+      invoke<string>('video_recordings_dir'),
+    ]);
+    recordingsList.set(list);
+    recordingsDir.set(dir);
+  } catch (e) {
+    logVideo('warn', `failed to list recordings: ${e instanceof Error ? e.message : String(e)}`);
+  } finally {
+    recordingsLoading.set(false);
+  }
 }
 
 /** Whether a Video widget sits in a dock (the phone grid included) — +page keeps this current.
@@ -1929,6 +2001,95 @@ export function setVideoRotate180(rotate180: boolean): void {
   syncNativeSinkOrient();
 }
 
+// ── Display ratio ────────────────────────────────────────────────────
+/** Analog SD as it comes out of an AV capture card (720×480 / 720×576 and CIF-ish cousins): stored
+ *  with non-square pixels, meant to be viewed at 4:3 — goggle video over an AV-to-USB dongle. */
+function isAnalogSd(width: number | null, height: number | null): boolean {
+  return !!width && !!height && width <= 720 && [240, 288, 480, 486, 576].includes(height);
+}
+
+/** The shape (width/height) the picture should be shown at for a ratio mode. */
+export function resolveDisplayAspect(
+  ratio: DisplayRatio,
+  width: number | null,
+  height: number | null,
+  sourceAspect: number,
+): number {
+  if (ratio === '4:3') return 4 / 3;
+  if (ratio === '16:9') return 16 / 9;
+  if (isAnalogSd(width, height)) return 4 / 3; // auto / fill: analog SD is really 4:3
+  return sourceAspect || 16 / 9;
+}
+
+/** The resolved display shape — every video surface sizes from this one value. */
+export const videoDisplayAspect = derived(videoState, (s) =>
+  resolveDisplayAspect(s.displayRatio, s.width, s.height, s.aspect),
+);
+
+/** True when the shape differs from the media's own pixel ratio, so the picture must be stretched
+ *  to its box (`object-fit: fill`) rather than letterboxed. */
+export const videoStretch = derived(
+  videoState,
+  (s) => s.displayRatio !== 'auto' || isAnalogSd(s.width, s.height),
+);
+
+/** Largest `aspect`-shaped box inside boxW × boxH (CSS `contain`, but explicit so the picture can be
+ *  stretched to a shape different from its pixel ratio). */
+export function fitContain(aspect: number, boxW: number, boxH: number): { w: number; h: number } {
+  const a = aspect || 16 / 9;
+  const w = Math.min(boxW, boxH * a);
+  return { w: Math.round(w), h: Math.round(w / a) };
+}
+
+export function setDisplayRatio(displayRatio: DisplayRatio): void {
+  patch({ displayRatio });
+  savePrefs();
+}
+
+// ── Digital zoom ─────────────────────────────────────────────────────
+// A CSS scale+translate on a layer around the picture (`.zoom-layer` in each surface): free per
+// frame and the same for <video>, <img> and the off-thread <canvas>. It magnifies the pixels the
+// capture has — it cannot add detail. Not applied to the native hardware sink (a layer below the
+// WebView that CSS cannot transform).
+export const VIDEO_ZOOM_LEVELS = [1, 2, 4] as const;
+const clampPan = (v: number) => Math.max(-1, Math.min(1, v));
+
+/** Set the zoom to the nearest preset. Back at 1× the pan is centred again. */
+export function setVideoZoom(zoom: number): void {
+  const level = VIDEO_ZOOM_LEVELS.reduce((best, l) => (Math.abs(l - zoom) < Math.abs(best - zoom) ? l : best));
+  patch(level === 1 ? { zoom: 1, panX: 0, panY: 0 } : { zoom: level });
+}
+
+/** One preset up (+1) or down (-1), stopping at the ends — mouse-wheel behaviour. */
+export function stepVideoZoom(dir: 1 | -1): void {
+  const i = VIDEO_ZOOM_LEVELS.indexOf(get(videoState).zoom as (typeof VIDEO_ZOOM_LEVELS)[number]);
+  const next = Math.max(0, Math.min(VIDEO_ZOOM_LEVELS.length - 1, (i < 0 ? 0 : i) + dir));
+  setVideoZoom(VIDEO_ZOOM_LEVELS[next]);
+}
+
+/** Next preset, wrapping 4× → 1× — the single-button control. */
+export function cycleVideoZoom(): void {
+  const i = VIDEO_ZOOM_LEVELS.indexOf(get(videoState).zoom as (typeof VIDEO_ZOOM_LEVELS)[number]);
+  setVideoZoom(VIDEO_ZOOM_LEVELS[((i < 0 ? 0 : i) + 1) % VIDEO_ZOOM_LEVELS.length]);
+}
+
+/** Pan by a fraction of the available travel. No-op at 1×. */
+export function panVideoBy(dx: number, dy: number): void {
+  const s = get(videoState);
+  if (s.zoom <= 1) return;
+  patch({ panX: clampPan(s.panX + dx), panY: clampPan(s.panY + dy) });
+}
+
+/** CSS transform for a zoom/pan: `translate` % is relative to the layer, so (zoom − 1) × 50 % is the
+ *  largest shift that still keeps the picture covering the frame — on every surface. '' at 1×. */
+export function zoomTransform(zoom: number, panX: number, panY: number): string {
+  if (zoom <= 1) return '';
+  const k = (zoom - 1) * 50;
+  return `translate(${(panX * k).toFixed(3)}%, ${(panY * k).toFixed(3)}%) scale(${zoom})`;
+}
+
+export const videoZoomTransform = derived(videoState, (s) => zoomTransform(s.zoom, s.panX, s.panY));
+
 /** Unobstructed fullscreen on/off — the map-swap video's layout reacts via the store. */
 export function setUnobstructedFullscreen(on: boolean): void {
   patch({ unobstructedFullscreen: on });
@@ -1991,9 +2152,13 @@ export const FLOAT_BEZEL_PX = 4;
 export const FLOAT_MIN_H_PX = 200;
 /** Height caps as a fraction of the viewport height. */
 export const FLOAT_FRAC_MIN = 0.1;
-export const FLOAT_FRAC_MAX = 0.3;
+export const FLOAT_FRAC_MAX = 0.8;
+/** A window's top edge stays below the toolbar (53 px + a gap), so its controls stay reachable. */
+export const FLOAT_TOP_SAFE = 61;
+/** A free / maximized window keeps this far from the app window's edges (its resize strips). */
+export const FLOAT_EDGE = 12;
 /** Widest the window may get (fraction of the viewport width). */
-export const FLOAT_MAX_W_FRAC = 0.7;
+export const FLOAT_MAX_W_FRAC = 0.9;
 /** Snapped position: this far from the left edge, and this far above the viewport bottom (the
  *  24 px status bar + the App Dock row + the widget dock's 6 px gap). */
 export const FLOAT_MARGIN_PX = 8;
@@ -2007,15 +2172,33 @@ export const FLOAT_BTN_GAP_PX = 8;
  *  The picture's box is the inner one (outer minus the bezel), and THAT carries the stream's aspect
  *  ratio exactly — sized from the inside out, or the bezel's 8 px would leave hairline bars. */
 export function floatFrameRect(s: VideoState, vw: number, vh: number, leftInset = 0): { left: number; top: number; width: number; height: number } {
-  const aspect = s.aspect || 16 / 9;
-  const height = Math.min(Math.round(FLOAT_FRAC_MAX * vh), Math.max(FLOAT_MIN_H_PX, Math.round(s.floatHeightFrac * vh)));
+  // Maximized: the whole content area, from the toolbar to above the dock, right of any sidebar.
+  if (s.floatFull) {
+    return {
+      left: leftInset + FLOAT_EDGE,
+      top: FLOAT_TOP_SAFE,
+      width: Math.max(0, vw - leftInset - 2 * FLOAT_EDGE),
+      height: Math.max(0, vh - FLOAT_TOP_SAFE - FLOAT_SNAP_BOTTOM_PX),
+    };
+  }
+  const aspect = resolveDisplayAspect(s.displayRatio, s.width, s.height, s.aspect);
+  // Up to 80 % of the height, but never so tall that a snapped window's top reaches the toolbar.
+  const maxH = Math.max(FLOAT_MIN_H_PX, Math.min(Math.round(FLOAT_FRAC_MAX * vh), vh - FLOAT_SNAP_BOTTOM_PX - FLOAT_TOP_SAFE));
+  const height = Math.min(maxH, Math.max(FLOAT_MIN_H_PX, Math.round(s.floatHeightFrac * vh)));
   const innerH = height - 2 * FLOAT_BEZEL_PX;
   const innerW = Math.min(Math.round(innerH * aspect), Math.round(vw * FLOAT_MAX_W_FRAC) - 2 * FLOAT_BEZEL_PX);
   const width = innerW + 2 * FLOAT_BEZEL_PX;
   // `leftInset`: a column the window must keep clear of (the cockpit instrument sidebar).
   const left = s.floatSnapped ? leftInset + FLOAT_MARGIN_PX : Math.max(leftInset, s.floatX);
-  const top = s.floatSnapped ? vh - height - FLOAT_SNAP_BOTTOM_PX : s.floatY;
+  const top = s.floatSnapped ? vh - height - FLOAT_SNAP_BOTTOM_PX : Math.max(FLOAT_TOP_SAFE, Math.min(s.floatY, vh - height - FLOAT_EDGE));
   return { left, top, width, height };
+}
+
+/** Maximize the floating window to the whole content area, or restore it (its own size and place
+ *  are kept, so restoring brings it back exactly as it was). */
+export function toggleFloatFull(): void {
+  patch({ floatFull: !get(videoState).floatFull });
+  if (typeof window !== 'undefined') setTimeout(() => window.dispatchEvent(new Event('resize')), 60);
 }
 
 export function toggleFloating(): void {

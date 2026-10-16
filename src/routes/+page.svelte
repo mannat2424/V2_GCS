@@ -47,7 +47,7 @@
   import TabBar, { type TabBarItem } from "$lib/components/TabBar.svelte";
   import { APP_ICONS, APP_HUES, FALLBACK_HUE } from "$lib/config/appIcons";
   import VideoEmptyState from "$lib/components/video/VideoEmptyState.svelte";
-  import { viewMode, setViewMode, setSplitFrac, setSideFrac, commitSplit, swapSplitSides, addOpenTab, removeOpenTab, APP_DOCK_PX, TAB_BAR_PX, type ViewMode } from "$lib/stores/viewMode";
+  import { viewMode, setViewMode, setSplitFrac, setSideFrac, setSidebarW, setSidebarCollapsed, commitSplit, swapSplitSides, addOpenTab, removeOpenTab, APP_DOCK_PX, TAB_BAR_PX, type ViewMode } from "$lib/stores/viewMode";
   import { getCurrentWindow } from "@tauri-apps/api/window";
   import PanelPlayground from "$lib/components/panel/PanelPlayground.svelte";
   import UavInfoPanel from "$lib/components/UavInfoPanel.svelte";
@@ -57,6 +57,7 @@
   import RcControlPanel from "$lib/components/control/RcControlPanel.svelte";
   import VirtualSticks from "$lib/components/control/VirtualSticks.svelte";
   import VideoPanel from "$lib/components/video/VideoPanel.svelte";
+  import RecordingsPanel from "$lib/components/video/RecordingsPanel.svelte";
   import RadarPanel from "$lib/components/RadarPanel.svelte";
   import AirspaceManagerPanel from "$lib/components/AirspaceManagerPanel.svelte";
   import { geozoneWorking } from "$lib/stores/geozone";
@@ -86,7 +87,7 @@
   import { batteryManagerOpen, batteryManagerCreateSerial, normalizeSerial } from '$lib/stores/batteryManager';
   import { vehicleManagerOpen, vehicleManagerCreateCraft, vehicleManagerSelectedId } from '$lib/stores/vehicleManager';
   import type { BlackboxImportStatus } from '$lib/stores/flightlog';
-  import { missionDbForFlight, flightLoggedWpCount, missionDbSave, flightLinkMission, missionDbGeocode, flightSetBatterySerial, updateFlightNotes, getFlight, flightlogCommitPending, flightlogDiscardPending, flightlogContinuePending, scanOrphanSessions, recoverDiscard, recoverSaveIncomplete, recoverContinue, batteryDbFindBySerial, batteryDbAddUsage, vehicleDbFindByCraftName, blackboxDecoderAvailable, downloadBlackboxDecode, hiresInfo, hiresParse, hiresSample, hiresDrop, hiresCleanup, scratchDir, scratchClear } from '$lib/stores/flightlog';
+  import { autosaveTrack, missionDbForFlight, flightLoggedWpCount, missionDbSave, flightLinkMission, missionDbGeocode, flightSetBatterySerial, updateFlightNotes, getFlight, flightlogCommitPending, flightlogDiscardPending, flightlogContinuePending, scanOrphanSessions, recoverDiscard, recoverSaveIncomplete, recoverContinue, batteryDbFindBySerial, batteryDbAddUsage, vehicleDbFindByCraftName, blackboxDecoderAvailable, downloadBlackboxDecode, hiresInfo, hiresParse, hiresSample, hiresDrop, hiresCleanup, scratchDir, scratchClear } from '$lib/stores/flightlog';
   import EndFlightDialog from "$lib/components/logbook/EndFlightDialog.svelte";
   import type { EndFlightStats } from "$lib/components/logbook/EndFlightDialog.svelte";
   import RecoveryPrompt from "$lib/components/logbook/RecoveryPrompt.svelte";
@@ -111,6 +112,8 @@
   import { setNativeRightBound } from "$lib/controllers/nativeVideo";
   import { doubleTap, mouseDoubleClick } from "$lib/helpers/doubleTap";
   import { startFloatMove, startFloatResize } from "$lib/helpers/floatWindowGestures";
+  import { videoZoomTransform, videoDisplayAspect, videoStretch, fitContain } from "$lib/stores/video";
+  import { videoZoom } from "$lib/controllers/videoZoom";
   import { initVideo, videoState, videoStream, bindVideoEl, setMapLocation, reportMjpegError, setVideoWidgetActive, floatFrameRect, toggleFloating, togglePhoneDockCompact, PHONE_DOCK_COMPACT, FLOAT_BEZEL_PX, FLOAT_MARGIN_PX, FLOAT_BTN_PX, FLOAT_BTN_GAP_PX } from "$lib/stores/video";
   import { canvasSink, mjpegSink } from "$lib/controllers/mjpegSink";
   import { nativeSurface, activeNativeSurfaces } from "$lib/controllers/nativeVideo";
@@ -293,6 +296,17 @@
 
   // Map-swap: the full-size video sink shown in the map zone when videoPrimary.
   let mapVideoEl = $state<HTMLVideoElement | null>(null);
+  // Full-screen picture box: letterboxed at the source's own shape normally; a forced display ratio
+  // (or analog SD's true 4:3) gets an explicit centred box the media stretches into; "Stretch to
+  // fill" uses the whole area.
+  let mvBoxW = $state(0);
+  let mvBoxH = $state(0);
+  const picMainFill = $derived($videoState.displayRatio === 'fill' || $videoStretch);
+  const picMainStyle = $derived.by(() => {
+    if ($videoState.displayRatio === 'fill' || !$videoStretch || !mvBoxW || !mvBoxH) return '';
+    const b = fitContain($videoDisplayAspect, mvBoxW, mvBoxH);
+    return `left:${Math.round((mvBoxW - b.w) / 2)}px; top:${Math.round((mvBoxH - b.h) / 2)}px; width:${b.w}px; height:${b.h}px; right:auto; bottom:auto;`;
+  });
   $effect(() => {
     bindVideoEl(mapVideoEl, $videoStream);
   });
@@ -898,6 +912,7 @@
     { id: "radar", label: () => $t('nav.radar'), icon: ICON_RADAR },
     { id: "airspace", label: () => $t('nav.airspace'), icon: ICON_AIRSPACE },
     { id: "video", label: () => $t('nav.video'), icon: ICON_VIDEO },
+    { id: "recordings", label: () => $t('nav.recordings'), icon: ICON_VIDEO },
     { id: "settings", label: () => $t('nav.settings'), icon: ICON_SETTINGS },
   ];
   // Airspace tab shows when its master switch is on, OR when a geozone-capable INAV FC is connected (so
@@ -1007,10 +1022,20 @@
   const GRID_GAP = 8; // = WidgetPanel's GRID_GAP_PX
   const SIDEBAR_PANEL_GAP = 14;
   const SIDEBAR_HEAD = 26;
-  const sidebarW = $derived(cockpit ? Math.round(Math.min(330, Math.max(236, logicalW * 0.17))) : 0);
-  const sidebarShown = $derived(
+  const SIDEBAR_MIN = 200;
+  const sidebarMax = $derived(Math.max(SIDEBAR_MIN, Math.min(560, Math.round(logicalW * 0.45))));
+  const sidebarW = $derived(
+    !cockpit
+      ? 0
+      : $viewMode.sidebarW > 0
+        ? Math.min(sidebarMax, Math.max(SIDEBAR_MIN, $viewMode.sidebarW))
+        : Math.round(Math.min(330, Math.max(236, logicalW * 0.17))),
+  );
+  /** The sidebar belongs to this tab (Map / Split / side-by-side tools) — collapsed or not. */
+  const sidebarApplies = $derived(
     cockpit && (layoutMode === 'side' || (layoutMode === 'view' && shownView !== 'video')),
   );
+  const sidebarShown = $derived(sidebarApplies && !$viewMode.sidebarCollapsed);
   const contentLeft = $derived(sidebarShown ? sidebarW : 0);
   /** The grid's large-tile edge: as wide as the column, unless the stacked rows need less height. */
   const gridUnit = $derived.by(() => {
@@ -1220,6 +1245,26 @@
 
   // Split divider drag (fractions of the window width; the map re-fits on release).
   let splitDragging = $state(false);
+  // Sidebar edge drag: the width follows the pointer (logical px); double-click → automatic width.
+  let sidebarDragging = $state(false);
+  function startSidebarDrag(e: PointerEvent) {
+    if (e.button !== 0) return;
+    const el = e.currentTarget as HTMLElement;
+    el.setPointerCapture(e.pointerId);
+    sidebarDragging = true;
+    const move = (ev: PointerEvent) => setSidebarW(Math.min(sidebarMax, Math.max(SIDEBAR_MIN, ev.clientX / uiScale)));
+    const up = () => {
+      sidebarDragging = false;
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', up);
+      el.removeEventListener('pointercancel', up);
+      commitSplit();
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', up);
+    el.addEventListener('pointercancel', up);
+  }
+
   function startSplitDrag(e: PointerEvent, setFrac: (f: number) => void = setSplitFrac) {
     if (e.button !== 0) return;
     const el = e.currentTarget as HTMLElement;
@@ -1654,6 +1699,15 @@
 
   // Persist a settings patch + mirror it into the local reactive vars the page binds. Shared by
   // the legacy SettingsPanel and the new SettingsPanel.
+  /** "Save flights as KML + CSV": write a freshly committed flight next to the raw logs. Never blocks
+   *  or fails the save — a flight without GPS simply has no track to write. */
+  function autoExportFlight(flightId: number) {
+    if (!(get(settings).autoExportTracks ?? true)) return;
+    autosaveTrack(flightId, flightLogDbPath, flightLogRawPath)
+      .then((paths) => console.info('[autosave] flight', flightId, '→', paths.join(', ')))
+      .catch((e) => console.warn('[autosave] flight', flightId, 'not exported:', e));
+  }
+
   function applySettingsPatch(patch: Partial<AppSettings>) {
     settings.patch(patch);
     if (patch.attitudeRateHz != null) attitudeRateHz = patch.attitudeRateHz;
@@ -2974,6 +3028,7 @@
             await flightlogDiscardPending();
           } else if (choice === 'save') {
             const flightId = await flightlogCommitPending();
+            autoExportFlight(flightId);
             await linkEndedMission(flightId, false);
             void loadLogbook();
           } else if (choice === 'continue') {
@@ -3436,6 +3491,7 @@
       }
       // Save → commit the pending session, then link mission + battery/notes against the new id.
       const flightId = await flightlogCommitPending();
+      autoExportFlight(flightId);
       if (res.batterySerial) {
         await flightSetBatterySerial(flightId, res.batterySerial, flightLogDbPath);
         // A flight may link several packs (comma-separated). Offer to create each unknown serial; on the
@@ -3504,6 +3560,7 @@
         await flightlogDiscardPending();
       } else if (choice === 'save') {
         const flightId = await flightlogCommitPending();
+        autoExportFlight(flightId);
         await linkEndedMission(flightId, false);
         void loadLogbook();
       } else if (choice === 'continue') {
@@ -4057,6 +4114,9 @@
       <div
         class="map-video-box"
         style={ufBox ? `left:${ufBox.left}px;top:${ufBox.top}px;width:${ufBox.w}px;height:${ufBox.h}px;` : ''}
+        bind:clientWidth={mvBoxW}
+        bind:clientHeight={mvBoxH}
+        use:videoZoom={{ wheel: true, pan: true }}
       >
       {#if !videoLive}
         <VideoEmptyState onOpenSource={() => openTab('video')} />
@@ -4074,7 +4134,11 @@
         >
           {#if !$activeNativeSurfaces.has('main')}<span>{$t('video.sinkElsewhere')}</span>{/if}
         </div>
-      {:else if $videoState.mjpegUrl}
+      {:else}
+      <!-- Digital zoom / pan + the display-ratio box (DOM media only — the native sink above is a
+           hardware layer CSS cannot transform). -->
+      <div class="zoom-layer" class:pic-fill={picMainFill} style={picMainStyle} style:transform={$videoZoomTransform}>
+      {#if $videoState.mjpegUrl}
         <!-- Native / MJPEG feed (no MediaStream): drawn by the off-thread reader where the WebView
              allows it, otherwise the plain <img> multipart stream. -->
         {#if $canvasSink}
@@ -4111,6 +4175,8 @@
           ondblclick={mouseDoubleClick(() => setMapLocation('main'))}
           use:doubleTap={() => setMapLocation('main')}
         ></video>
+      {/if}
+      </div>
       {/if}
       </div>
     </div>
@@ -4233,6 +4299,35 @@
         />
       </div>
     </aside>
+    <!-- Edge handle: drag to resize, double-click for the automatic width; the round button folds
+         the sidebar away. -->
+    <div
+      class="cs-resize"
+      class:dragging={sidebarDragging}
+      style:left="{sidebarW}px"
+      role="separator"
+      aria-orientation="vertical"
+      title={$t('dock.resizeSidebar')}
+      onpointerdown={startSidebarDrag}
+      ondblclick={() => { setSidebarW(0); commitSplit(); }}
+    >
+      <span class="cs-resize-line"></span>
+      <button
+        class="cs-toggle"
+        title={$t('dock.hideSidebar')}
+        aria-label={$t('dock.hideSidebar')}
+        onpointerdown={(e) => e.stopPropagation()}
+        onclick={() => setSidebarCollapsed(true)}
+      >
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5" /></svg>
+      </button>
+    </div>
+  {:else if sidebarApplies}
+    <!-- Folded away: a slim tab on the left edge brings the instruments back. -->
+    <button class="cs-expand" title={$t('dock.showSidebar')} aria-label={$t('dock.showSidebar')} onclick={() => setSidebarCollapsed(false)}>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 17a8.5 8.5 0 1 1 17 0" /><path d="M12 15.4 16.2 10" /><circle cx="12" cy="15.4" r="1.6" /></svg>
+      <span>{$t('dock.instruments')}</span>
+    </button>
   {/if}
 
   {#if !phoneUi}
@@ -4397,6 +4492,7 @@
             {flightRecordingEnabled}
             {flightLogRawEnabled}
             {flightLogRawAlways}
+            autoExportTracks={$settings.autoExportTracks ?? true}
             {flightLogDbPath}
             {defaultFlightLogPath}
             {flightLogRawPath}
@@ -4491,6 +4587,8 @@
           {/key}
         {:else if activeTab === 'video'}
           <VideoPanel />
+        {:else if activeTab === 'recordings'}
+          <RecordingsPanel />
         {:else if DEV_MODE && activeTab === 'dev-playground'}
           <PanelPlayground initial="compact" label="DEV Playground" />
         {/if}
@@ -5022,6 +5120,18 @@
     object-fit: contain;
     display: block;
   }
+  .map-video-box .zoom-layer {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 50%;
+  }
+  /* The box already has the display shape (or "Stretch to fill" wants the whole area). */
+  .zoom-layer.pic-fill .map-video {
+    object-fit: fill;
+  }
+  .map-video-box {
+    overflow: hidden;
+  }
   .map-video.mirror {
     transform: scaleX(-1);
   }
@@ -5112,6 +5222,106 @@
   :global(html.is-mobile) .cockpit-sidebar {
     top: var(--toolbar-h, 53px);
   }
+  /* Sidebar edge: resize grip + fold button (same language as the split divider). */
+  .cs-resize {
+    position: absolute;
+    top: 53px;
+    bottom: 24px;
+    width: 12px;
+    margin-left: -6px;
+    z-index: 105;
+    cursor: col-resize;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  :global(html.is-mobile) .cs-resize {
+    top: var(--toolbar-h, 53px);
+  }
+  .cs-resize-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+    background: transparent;
+    transition: background-color 0.15s, box-shadow 0.15s;
+  }
+  .cs-resize:hover .cs-resize-line,
+  .cs-resize.dragging .cs-resize-line {
+    background: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+  }
+  .cs-toggle {
+    position: relative;
+    width: 22px;
+    height: 44px;
+    padding: 0 4px;
+    border-radius: 11px;
+    border: 1px solid rgba(148, 178, 214, 0.22);
+    background: rgba(12, 18, 26, 0.92);
+    color: #9eacbf;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s, background-color 0.15s, color 0.15s;
+  }
+  .cs-resize:hover .cs-toggle,
+  .cs-toggle:focus-visible {
+    opacity: 1;
+  }
+  .cs-toggle:hover {
+    background: #38bdf8;
+    color: #05090e;
+  }
+  .cs-toggle svg,
+  .cs-expand svg {
+    display: block;
+    width: 100%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .cs-expand {
+    position: absolute;
+    top: calc(53px + 12px);
+    left: 0;
+    z-index: 105;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 30px;
+    padding: 10px 0 12px;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    background: rgba(12, 18, 26, 0.92);
+    color: #7dd3fc;
+    cursor: pointer;
+    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.4);
+  }
+  .cs-expand svg {
+    width: 18px;
+  }
+  .cs-expand span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+  .cs-expand:hover {
+    background: rgba(56, 189, 248, 0.16);
+  }
+  :global(html.is-mobile) .cs-expand {
+    top: calc(var(--toolbar-h, 53px) + 12px);
+  }
+
   .cs-head {
     align-self: stretch;
     display: flex;

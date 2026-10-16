@@ -6,6 +6,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { initI18n } from '$lib/i18n';
+  import '$lib/styles/instruments.css';
   import { isLoading } from 'svelte-i18n';
   import { settings } from '$lib/stores/settings';
   import { get } from 'svelte/store';

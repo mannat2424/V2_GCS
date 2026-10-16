@@ -44,7 +44,14 @@
     FLOAT_SNAP_BOTTOM_PX,
     FLOAT_BTN_PX,
     FLOAT_BTN_GAP_PX,
+    FLOAT_BEZEL_PX,
+    toggleFloatFull,
+    cycleVideoZoom,
+    videoZoomTransform,
+    videoDisplayAspect,
+    fitContain,
   } from '$lib/stores/video';
+  import { videoZoom } from '$lib/controllers/videoZoom';
   import { canvasSink, mjpegSink } from '$lib/controllers/mjpegSink';
   import { detachVideo } from '$lib/controllers/detachedVideo';
   import { isMobile } from '$lib/platform';
@@ -145,6 +152,18 @@
     bindVideoEl(videoEl, $videoStream);
   });
 
+  // Picture box. Normally the window itself has the display shape, so the picture fills it. Maximized,
+  // the window is the whole content area: the picture gets a centred box of the display shape inside
+  // it — or all of it with "Stretch to fill".
+  const full = $derived($videoState.floatFull);
+  const picStyle = $derived.by(() => {
+    if (!full || $videoState.displayRatio === 'fill') return '';
+    const bw = width - 2 * FLOAT_BEZEL_PX;
+    const bh = height - 2 * FLOAT_BEZEL_PX;
+    const b = fitContain($videoDisplayAspect, bw, bh);
+    return `left:${Math.round((bw - b.w) / 2)}px; top:${Math.round((bh - b.h) / 2)}px; width:${b.w}px; height:${b.h}px; right:auto; bottom:auto;`;
+  });
+
   // ── Gestures (helpers/floatWindowGestures — +page's mini-frame corners share both) ──
   const frame = () => ({ left, top, width, height, vw, vh, leftInset });
   function onMovePointerDown(e: PointerEvent) {
@@ -211,6 +230,7 @@
         data-nv-clip={armed ? 'floating' : undefined}
         ondblclick={mouseDoubleClick(() => setMapLocation('floating'))}
         use:doubleTap={() => setMapLocation('floating')}
+        use:videoZoom={{ wheel: true, pan: true }}
       >
         {#if live && $videoState.nativeSink}
           <!-- Native decode sink (hole punch): the video is a hardware layer BELOW the WebView;
@@ -227,15 +247,20 @@
         {:else if live && $videoState.mjpegUrl}
           <!-- Native / MJPEG feed (no MediaStream): drawn by the off-thread reader where the WebView
                allows it, otherwise the plain <img> multipart stream. -->
-          {#if $canvasSink}
-            <canvas use:mjpegSink class:mirror={$videoState.mirror} class:rot180={$videoState.rotate180}></canvas>
-          {:else}
-            <!-- svelte-ignore a11y_missing_attribute -->
-            <img src={$videoState.mjpegUrl} class:mirror={$videoState.mirror} class:rot180={$videoState.rotate180} onload={reportImgSize} onerror={reportMjpegError} />
-          {/if}
+          <!-- .zoom-layer carries the digital zoom / pan, composed with the media's own mirror flip. -->
+          <div class="zoom-layer" style={picStyle} style:transform={$videoZoomTransform}>
+            {#if $canvasSink}
+              <canvas use:mjpegSink class:mirror={$videoState.mirror} class:rot180={$videoState.rotate180}></canvas>
+            {:else}
+              <!-- svelte-ignore a11y_missing_attribute -->
+              <img src={$videoState.mjpegUrl} class:mirror={$videoState.mirror} class:rot180={$videoState.rotate180} onload={reportImgSize} onerror={reportMjpegError} />
+            {/if}
+          </div>
         {:else if live}
-          <!-- svelte-ignore a11y_media_has_caption -->
-          <video bind:this={videoEl} use:fpsProbe autoplay muted playsinline class:mirror={$videoState.mirror} class:rot180={$videoState.rotate180}></video>
+          <div class="zoom-layer" style={picStyle} style:transform={$videoZoomTransform}>
+            <!-- svelte-ignore a11y_media_has_caption -->
+            <video bind:this={videoEl} use:fpsProbe autoplay muted playsinline class:mirror={$videoState.mirror} class:rot180={$videoState.rotate180}></video>
+          </div>
         {:else}
           <div class="fw-ph">
             {#if $videoState.status === 'error'}
@@ -265,6 +290,30 @@
           </button>
         {/if}
         <VideoReconnectOverlay />
+        {#if live}
+          <!-- Hover tools, top centre: maximize / restore, swap with the map, digital zoom. -->
+          <div class="fw-tools" onpointerdown={(e) => e.stopPropagation()} ondblclick={(e) => e.stopPropagation()} role="toolbar" tabindex="-1">
+            <button class="fw-tool" onclick={() => toggleFloatFull()}
+              title={full ? $t('video.restoreWindow') : $t('video.expandWindow')}
+              aria-label={full ? $t('video.restoreWindow') : $t('video.expandWindow')}>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                {#if full}
+                  <path d="M20 10h-6V4M4 14h6v6M14 10l7-7M10 14l-7 7" />
+                {:else}
+                  <path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7" />
+                {/if}
+              </svg>
+            </button>
+            <button class="fw-tool" onclick={() => setMapLocation('floating')} title={$t('video.swapWithMap')} aria-label={$t('video.swapWithMap')}>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13M16 3l4 4-4 4M17 17H4M8 13l-4 4 4 4" /></svg>
+            </button>
+            {#if !$videoState.nativeSink}
+              <button class="fw-tool fw-zoom" class:active={$videoState.zoom > 1} onclick={() => cycleVideoZoom()}
+                title={$t('video.zoomCycle', { values: { n: $videoState.zoom } })}
+                aria-label={$t('video.zoomCycle', { values: { n: $videoState.zoom } })}>{$videoState.zoom}×</button>
+            {/if}
+          </div>
+        {/if}
       </div>
     {/if}
 
@@ -272,7 +321,7 @@
          rounded square with the four-way arrow in the bottom-left corner moves. Video mode only —
          with the map in the frame its layer covers the chrome, so +page draws the same corners
          above the map. -->
-    {#if !mapHere}
+    {#if !mapHere && !full}
       <!-- svelte-ignore a11y_no_static_element_interactions -->
       <div class="fw-grip" onpointerdown={onGripPointerDown} title={$t('video.resizeWindow')}></div>
       <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -390,12 +439,20 @@
   .native-hole.armed {
     background: transparent;
   }
+  /* Digital zoom / pan layer (transform inline). Its box is the display shape, so the media fills
+     it — which also gives non-square-pixel sources (analog SD) their true 4:3. */
+  .zoom-layer {
+    position: absolute;
+    inset: 0;
+    transform-origin: 50% 50%;
+    overflow: hidden;
+  }
   .fw-body video,
   .fw-body img,
   .fw-body canvas {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
     display: block;
     /* Own compositing layer — see VideoWidget: keeps the 60 fps MJPEG <img> from dirtying shared
        layer tiles every frame on WebKitGTK. */
@@ -415,6 +472,57 @@
   .fw-body img.mirror.rot180,
   .fw-body canvas.mirror.rot180 {
     transform: scaleY(-1);
+  }
+  /* Hover tools: a small pill strip at the top centre of the picture. */
+  .fw-tools {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9px;
+    background: rgba(8, 12, 18, 0.78);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+  .fw-body:hover .fw-tools {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .fw-tool {
+    min-width: 28px;
+    height: 26px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #d6dee9;
+    font: 600 12px/1 'Bahnschrift', 'Segoe UI', sans-serif;
+    cursor: pointer;
+  }
+  .fw-tool:hover {
+    background: rgba(56, 189, 248, 0.2);
+    color: #fff;
+  }
+  .fw-tool.active {
+    color: #38bdf8;
+  }
+  .fw-tool svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
   /* Unplug: invisible until the pointer is over the frame, then a small overlay button in the
      picture's top-left corner. */

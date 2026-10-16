@@ -59,6 +59,8 @@ export const APP_ICONS: Record<string, string> = {
   video: svg(
     `<rect x="2.5" y="6.5" width="13" height="11" rx="2.6" ${SOFT}/><path d="M15.5 10.4 21.5 7v10l-6-3.4Z"/><circle cx="6.4" cy="10.3" r="1.2" ${SOLID}/>`,
   ),
+  // Record dot in a ring (Recordings).
+  recordings: svg(`<circle cx="12" cy="12" r="8.5" ${SOFT}/><circle cx="12" cy="12" r="3.6" ${SOLID}/>`),
   // Sliders (Settings).
   settings: svg(
     `<path d="M4 7h8.5M17.5 7H20M4 12h2.5M11.5 12H20M4 17h10.5M19.5 17h.5"/><circle cx="15" cy="7" r="2.3" ${SOFT}/><circle cx="9" cy="12" r="2.3" ${SOFT}/><circle cx="17" cy="17" r="2.3" ${SOFT}/>`,
@@ -90,6 +92,7 @@ export const APP_HUES: Record<string, string> = {
   radar: '#4ade80',
   airspace: '#38bdf8',
   video: '#fb923c',
+  recordings: '#f87171',
   settings: '#cbd5e1',
   'dev-playground': '#94a3b8',
   'util:widgets': '#2dd4bf',

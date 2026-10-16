@@ -56,6 +56,14 @@
     });
   }
 
+  // Digital readouts: pitch (+ = nose up) and bank with its side (telem.roll > 0 = right wing down).
+  let pitchLabel = $derived(telem.lastUpdate ? `${pitchDisp > 0 ? '+' : ''}${Math.round(pitchDisp)}°` : '—');
+  let bankLabel = $derived(
+    telem.lastUpdate
+      ? `${Math.round(telem.roll) === 0 ? '' : telem.roll > 0 ? 'R ' : 'L '}${Math.abs(Math.round(telem.roll))}°`
+      : 'B —',
+  );
+
   // Roll scale ticks (fixed on bezel)
   const rollTicks = [
     { angle: -60, len: 8 }, { angle: -45, len: 8 },
@@ -67,95 +75,96 @@
   ];
 </script>
 
+<!-- VAYU attitude display: a rounded-square synthetic-vision panel (deep sky / slate terrain, cyan
+     horizon glow), a roll arc across the top, a chevron aircraft symbol and digital pitch/bank chips. -->
 <div class="ahi-container" style="--ahi-size: {size}">
   <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <clipPath id="ahi-clip">
-        <circle cx="100" cy="100" r="88" />
+      <clipPath id="vayu-ahi-clip">
+        <rect x="7" y="7" width="186" height="186" rx="38" />
       </clipPath>
-      <linearGradient id="ahi-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#0a2e52" />
-        <stop offset="100%" stop-color="#2980b9" />
+      <linearGradient id="vayu-ahi-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#05142a" />
+        <stop offset="70%" stop-color="#0f4c86" />
+        <stop offset="100%" stop-color="#2b8ad0" />
       </linearGradient>
-      <linearGradient id="ahi-gnd" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#8B6914" />
-        <stop offset="100%" stop-color="#3d2b1f" />
+      <linearGradient id="vayu-ahi-gnd" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2a3a3c" />
+        <stop offset="35%" stop-color="#182224" />
+        <stop offset="100%" stop-color="#090e10" />
       </linearGradient>
+      <radialGradient id="vayu-ahi-vignette" cx="50%" cy="50%" r="72%">
+        <stop offset="60%" stop-color="#000" stop-opacity="0" />
+        <stop offset="100%" stop-color="#000" stop-opacity="0.55" />
+      </radialGradient>
     </defs>
 
-    <!-- Horizon: clipped circle, rotated by roll, shifted by pitch -->
-    <g clip-path="url(#ahi-clip)">
+    <g clip-path="url(#vayu-ahi-clip)">
       <g transform="rotate({rollDeg}, 100, 100)">
-        <!-- Sky -->
-        <rect x="-200" y={-400 + pitchPx} width="600" height="500"
-              fill="url(#ahi-sky)" />
-        <!-- Ground -->
-        <rect x="-200" y={100 + pitchPx} width="600" height="500"
-              fill="url(#ahi-gnd)" />
-        <!-- Horizon line -->
-        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx}
-              stroke="rgba(255,255,255,0.8)" stroke-width="1.5" />
+        <rect x="-200" y={-400 + pitchPx} width="600" height="500" fill="url(#vayu-ahi-sky)" />
+        <rect x="-200" y={100 + pitchPx} width="600" height="500" fill="url(#vayu-ahi-gnd)" />
+        <!-- Horizon: a soft cyan glow under a crisp line -->
+        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx} stroke="#67e8f9" stroke-width="6" opacity="0.18" />
+        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx} stroke="#a5f3fc" stroke-width="1.6" />
 
-        <!-- Pitch ladder -->
+        <!-- Pitch ladder: solid above the horizon, dashed below -->
         {#each pitchMarks as pm}
           {@const y = 100 - pm.deg * PITCH_SCALE + pitchPx}
           <line x1={100 - pm.hw} y1={y} x2={100 + pm.hw} y2={y}
-                stroke="white" stroke-width={pm.label ? 1.2 : 0.8}
-                opacity={pm.label ? 0.8 : 0.5} />
+                stroke="#e0f2fe" stroke-width={pm.label ? 1.3 : 0.9}
+                stroke-dasharray={pm.deg < 0 ? '4 3' : undefined}
+                opacity={pm.label ? 0.85 : 0.45} />
           {#if pm.label}
-            <text x={100 + pm.hw + 4} y={y + 4}
-                  fill="white" font-size="14" opacity="0.7"
-                  font-family="sans-serif">{Math.abs(pm.deg)}</text>
-            <text x={100 - pm.hw - 4} y={y + 4}
-                  fill="white" font-size="14" opacity="0.7"
-                  font-family="sans-serif" text-anchor="end">{Math.abs(pm.deg)}</text>
+            <text x={100 + pm.hw + 5} y={y + 4} fill="#e0f2fe" font-size="11.5" opacity="0.8"
+                  font-family="Bahnschrift, 'DIN Alternate', 'Segoe UI', sans-serif">{Math.abs(pm.deg)}</text>
+            <text x={100 - pm.hw - 5} y={y + 4} fill="#e0f2fe" font-size="11.5" opacity="0.8" text-anchor="end"
+                  font-family="Bahnschrift, 'DIN Alternate', 'Segoe UI', sans-serif">{Math.abs(pm.deg)}</text>
           {/if}
         {/each}
       </g>
+      <rect x="7" y="7" width="186" height="186" fill="url(#vayu-ahi-vignette)" />
     </g>
 
-    <!-- Roll scale ticks (fixed on bezel) -->
+    <!-- Roll arc + ticks (fixed) -->
+    <path d="M {100 + 78 * Math.cos((-150) * Math.PI / 180)} {100 + 78 * Math.sin((-150) * Math.PI / 180)} A 78 78 0 0 1 {100 + 78 * Math.cos((-30) * Math.PI / 180)} {100 + 78 * Math.sin((-30) * Math.PI / 180)}"
+          fill="none" stroke="#e0f2fe" stroke-width="1.2" opacity="0.45" />
     {#each rollTicks as rt}
       {@const rad = (rt.angle - 90) * Math.PI / 180}
-      {@const x1 = 100 + 88 * Math.cos(rad)}
-      {@const y1 = 100 + 88 * Math.sin(rad)}
-      {@const x2 = 100 + (88 - rt.len) * Math.cos(rad)}
-      {@const y2 = 100 + (88 - rt.len) * Math.sin(rad)}
-      <line {x1} {y1} {x2} {y2} stroke="white" stroke-width="1.5" opacity="0.5" />
+      <line x1={100 + 78 * Math.cos(rad)} y1={100 + 78 * Math.sin(rad)}
+            x2={100 + (78 - rt.len) * Math.cos(rad)} y2={100 + (78 - rt.len) * Math.sin(rad)}
+            stroke="#e0f2fe" stroke-width="1.6" opacity="0.6" />
     {/each}
-
-    <!-- Fixed roll index (zero-bank reference) — points DOWN at the roll pointer,
-         so it reads distinctly from the live sky pointer (they converge when level). -->
-    <polygon points="100,13 96,5 104,5" fill="white" />
-
-    <!-- Roll pointer (rotates with aircraft) -->
+    <!-- Zero-bank index (fixed) + bank pointer (rotates) -->
+    <polygon points="100,24 95,15 105,15" fill="#e0f2fe" />
     <g transform="rotate({rollDeg}, 100, 100)">
-      <polygon points="100,14 97,22 103,22" fill="white" />
+      <polygon points="100,25 95,34 105,34" fill="#22d3ee" />
     </g>
 
-    <!-- Bezel ring -->
-    <circle cx="100" cy="100" r="90" fill="none"
-            stroke="rgba(255,255,255,0.12)" stroke-width="3" />
+    <!-- Aircraft symbol: amber chevron with a dark outline -->
+    <path d="M58 100 H84 L100 112 L116 100 H142" fill="none" stroke="#0b1017" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M58 100 H84 L100 112 L116 100 H142" fill="none" stroke="#fbbf24" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="100" cy="100" r="2.6" fill="#fbbf24" />
 
-    <!-- Center aircraft symbol (fixed) -->
-    <line x1="50" y1="100" x2="82" y2="100"
-          stroke="#f0c040" stroke-width="3" stroke-linecap="round" />
-    <line x1="118" y1="100" x2="150" y2="100"
-          stroke="#f0c040" stroke-width="3" stroke-linecap="round" />
-    <circle cx="100" cy="100" r="4" fill="none"
-            stroke="#f0c040" stroke-width="2.5" />
-    <line x1="100" y1="104" x2="100" y2="112"
-          stroke="#f0c040" stroke-width="2.5" stroke-linecap="round" />
-
-    <!-- Flight-path marker (velocity vector) — where the aircraft is actually going, body-frame -->
+    <!-- Flight-path marker (velocity vector) -->
     {#if fpm.shown}
-      <g opacity="0.9">
-        <circle cx={fpmX} cy={fpmY} r="7" fill="none" stroke="#f0c040" stroke-width="2" />
-        <line x1={fpmX - 7} y1={fpmY} x2={fpmX - 16} y2={fpmY} stroke="#f0c040" stroke-width="2" stroke-linecap="round" />
-        <line x1={fpmX + 7} y1={fpmY} x2={fpmX + 16} y2={fpmY} stroke="#f0c040" stroke-width="2" stroke-linecap="round" />
-        <line x1={fpmX} y1={fpmY - 7} x2={fpmX} y2={fpmY - 15} stroke="#f0c040" stroke-width="2" stroke-linecap="round" />
+      <g opacity="0.95" stroke="#a3e635" stroke-width="2" stroke-linecap="round" fill="none">
+        <circle cx={fpmX} cy={fpmY} r="6.5" />
+        <line x1={fpmX - 6.5} y1={fpmY} x2={fpmX - 15} y2={fpmY} />
+        <line x1={fpmX + 6.5} y1={fpmY} x2={fpmX + 15} y2={fpmY} />
+        <line x1={fpmX} y1={fpmY - 6.5} x2={fpmX} y2={fpmY - 13} />
       </g>
     {/if}
+
+    <!-- Digital pitch / bank chips -->
+    <g font-family="Bahnschrift, 'DIN Alternate', 'Segoe UI', sans-serif" font-size="12" font-weight="600">
+      <rect x="16" y="168" width="52" height="18" rx="6" fill="#05090e" fill-opacity="0.72" stroke="#38bdf8" stroke-opacity="0.35" />
+      <text x="42" y="181" text-anchor="middle" fill="#e0f2fe" style="font-variant-numeric: tabular-nums">P {pitchLabel}</text>
+      <rect x="132" y="168" width="52" height="18" rx="6" fill="#05090e" fill-opacity="0.72" stroke="#38bdf8" stroke-opacity="0.35" />
+      <text x="158" y="181" text-anchor="middle" fill="#e0f2fe" style="font-variant-numeric: tabular-nums">{bankLabel}</text>
+    </g>
+
+    <!-- Frame -->
+    <rect x="7" y="7" width="186" height="186" rx="38" fill="none" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="2" />
   </svg>
 </div>
 
@@ -168,10 +177,9 @@
   svg {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    /* Same glass as the card widgets — only the outer rim outside the horizon disc shows it. */
-    background: rgba(12, 17, 24, 0.6);
-    backdrop-filter: var(--glass-blur, blur(6px));
-    -webkit-backdrop-filter: var(--glass-blur, blur(6px));
+    display: block;
+    border-radius: 21%;
+    background: #070b11;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.5);
   }
 </style>

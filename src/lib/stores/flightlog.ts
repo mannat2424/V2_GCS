@@ -536,6 +536,11 @@ export async function getDefaultFlightlogPath(): Promise<string> {
   return invoke<string>('flightlog_default_db_path');
 }
 
+/** Write a committed flight as KML + CSV into `<raw-log dir>/Flights/`; returns the file paths. */
+export async function autosaveTrack(flightId: number, dbPath: string, rawDir: string): Promise<string[]> {
+  return invoke<string[]>('flightlog_autosave_track', { flightId, dbPath: dbPath || null, rawDir: rawDir || null });
+}
+
 export async function getDefaultRawLogPath(): Promise<string> {
   return invoke<string>('flightlog_default_raw_log_path');
 }

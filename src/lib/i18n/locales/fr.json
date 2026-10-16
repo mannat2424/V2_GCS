@@ -694,6 +694,7 @@
       "copy": "Copie"
     },
     "disableHwAccel": "Désactiver l'accélération matérielle",
+    "genericDeviceLabel": "Comm sécurisée {n}",
     "disableHwAccelHint": "Force le transcodage logiciel. Utile uniquement si l'image est défectueuse ou instable avec l'accélération matérielle."
   },
   "terrain": {

@@ -195,6 +195,7 @@ pub fn video_native_mjpeg_start(
     width: u32,
     height: u32,
     fps: u32,
+    record: Option<bool>,
     mjpeg: State<'_, crate::video::MjpegServer>,
 ) -> Result<serde_json::Value, String> {
     let spec = native::CaptureSpec { id, codec, width, height, fps };
@@ -202,8 +203,30 @@ pub fn video_native_mjpeg_start(
     // to accelerate) and the raw-input case measured only ~21 % better on VAAPI because the upload
     // eats most of the gain, so it stays in software.
     let transcode = if native::needs_transcode(&spec.codec) { "software" } else { "copy" };
-    let port = mjpeg.start(ended_hook(&app), &MjpegSource::Device(&spec))?;
-    Ok(serde_json::json!({ "url": format!("http://127.0.0.1:{port}/"), "transcode": transcode }))
+    // `record`: also write an enhanced (denoised / sharpened / colour-corrected) H.264 Matroska copy
+    // to `video::recording::recordings_dir()`; the live picture is unaffected.
+    let record_path = record
+        .unwrap_or(false)
+        .then(crate::video::recording::new_recording_path)
+        .transpose()?;
+    let port = mjpeg.start(ended_hook(&app), &MjpegSource::Device(&spec), record_path.clone())?;
+    Ok(serde_json::json!({
+        "url": format!("http://127.0.0.1:{port}/"),
+        "transcode": transcode,
+        "recordingPath": record_path.map(|p| p.to_string_lossy().into_owned()),
+    }))
+}
+
+/// List saved enhanced recordings (native capture with Record on), newest first.
+#[tauri::command(async)]
+pub fn video_list_recordings() -> Result<Vec<crate::video::recording::RecordingInfo>, String> {
+    crate::video::recording::list()
+}
+
+/// Where recordings are saved (`Documents/VAYU/Recordings`) — shown in the Recordings panel.
+#[tauri::command(async)]
+pub fn video_recordings_dir() -> String {
+    crate::video::recording::recordings_dir().to_string_lossy().into_owned()
 }
 
 /// Start the embedded MJPEG server on an RTSP source — the image path, **without the engine**.
@@ -234,7 +257,7 @@ pub fn video_rtsp_mjpeg_start(
     // the only way to know — the mpjpeg muxer rejects anything that isn't MJPEG, so the attempt costs
     // a failed spawn rather than a probe.
     let copy = MjpegSource::Rtsp { url: &url, transcode: RtspTranscode::Copy };
-    match mjpeg.start(ended_hook(&app), &copy) {
+    match mjpeg.start(ended_hook(&app), &copy, None) {
         Ok(port) => {
             log::info!("[video] RTSP source already carries MJPEG — stream-copied, no transcode");
             return Ok(reply(port, RtspTranscode::Copy));
@@ -255,7 +278,7 @@ pub fn video_rtsp_mjpeg_start(
     } else {
         RtspTranscode::Software
     };
-    let port = mjpeg.start(ended_hook(&app), &MjpegSource::Rtsp { url: &url, transcode })?;
+    let port = mjpeg.start(ended_hook(&app), &MjpegSource::Rtsp { url: &url, transcode }, None)?;
     log::info!("[video] RTSP MJPEG transcode running ({})", transcode.label());
     Ok(reply(port, transcode))
 }

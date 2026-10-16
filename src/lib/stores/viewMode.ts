@@ -19,6 +19,10 @@ export interface ViewModeState {
   mapLeft: boolean;
   /** Side-by-side tabs (Mission, Terrain, …): the panel pane's width as a fraction of the window. */
   sideFrac: number;
+  /** Cockpit sidebar width (logical px) the pilot dragged it to; 0 = automatic. */
+  sidebarW: number;
+  /** Cockpit sidebar folded away (the map takes its room). */
+  sidebarCollapsed: boolean;
   /** Tabs open in the tab bar, in bar order: `view:<mode>` (Map / Video / Split) and
    *  `tab:<panel id>` ('tab:uav-info', 'tab:mission', …). */
   openTabs: string[];
@@ -33,7 +37,7 @@ export const SPLIT_FRAC_MAX = 0.8;
 /** Height of the browser-style tab bar under the toolbar (logical px, desktop + tablet). */
 export const TAB_BAR_PX = 34;
 
-const DEFAULTS: ViewModeState = { mode: 'map', splitFrac: 0.5, mapLeft: true, sideFrac: 0.4, openTabs: ['view:map'] };
+const DEFAULTS: ViewModeState = { mode: 'map', splitFrac: 0.5, mapLeft: true, sideFrac: 0.4, sidebarW: 0, sidebarCollapsed: false, openTabs: ['view:map'] };
 export const SIDE_FRAC_MIN = 0.25;
 export const SIDE_FRAC_MAX = 0.65;
 function clampSide(f: number): number {
@@ -64,6 +68,8 @@ function load(): ViewModeState {
       splitFrac: clampFrac(typeof p.splitFrac === 'number' ? p.splitFrac : DEFAULTS.splitFrac),
       mapLeft: p.mapLeft !== false,
       sideFrac: clampSide(typeof p.sideFrac === 'number' ? p.sideFrac : DEFAULTS.sideFrac),
+      sidebarW: typeof p.sidebarW === 'number' && p.sidebarW > 0 ? p.sidebarW : 0,
+      sidebarCollapsed: p.sidebarCollapsed === true,
       openTabs: loadTabs(p.openTabs),
     };
   } catch {
@@ -104,6 +110,15 @@ export function setSplitFrac(frac: number): void {
 /** Side-by-side divider drag — not persisted per move (see commitSplit). */
 export function setSideFrac(frac: number): void {
   viewMode.update((s) => ({ ...s, sideFrac: clampSide(frac) }));
+}
+
+/** Sidebar edge drag — not persisted per move (see commitSplit); 0 restores the automatic width. */
+export function setSidebarW(w: number): void {
+  viewMode.update((s) => ({ ...s, sidebarW: Math.round(w) }));
+}
+
+export function setSidebarCollapsed(sidebarCollapsed: boolean): void {
+  patch({ sidebarCollapsed });
 }
 
 /** End of a divider drag: persist + one resize for the map. */

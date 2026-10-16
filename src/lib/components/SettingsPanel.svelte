@@ -58,6 +58,7 @@
     flightRecordingEnabled = false,
     flightLogRawEnabled = false,
     flightLogRawAlways = false,
+    autoExportTracks = true,
     flightLogDbPath = '',
     defaultFlightLogPath = '',
     flightLogRawPath = '',
@@ -113,6 +114,7 @@
     flightRecordingEnabled?: boolean;
     flightLogRawEnabled?: boolean;
     flightLogRawAlways?: boolean;
+    autoExportTracks?: boolean;
     flightLogDbPath?: string;
     defaultFlightLogPath?: string;
     flightLogRawPath?: string;
@@ -757,6 +759,10 @@
       <div class="s-row" class:s-disabled={!flightRecordingEnabled}>
         <label class="s-label" for="flightlog-raw-always">{$t('settings.continuousRawLogging')}</label>
         <Toggle checked={flightLogRawAlways} id="flightlog-raw-always" disabled={!flightRecordingEnabled} onchange={(c) => onPatch({ flightLogRawAlways: c })} />
+      </div>
+      <div class="s-row" class:s-disabled={!flightRecordingEnabled || !flightLoggingEnabled} title={$t('settings.autoExportTracksHint')}>
+        <label class="s-label" for="flightlog-autoexport">{$t('settings.autoExportTracks')}</label>
+        <Toggle checked={autoExportTracks} id="flightlog-autoexport" disabled={!flightRecordingEnabled || !flightLoggingEnabled} onchange={(c) => onPatch({ autoExportTracks: c })} />
       </div>
       <div class="s-row s-row-stack">
         <span class="s-label">{$t('settings.flightLogDbPath')}</span>
