@@ -846,14 +846,14 @@
     gap: 8px;
   }
   .am-head-row { padding: 0 2px 2px; }
-  .am-dim { font-size: 11px; color: #8493a8; text-align: center; }
-  .am-layer { font-size: 13px; color: #e3eaf3; }
+  .am-dim { font-size: 11px; color: #7d9d98; text-align: center; }
+  .am-layer { font-size: 13px; color: #e2f0ee; }
   .am-row { padding: 4px 2px; }
 
   /* "Show on Map" group — the layer-visibility toggles + render ranges, pinned to the end. */
-  .am-showmap { margin-top: 10px; padding-top: 8px; border-top: 1px solid #1c2633; }
+  .am-showmap { margin-top: 10px; padding-top: 8px; border-top: 1px solid #16292c; }
   .am-showmap-head {
-    font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px;
+    font-size: 11px; font-weight: 700; color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px;
     padding: 0 2px 4px;
   }
   .am-ranges {
@@ -862,22 +862,22 @@
     gap: 6px;
     margin-top: 10px;
     padding-top: 8px;
-    border-top: 1px solid #1c2633;
+    border-top: 1px solid #16292c;
   }
   .am-range { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; }
-  .am-range-label { font-size: 12px; color: #8493a8; }
+  .am-range-label { font-size: 12px; color: #7d9d98; }
   .am-select {
-    background: #0d131b; color: #e3eaf3; border: 1px solid #1c2633; border-radius: 4px;
+    background: #091416; color: #e2f0ee; border: 1px solid #16292c; border-radius: 4px;
     padding: 2px 6px; font-size: 12px; cursor: pointer;
   }
 
 
   .am-list { display: flex; flex-direction: column; }
   .am-group-head {
-    font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px;
-    padding: 8px 4px 3px; position: sticky; top: 0; background: #121a24; z-index: 1;
+    font-size: 11px; font-weight: 700; color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 8px 4px 3px; position: sticky; top: 0; background: #0c1b1e; z-index: 1;
   }
-  .am-group-count { color: #8493a8; font-weight: 600; }
+  .am-group-count { color: #7d9d98; font-weight: 600; }
   .am-item {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -887,55 +887,55 @@
     text-align: left;
     background: none;
     border: none;
-    border-bottom: 1px solid #1c2633;
+    border-bottom: 1px solid #16292c;
     padding: 5px 4px;
     cursor: pointer;
     color: inherit;
   }
-  .am-item:hover { background: rgba(56, 189, 248, 0.08); }
-  .am-item-name { grid-area: name; font-size: 12px; color: #e3eaf3; }
-  .am-item-sub { grid-area: sub; font-size: 10.5px; color: #8493a8; }
-  .am-item-dist { grid-area: dist; align-self: center; font-size: 11px; color: #38bdf8; white-space: nowrap; }
+  .am-item:hover { background: rgba(45, 212, 191, 0.08); }
+  .am-item-name { grid-area: name; font-size: 12px; color: #e2f0ee; }
+  .am-item-sub { grid-area: sub; font-size: 10.5px; color: #7d9d98; }
+  .am-item-dist { grid-area: dist; align-self: center; font-size: 11px; color: #2dd4bf; white-space: nowrap; }
 
   /* Geozones section (FC config) — collapsible zone rows, colour-coded by type. */
-  .gz-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid #1c2633; display: flex; flex-direction: column; gap: 3px; }
+  .gz-section { margin-top: 10px; padding-top: 8px; border-top: 1px solid #16292c; display: flex; flex-direction: column; gap: 3px; }
   .gz-head { display: flex; align-items: center; justify-content: space-between; padding: 0 2px 4px; }
-  .gz-title { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; }
-  .gz-count { font-size: 11px; color: #8493a8; font-weight: 600; }
-  .gz-empty { font-size: 12px; color: #8493a8; padding: 2px 4px 4px; }
-  .gz-row { border-left: 3px solid var(--gz-color); background: #1c2633; border-radius: 3px; overflow: hidden; }
+  .gz-title { font-size: 11px; font-weight: 700; color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px; }
+  .gz-count { font-size: 11px; color: #7d9d98; font-weight: 600; }
+  .gz-empty { font-size: 12px; color: #7d9d98; padding: 2px 4px 4px; }
+  .gz-row { border-left: 3px solid var(--gz-color); background: #16292c; border-radius: 3px; overflow: hidden; }
   .gz-rowhead {
     display: grid; grid-template-columns: auto auto 1fr auto; align-items: center; gap: 8px;
     width: 100%; text-align: left; background: none; border: none; padding: 5px 8px; cursor: pointer; color: inherit;
   }
-  .gz-rowhead:hover { background: rgba(56, 189, 248, 0.08); }
+  .gz-rowhead:hover { background: rgba(45, 212, 191, 0.08); }
   .gz-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--gz-color); }
-  .gz-name { font-size: 12px; font-weight: 700; color: #e3eaf3; }
-  .gz-shape { font-size: 11px; color: #afbccc; }
-  .gz-sub { font-size: 10.5px; color: #8493a8; text-align: right; }
-  .gz-detail { display: flex; flex-direction: column; gap: 2px; padding: 4px 10px 8px; border-top: 1px solid #0d131b; }
+  .gz-name { font-size: 12px; font-weight: 700; color: #e2f0ee; }
+  .gz-shape { font-size: 11px; color: #a9c3bf; }
+  .gz-sub { font-size: 10.5px; color: #7d9d98; text-align: right; }
+  .gz-detail { display: flex; flex-direction: column; gap: 2px; padding: 4px 10px 8px; border-top: 1px solid #091416; }
   .gz-focus {
-    align-self: flex-start; background: none; border: 1px solid #38bdf8; color: #38bdf8;
+    align-self: flex-start; background: none; border: 1px solid #2dd4bf; color: #2dd4bf;
     border-radius: 4px; padding: 2px 8px; font-size: 11px; cursor: pointer;
   }
-  .gz-focus:hover { background: rgba(56, 189, 248, 0.12); }
+  .gz-focus:hover { background: rgba(45, 212, 191, 0.12); }
 
   /* Editing toolbar + per-zone edit controls (P2). */
   .gz-toolbar { display: flex; align-items: center; gap: 6px; padding: 2px 2px 6px; }
   .gz-add {
-    background: #0d131b; color: #e3eaf3; border: 1px solid #1c2633; border-radius: 4px;
+    background: #091416; color: #e2f0ee; border: 1px solid #16292c; border-radius: 4px;
     padding: 3px 8px; font-size: 11px; cursor: pointer;
   }
-  .gz-add:hover:not(:disabled) { background: rgba(56, 189, 248, 0.12); border-color: #38bdf8; }
+  .gz-add:hover:not(:disabled) { background: rgba(45, 212, 191, 0.12); border-color: #2dd4bf; }
   .gz-add:disabled { opacity: 0.4; cursor: not-allowed; }
   .gz-spacer { flex: 1; }
-  .gz-editlock { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #8493a8; }
+  .gz-editlock { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: #7d9d98; }
 
   .gz-edit { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; padding: 3px 0; }
-  .gz-elabel { font-size: 11.5px; color: #8493a8; }
+  .gz-elabel { font-size: 11.5px; color: #7d9d98; }
   .gz-typetoggle { display: inline-flex; align-items: center; gap: 6px; }
-  .gz-tname { font-size: 11.5px; color: #e3eaf3; min-width: 70px; text-align: right; }
-  .gz-hint { font-size: 10.5px; color: #8493a8; font-style: italic; padding: 0 0 3px; }
+  .gz-tname { font-size: 11.5px; color: #e2f0ee; min-width: 70px; text-align: right; }
+  .gz-hint { font-size: 10.5px; color: #7d9d98; font-style: italic; padding: 0 0 3px; }
   .gz-rowactions { display: flex; gap: 6px; margin-top: 6px; }
   .gz-delete {
     background: none; border: 1px solid #d40000; color: #ff5a5a; border-radius: 4px;
@@ -944,12 +944,12 @@
   .gz-delete:hover { background: rgba(212, 0, 0, 0.12); }
 
   .gz-armed {
-    font-size: 11.5px; color: #0b1017; background: #f5a623; font-weight: 600;
+    font-size: 11.5px; color: #071315; background: #f5a623; font-weight: 600;
     border-radius: 4px; padding: 4px 8px; margin: 2px 2px 4px;
   }
   /* Global fence params (raw FC param names + numeric inputs). */
-  .gz-params { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; padding-top: 6px; border-top: 1px solid #0d131b; }
-  .gz-params-head { font-size: 11px; font-weight: 700; color: #8493a8; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 2px 2px; }
+  .gz-params { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; padding-top: 6px; border-top: 1px solid #091416; }
+  .gz-params-head { font-size: 11px; font-weight: 700; color: #7d9d98; text-transform: uppercase; letter-spacing: 0.5px; padding: 0 2px 2px; }
 
   .gz-issues { display: flex; flex-direction: column; gap: 2px; margin-top: 6px; }
   .gz-issue { font-size: 11px; color: #f5a623; }

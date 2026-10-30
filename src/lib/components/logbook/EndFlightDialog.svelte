@@ -245,20 +245,20 @@
 
 <style>
   .dialog-backdrop { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.55); display: flex; align-items: center; justify-content: center; }
-  .dialog-box { background: #121a24; border: 1px solid rgba(56, 189, 248, 0.45); border-radius: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); padding: 20px 24px 16px; min-width: 340px; max-width: 460px; }
-  .dialog-title { font-size: 14px; font-weight: 700; color: #e3eaf3; margin-bottom: 14px; }
+  .dialog-box { background: #0c1b1e; border: 1px solid rgba(45, 212, 191, 0.45); border-radius: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); padding: 20px 24px 16px; min-width: 340px; max-width: 460px; }
+  .dialog-title { font-size: 14px; font-weight: 700; color: #e2f0ee; margin-bottom: 14px; }
 
   .fc-info-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; font-size: 13px; }
-  .fc-label { color: #8493a8; }
-  .fc-value { color: #e3eaf3; font-weight: 600; }
+  .fc-label { color: #7d9d98; }
+  .fc-value { color: #e2f0ee; font-weight: 600; }
 
-  .ef-divider { height: 1px; background: #1f2a38; margin: 14px 0 12px; }
-  .ef-note { font-size: 12px; color: #8493a8; margin: 12px 0 4px; }
+  .ef-divider { height: 1px; background: #172d30; margin: 14px 0 12px; }
+  .ef-note { font-size: 12px; color: #7d9d98; margin: 12px 0 4px; }
 
   .fld { display: block; margin-bottom: 12px; }
-  .fld-label { display: block; font-size: 11px; font-weight: 600; color: #8493a8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
-  .fld-input { box-sizing: border-box; width: 100%; padding: 6px 8px; font-size: 13px; color: #e3eaf3; background: #0d131b; border: 1px solid #273446; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; }
-  .fld-input:focus { outline: none; border-color: #38bdf8; }
+  .fld-label { display: block; font-size: 11px; font-weight: 600; color: #7d9d98; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
+  .fld-input { box-sizing: border-box; width: 100%; padding: 6px 8px; font-size: 13px; color: #e2f0ee; background: #091416; border: 1px solid #1c373b; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  .fld-input:focus { outline: none; border-color: #2dd4bf; }
   .fld-area { resize: vertical; }
 
   /* Battery serial combobox: filter input + dropdown of existing packs. */
@@ -267,30 +267,30 @@
     position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
     margin: 2px 0 0; padding: 4px; list-style: none;
     max-height: 180px; overflow-y: auto;
-    background: #0f161e; border: 1px solid #273446; border-radius: 4px;
+    background: #0f1d1e; border: 1px solid #1c373b; border-radius: 4px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
   }
   .battery-opt {
     display: flex; align-items: baseline; gap: 8px; width: 100%;
     padding: 5px 8px; border: none; border-radius: 3px; background: transparent;
-    color: #e3eaf3; font-size: 12px; text-align: left; cursor: pointer;
+    color: #e2f0ee; font-size: 12px; text-align: left; cursor: pointer;
   }
-  .battery-opt:hover { background: rgba(56, 189, 248, 0.18); }
+  .battery-opt:hover { background: rgba(45, 212, 191, 0.18); }
   .bo-serial { font-weight: 600; }
-  .bo-meta { color: #8493a8; font-size: 11px; }
-  .battery-new-hint { display: block; margin-top: 4px; font-size: 11px; color: #38bdf8; }
+  .bo-meta { color: #7d9d98; font-size: 11px; }
+  .battery-new-hint { display: block; margin-top: 4px; font-size: 11px; color: #2dd4bf; }
 
-  .ef-check { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #e3eaf3; margin-bottom: 12px; cursor: pointer; }
-  .ef-check input { accent-color: #38bdf8; }
+  .ef-check { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #e2f0ee; margin-bottom: 12px; cursor: pointer; }
+  .ef-check input { accent-color: #2dd4bf; }
 
   .ef-discard-warn { font-size: 12px; color: #f0b0b0; background: rgba(212, 0, 0, 0.12); border: 1px solid rgba(212, 0, 0, 0.4); border-radius: 4px; padding: 8px 10px; margin: 10px 0 12px; }
 
   .dialog-buttons { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 4px; }
   .ef-spacer { flex: 1 1 auto; }
-  .dialog-btn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 4px; border: 1px solid #3a4a5f; background: #253244; color: #e3eaf3; cursor: pointer; transition: background 0.15s; }
-  .dialog-btn:hover { background: #2e3d51; }
-  .dialog-btn-primary { background: #0369a1; border-color: #0ea5e9; color: #fff; }
-  .dialog-btn-primary:hover { background: #0284c7; }
+  .dialog-btn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 4px; border: 1px solid #2b4d52; background: #1b3539; color: #e2f0ee; cursor: pointer; transition: background 0.15s; }
+  .dialog-btn:hover { background: #214045; }
+  .dialog-btn-primary { background: #0f766e; border-color: #14b8a6; color: #fff; }
+  .dialog-btn-primary:hover { background: #0d9488; }
   .dialog-btn-danger { background: #5a1414; border-color: #d40000; color: #f3c5c5; }
   .dialog-btn-danger:hover { background: #7a1a1a; }
 </style>

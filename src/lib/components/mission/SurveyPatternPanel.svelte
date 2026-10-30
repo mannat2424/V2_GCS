@@ -878,12 +878,12 @@
     align-items: center;
     gap: 6px;
     font-size: 12px;
-    color: #c3cedb;
+    color: #bfd6d2;
     cursor: pointer;
   }
 
   .toggle-row input[type="checkbox"] {
-    accent-color: #38bdf8;
+    accent-color: #2dd4bf;
   }
 
   .spacing-wrapper {
@@ -894,7 +894,7 @@
 
   .spacing-info {
     font-size: 11px;
-    color: #7a8aa0;
+    color: #73938e;
     font-style: italic;
     padding-left: 4px;
   }
@@ -916,12 +916,12 @@
   .section-label {
     font-size: 12px;
     font-weight: 600;
-    color: #7a8aa0;
+    color: #73938e;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-top: 4px;
     width: 100%;
-    border-bottom: 1px solid #18212d;
+    border-bottom: 1px solid #122326;
     padding-bottom: 2px;
   }
 
@@ -940,7 +940,7 @@
 
   .ua-col-label {
     font-size: 11px;
-    color: #7a8aa0;
+    color: #73938e;
     font-weight: 600;
     text-align: center;
   }
@@ -959,13 +959,13 @@
   }
 
   .ua-check-item input[type="checkbox"] {
-    accent-color: #38bdf8;
+    accent-color: #2dd4bf;
     margin: 0;
   }
 
   .ua-check-item span {
     font-size: 10px;
-    color: #4b5b71;
+    color: #3a5c61;
   }
 
   .alt-type-row {
@@ -975,16 +975,16 @@
 
   .alt-type-label {
     font-size: 12px;
-    color: #9eacbf;
+    color: #97b3af;
     white-space: nowrap;
   }
 
   .alt-type-select {
     padding: 3px 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 3px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     color-scheme: dark;
     max-width: 120px;
@@ -992,10 +992,10 @@
 
   .survey-header select {
     padding: 2px 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 3px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     color-scheme: dark;
     margin-left: 6px;
@@ -1004,7 +1004,7 @@
   .survey-header h4 {
     margin: 0;
     font-size: 14px;
-    color: #38bdf8;
+    color: #2dd4bf;
     display: inline;
   }
 
@@ -1031,30 +1031,30 @@
     width: 100%;
     padding: 6px 12px;
     background: #1a3a5c;
-    border: 1px solid #38bdf8;
+    border: 1px solid #2dd4bf;
     border-radius: 4px;
-    color: #38bdf8;
+    color: #2dd4bf;
     cursor: pointer;
     font-size: 13px;
     font-weight: 600;
   }
   .btn-primary:hover {
-    background: #38bdf8;
+    background: #2dd4bf;
     color: #fff;
   }
 
   .btn-ctrl {
     padding: 5px 6px;
-    border: 1px solid #38bdf8;
+    border: 1px solid #2dd4bf;
     border-radius: 4px;
     background: #1a3a5c;
-    color: #38bdf8;
+    color: #2dd4bf;
     cursor: pointer;
     font-size: 12px;
     white-space: nowrap;
   }
-  .btn-ctrl:hover:not(:disabled) { background: #38bdf8; color: #fff; }
+  .btn-ctrl:hover:not(:disabled) { background: #2dd4bf; color: #fff; }
   .btn-ctrl:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-ctrl.btn-file { border-color: #3a4a5f; background: #111822; color: #c3cedb; }
-  .btn-ctrl.btn-file:hover { background: #1f2a38; }
+  .btn-ctrl.btn-file { border-color: #2b4d52; background: #0b191b; color: #bfd6d2; }
+  .btn-ctrl.btn-file:hover { background: #172d30; }
 </style>

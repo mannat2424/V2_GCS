@@ -75,7 +75,7 @@
   }
   /* The arming pill is styled for the toolbar's solid background; over the map it gets a backing. */
   .chips > :global(.arming) {
-    background-color: rgba(18, 26, 36, 0.92);
+    background-color: rgba(12, 27, 30, 0.92);
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
   }
@@ -86,7 +86,7 @@
     height: 26px;
     padding: 0 4px;
     align-items: center;
-    background: rgba(18, 26, 36, 0.92);
+    background: rgba(12, 27, 30, 0.92);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
     backdrop-filter: var(--glass-blur, blur(6px));
@@ -98,7 +98,7 @@
     font-size: 10px;
     font-weight: 700;
     letter-spacing: 0.04em;
-    color: #0b1017;
+    color: #071315;
   }
   .sensor.warning {
     background: #f5a623;

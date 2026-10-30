@@ -56,26 +56,26 @@
     padding: 24px;
     box-sizing: border-box;
     text-align: center;
-    color: #c9d3df;
+    color: #c4dad7;
     background:
-      radial-gradient(ellipse at center, rgba(56, 189, 248, 0.08), transparent 60%),
-      #080b10;
+      radial-gradient(ellipse at center, rgba(45, 212, 191, 0.08), transparent 60%),
+      #080f10;
   }
   .ves-icon {
     width: 64px;
     height: 64px;
-    color: rgba(56, 189, 248, 0.75);
+    color: rgba(45, 212, 191, 0.75);
   }
   .ves-title {
     font-size: 17px;
     font-weight: 600;
-    color: #dee6f4;
+    color: #d8ece8;
   }
   .ves-hint,
   .ves-error {
     max-width: 420px;
     font-size: 13px;
-    color: #8493a8;
+    color: #7d9d98;
   }
   .ves-error {
     color: #ff7b72;

@@ -134,8 +134,8 @@
   .hamburger-btn {
     width: 42px;
     height: 42px;
-    background: rgba(18, 26, 36, 0.92);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(12, 27, 30, 0.92);
+    border: 1px solid rgba(45, 212, 191, 0.5);
     border-radius: 6px;
     cursor: pointer;
     display: flex;
@@ -160,7 +160,7 @@
   .hamburger-icon span {
     display: block;
     height: 2px;
-    background: #38bdf8;
+    background: #2dd4bf;
     border-radius: 1px;
     transition: transform 0.3s ease, opacity 0.2s ease;
   }
@@ -188,7 +188,7 @@
   .tab-sep {
     height: 1px;
     margin: 4px 6px;
-    background: rgba(56, 189, 248, 0.4);
+    background: rgba(45, 212, 191, 0.4);
   }
 
   .tab-btn {
@@ -197,10 +197,10 @@
     gap: 8px;
     width: 42px;
     height: 38px;
-    background: rgba(18, 26, 36, 0.92);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    background: rgba(12, 27, 30, 0.92);
+    border: 1px solid rgba(45, 212, 191, 0.3);
     border-radius: 6px;
-    color: #9cabbe;
+    color: #95b1ad;
     font-size: 11px;
     cursor: pointer;
     padding: 0;
@@ -212,21 +212,21 @@
   }
 
   .tab-btn:hover {
-    background: rgba(56, 189, 248, 0.15);
-    color: #e3eaf3;
+    background: rgba(45, 212, 191, 0.15);
+    color: #e2f0ee;
   }
 
   /* Darker active fill (black 50% + the inherited blur) so the accent border + icon stay
      readable over bright maps; the blue border/icon remain the active indicator. */
   .tab-btn.active {
     background: rgba(0, 0, 0, 0.5);
-    border-color: #38bdf8;
-    color: #38bdf8;
+    border-color: #2dd4bf;
+    color: #2dd4bf;
   }
   /* Active but slid out of view: still the selected tab, just parked. */
   .tab-btn.active.hidden-panel {
     border-style: dashed;
-    color: rgba(56, 189, 248, 0.6);
+    color: rgba(45, 212, 191, 0.6);
   }
 
   .tab-icon {

@@ -124,6 +124,6 @@
 <div class="preview-map" bind:this={container}></div>
 
 <style>
-  .preview-map { width: 100%; height: 100%; border: 1px solid #18212d; border-radius: 4px; background: #0b1017; overflow: hidden; }
-  .preview-map :global(.leaflet-container) { background: #0b1017; cursor: default; font-family: inherit; }
+  .preview-map { width: 100%; height: 100%; border: 1px solid #122326; border-radius: 4px; background: #071315; overflow: hidden; }
+  .preview-map :global(.leaflet-container) { background: #071315; cursor: default; font-family: inherit; }
 </style>

@@ -94,54 +94,54 @@
   }
   .about-box {
     position: relative;
-    background: #121a24;
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: #0c1b1e;
+    border: 1px solid rgba(45, 212, 191, 0.45);
     border-radius: 10px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     padding: 22px 24px 16px;
     width: 460px; max-width: calc(100vw - 32px);
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-family: 'Segoe UI', Tahoma, sans-serif;
   }
   .about-x {
     position: absolute; top: 10px; right: 12px;
-    background: none; border: none; color: #8493a8;
+    background: none; border: none; color: #7d9d98;
     font-size: 22px; line-height: 1; cursor: pointer; padding: 2px 6px; border-radius: 4px;
   }
-  .about-x:hover { color: #e3eaf3; background: rgba(255, 255, 255, 0.06); }
+  .about-x:hover { color: #e2f0ee; background: rgba(255, 255, 255, 0.06); }
 
   .about-head { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 16px; }
   .about-logo-full { width: 340px; max-width: 100%; height: auto; display: block; }
-  .about-tagline { font-size: 12px; color: #8493a8; }
+  .about-tagline { font-size: 12px; color: #7d9d98; }
 
-  .about-rows { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid #1c2633; }
+  .about-rows { display: flex; flex-direction: column; gap: 5px; padding-bottom: 14px; border-bottom: 1px solid #16292c; }
   .about-row { display: grid; grid-template-columns: 84px 1fr; align-items: baseline; gap: 10px; font-size: 12px; }
-  .about-k { color: #8493a8; }
-  .about-v { color: #e3eaf3; }
-  .about-mono { font-family: 'Consolas', monospace; color: #38bdf8; }
-  .about-link { background: none; border: none; padding: 0; color: #38bdf8; cursor: pointer; font: inherit; text-align: left; }
+  .about-k { color: #7d9d98; }
+  .about-v { color: #e2f0ee; }
+  .about-mono { font-family: 'Consolas', monospace; color: #2dd4bf; }
+  .about-link { background: none; border: none; padding: 0; color: #2dd4bf; cursor: pointer; font: inherit; text-align: left; }
   .about-link:hover { text-decoration: underline; }
 
   .about-fw { margin-top: 14px; }
-  .about-fw-head { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .about-fw-head { font-size: 11px; font-weight: 700; color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
   .about-fw-list { display: flex; flex-direction: column; gap: 3px; }
   .about-fw-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: baseline; font-size: 12px; }
-  .about-fw-lic { color: #8493a8; white-space: nowrap; }
+  .about-fw-lic { color: #7d9d98; white-space: nowrap; }
 
   .about-tp { margin-top: 14px; }
-  .about-tp-head { font-size: 11px; font-weight: 700; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-  .about-tp-scroll { max-height: 200px; overflow-y: auto; border: 1px solid #1c2633; border-radius: 6px; padding: 4px 8px; background: #0f161e; }
-  .about-tp-group { font-size: 10.5px; font-weight: 700; color: #8493a8; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 0 2px; }
+  .about-tp-head { font-size: 11px; font-weight: 700; color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .about-tp-scroll { max-height: 200px; overflow-y: auto; border: 1px solid #16292c; border-radius: 6px; padding: 4px 8px; background: #0f1d1e; }
+  .about-tp-group { font-size: 10.5px; font-weight: 700; color: #7d9d98; text-transform: uppercase; letter-spacing: 0.4px; margin: 8px 0 2px; }
   .about-tp-group:first-child { margin-top: 2px; }
   .about-tp-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 2px 0; font-size: 11.5px; }
-  .about-tp-name { color: #e3eaf3; }
-  .about-tp-lic { color: #8493a8; white-space: nowrap; }
-  .about-tp-note { font-size: 10.5px; color: #4b617c; margin-top: 6px; line-height: 1.4; }
+  .about-tp-name { color: #e2f0ee; }
+  .about-tp-lic { color: #7d9d98; white-space: nowrap; }
+  .about-tp-note { font-size: 10.5px; color: #4b787c; margin-top: 6px; line-height: 1.4; }
 
   .about-foot { display: flex; justify-content: flex-end; margin-top: 16px; }
   .about-close {
     padding: 6px 16px; font-size: 12px; font-weight: 600; border-radius: 4px;
-    border: 1px solid #38bdf8; background: #38bdf8; color: #fff; cursor: pointer;
+    border: 1px solid #2dd4bf; background: #2dd4bf; color: #fff; cursor: pointer;
   }
   .about-close:hover { background: #2e96c5; }
 </style>

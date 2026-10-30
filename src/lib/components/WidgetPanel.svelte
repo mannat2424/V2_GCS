@@ -680,7 +680,7 @@
 
   /* Edit mode: show panel outline, accept drops */
   .widget-panel.editing {
-    outline: 2px dashed rgba(56, 189, 248, 0.7);
+    outline: 2px dashed rgba(45, 212, 191, 0.7);
     outline-offset: 4px;
     border-radius: 8px;
     min-width: 40px;
@@ -691,7 +691,7 @@
 
   .widget-panel.editing.empty {
     outline-style: dotted;
-    outline-color: rgba(56, 189, 248, 0.5);
+    outline-color: rgba(45, 212, 191, 0.5);
   }
 
   .widget-panel.horizontal.editing.empty {
@@ -705,9 +705,9 @@
   }
 
   .widget-panel.drag-hover {
-    outline-color: #38bdf8;
+    outline-color: #2dd4bf;
     outline-style: solid;
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(45, 212, 191, 0.05);
   }
 
   .widget-slot {
@@ -742,10 +742,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(56, 189, 248, 0.6);
+    border: 1px solid rgba(45, 212, 191, 0.6);
     border-radius: 6px;
-    background: rgba(12, 17, 24, 0.8);
-    color: #38bdf8;
+    background: rgba(8, 20, 22, 0.8);
+    color: #2dd4bf;
     cursor: pointer;
     touch-action: manipulation;
   }
@@ -783,7 +783,7 @@
   .widget-slot.insert-after::after {
     content: '';
     position: absolute;
-    background: #38bdf8;
+    background: #2dd4bf;
     border-radius: 2px;
     z-index: 20;
   }
@@ -820,7 +820,7 @@
     left: 50%;
     transform: translateX(-50%);
     font-size: 14px;
-    color: rgba(56, 189, 248, 0.7);
+    color: rgba(45, 212, 191, 0.7);
     z-index: 10;
     pointer-events: none;
     line-height: 1;
@@ -839,9 +839,9 @@
     transform: translate(-50%, -50%);
     pointer-events: none;
     z-index: 1000;
-    border: 1px solid rgba(56, 189, 248, 0.75);
+    border: 1px solid rgba(45, 212, 191, 0.75);
     border-radius: 8px;
-    background: rgba(12, 17, 24, 0.48);
+    background: rgba(8, 20, 22, 0.48);
     backdrop-filter: var(--glass-blur, blur(6px));
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     display: flex;

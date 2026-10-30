@@ -68,8 +68,8 @@
     justify-content: center;
   }
   .dialog-box {
-    background: #121a24;
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: #0c1b1e;
+    border: 1px solid rgba(45, 212, 191, 0.45);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     padding: 20px 24px 16px;
@@ -79,7 +79,7 @@
   .dialog-title {
     font-size: 14px;
     font-weight: 700;
-    color: #e3eaf3;
+    color: #e2f0ee;
     margin-bottom: 14px;
   }
   .fld { display: block; margin-bottom: 12px; }
@@ -87,7 +87,7 @@
     display: block;
     font-size: 11px;
     font-weight: 600;
-    color: #8493a8;
+    color: #7d9d98;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 4px;
@@ -97,13 +97,13 @@
     width: 100%;
     padding: 6px 8px;
     font-size: 13px;
-    color: #e3eaf3;
-    background: #0d131b;
-    border: 1px solid #273446;
+    color: #e2f0ee;
+    background: #091416;
+    border: 1px solid #1c373b;
     border-radius: 4px;
     font-family: 'Segoe UI', Tahoma, sans-serif;
   }
-  .fld-input:focus { outline: none; border-color: #38bdf8; }
+  .fld-input:focus { outline: none; border-color: #2dd4bf; }
   .fld-area { resize: vertical; }
   .dialog-buttons {
     display: flex;
@@ -116,18 +116,18 @@
     font-size: 12px;
     font-weight: 600;
     border-radius: 4px;
-    border: 1px solid #3a4a5f;
-    background: #253244;
-    color: #e3eaf3;
+    border: 1px solid #2b4d52;
+    background: #1b3539;
+    color: #e2f0ee;
     cursor: pointer;
     transition: background 0.15s;
   }
-  .dialog-btn:hover { background: #2e3d51; }
-  .dialog-btn-cancel { color: #8796ab; }
+  .dialog-btn:hover { background: #214045; }
+  .dialog-btn-cancel { color: #80a09b; }
   .dialog-btn-primary {
-    background: #0369a1;
-    border-color: #0ea5e9;
+    background: #0f766e;
+    border-color: #14b8a6;
     color: #fff;
   }
-  .dialog-btn-primary:hover { background: #0284c7; }
+  .dialog-btn-primary:hover { background: #0d9488; }
 </style>

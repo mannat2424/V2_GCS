@@ -135,12 +135,12 @@
     position: fixed; left: 0; right: 0; bottom: 0; height: 46vh; z-index: 400;
     display: flex; flex-direction: column; gap: 12px; padding: 12px; box-sizing: border-box;
     background: linear-gradient(#0a0a0acc, #0a0a0aee); backdrop-filter: var(--glass-blur, blur(2px));
-    border-top: 2px solid #38bdf8;
+    border-top: 2px solid #2dd4bf;
   }
   .vs-bar { display: flex; align-items: center; gap: 12px; }
   .engage, .arm {
-    font: 600 15px/1 system-ui; padding: 12px 20px; border-radius: 8px; border: 1px solid #3a4a5f;
-    background: #121a24; color: #e4ecfa; cursor: pointer; min-width: 110px; touch-action: manipulation;
+    font: 600 15px/1 system-ui; padding: 12px 20px; border-radius: 8px; border: 1px solid #2b4d52;
+    background: #0c1b1e; color: #e4ecfa; cursor: pointer; min-width: 110px; touch-action: manipulation;
   }
   .engage.on { background: #1e6b3a; border-color: #2e9d55; }
   .arm { background: #3a2e2e; }
@@ -150,7 +150,7 @@
   .vs-pads { display: flex; flex: 1; gap: 24px; }
   .vs-pads.disabled { opacity: 0.35; pointer-events: none; }
   .pad {
-    position: relative; flex: 1; border-radius: 16px; background: #0b0f16;
+    position: relative; flex: 1; border-radius: 16px; background: #0b1516;
     border: 2px solid #37a8db55; touch-action: none; overflow: hidden;
   }
   .cross {

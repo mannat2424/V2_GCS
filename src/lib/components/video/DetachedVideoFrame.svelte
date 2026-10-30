@@ -426,7 +426,7 @@
     background: transparent;
     overflow: hidden;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    color: #e3eaf3;
+    color: #e2f0ee;
     user-select: none;
     -webkit-user-select: none;
   }
@@ -449,10 +449,10 @@
     background: #000;
     overflow: hidden;
     border-radius: 5px;
-    border: 1px solid #17202e;
+    border: 1px solid #172c2e;
     /* No drop shadow: it would be painted outside the window and clipped to a smear at the edge.
        The ring IS the window's border — an undecorated window has no shadow of its own. */
-    box-shadow: 0 0 0 4px rgba(12, 17, 24, 0.92);
+    box-shadow: 0 0 0 4px rgba(8, 20, 22, 0.92);
     cursor: grab;
     touch-action: none;
   }
@@ -483,7 +483,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7a8aa0;
+    color: #73938e;
     font-size: 12px;
     background: #000;
     /* The router reads this radius and rounds the hole with it. */
@@ -502,7 +502,7 @@
     align-items: center;
     justify-content: center;
     padding: 0 10px;
-    color: #7a8aa0;
+    color: #73938e;
     font-size: 12px;
     text-align: center;
   }
@@ -513,10 +513,10 @@
     width: 32px;
     height: 32px;
     padding: 6px;
-    background: rgba(18, 26, 36, 0.82);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(12, 27, 30, 0.82);
+    border: 1px solid rgba(45, 212, 191, 0.5);
     border-radius: 6px;
-    color: #38bdf8;
+    color: #2dd4bf;
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.15s ease, background 0.2s;
@@ -527,7 +527,7 @@
     pointer-events: auto;
   }
   .dv-btn:hover {
-    background: rgba(56, 189, 248, 0.3);
+    background: rgba(45, 212, 191, 0.3);
   }
   .dv-btn svg {
     width: 100%;
@@ -580,11 +580,11 @@
     width: 26px;
     height: 26px;
     box-sizing: border-box;
-    border-top: 4px solid #405269;
-    border-right: 4px solid #405269;
+    border-top: 4px solid #406669;
+    border-right: 4px solid #406669;
     border-top-right-radius: 8px;
   }
   .dv-grip:hover::after {
-    border-color: #68707e;
+    border-color: #687c7e;
   }
 </style>

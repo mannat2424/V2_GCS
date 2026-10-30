@@ -91,13 +91,13 @@
     width: 100%;
     height: 34px;
     border-radius: 18px;
-    border: 1px solid var(--as-border, #38bdf8);
-    background: var(--as-bg, rgba(56, 189, 248, 0.1));
+    border: 1px solid var(--as-border, #2dd4bf);
+    background: var(--as-bg, rgba(45, 212, 191, 0.1));
     overflow: hidden;
     user-select: none;
     touch-action: none;
   }
-  .arm-slider.standard { --as-border: #38bdf8; --as-bg: rgba(56, 189, 248, 0.1);  --as-knob: #38bdf8; --as-fg: #cfe8f4; }
+  .arm-slider.standard { --as-border: #2dd4bf; --as-bg: rgba(45, 212, 191, 0.1);  --as-knob: #2dd4bf; --as-fg: #cfe8f4; }
   .arm-slider.warning  { --as-border: #d4a017; --as-bg: rgba(212, 160, 23, 0.1);  --as-knob: #d4a017; --as-fg: #f0dca6; }
   .arm-slider.danger   { --as-border: #d40000; --as-bg: rgba(212, 0, 0, 0.12);    --as-knob: #d40000; --as-fg: #f3b5b5; }
 
@@ -127,8 +127,8 @@
     height: 30px;
     border-radius: 50%;
     border: none;
-    background: var(--as-knob, #38bdf8);
-    color: #11181d;
+    background: var(--as-knob, #2dd4bf);
+    color: #111c1d;
     cursor: grab;
     display: flex;
     align-items: center;

@@ -243,8 +243,8 @@
   // vertexShadowDarkness 0.3 → floor 0.3). We mirror that on the Leaflet imagery only.
   let nightDimFactor = 1.0;                    // current applied imagery brightness (1 = none)
   // Dark basemaps (CARTO Dark Matter) are a neutral charcoal; this nudges them into the app's
-  // midnight-navy palette so the map reads as part of the UI. Imagery providers stay untouched.
-  const DARK_MAP_TINT = 'sepia(0.45) hue-rotate(172deg) saturate(1.9) brightness(1.08) contrast(1.05)';
+  // aqua palette so the map reads as part of the UI. Imagery providers stay untouched.
+  const DARK_MAP_TINT = 'sepia(0.45) hue-rotate(145deg) saturate(1.7) brightness(1.08) contrast(1.05)';
   let providerTint = '';
   let nightTimer: ReturnType<typeof setInterval> | undefined; // auto re-check (live time drift)
   let unsubUserGeo: (() => void) | undefined;  // recompute when OS geolocation resolves
@@ -2470,33 +2470,33 @@
 
   /* Geozone vertex popup (dark, matching the mission WP editor popup). */
   :global(.gz-popup-container .leaflet-popup-content-wrapper) {
-    background: rgba(12, 17, 24, 0.92); color: #d6dee9; border: 1px solid rgba(56, 189, 248, 0.35);
+    background: rgba(8, 20, 22, 0.92); color: #d3e6e3; border: 1px solid rgba(45, 212, 191, 0.35);
     border-radius: 8px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
   }
   :global(.gz-popup-container .leaflet-popup-tip) {
-    background: rgba(12, 17, 24, 0.92); border: 1px solid rgba(56, 189, 248, 0.35);
+    background: rgba(8, 20, 22, 0.92); border: 1px solid rgba(45, 212, 191, 0.35);
   }
   :global(.gz-popup) { display: flex; flex-direction: column; gap: 5px; min-width: 160px; }
-  :global(.gz-popup-row) { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: #c9d3df; }
+  :global(.gz-popup-row) { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: #c4dad7; }
   :global(.gz-popup-row input) {
-    width: 98px; background: #0d131b; color: #e3eaf3; border: 1px solid #1f2a38; border-radius: 4px;
+    width: 98px; background: #091416; color: #e2f0ee; border: 1px solid #172d30; border-radius: 4px;
     padding: 2px 4px; font-size: 12px;
   }
   :global(.gz-popup-btns) { display: flex; gap: 6px; margin-top: 3px; }
   :global(.gz-popup-apply), :global(.gz-popup-del) {
     border: none; border-radius: 4px; padding: 3px 10px; font-size: 12px; cursor: pointer;
   }
-  :global(.gz-popup-apply) { background: #38bdf8; color: #04222e; font-weight: 600; }
+  :global(.gz-popup-apply) { background: #2dd4bf; color: #04222e; font-weight: 600; }
   :global(.gz-popup-del) { background: none; border: 1px solid #d40000; color: #ff5a5a; }
 
   .map {
     width: 100%;
     height: 100%;
     transition: none;
-    /* Override Leaflet's light default (#d6dee9): it shines through every antialiased tile seam as a
+    /* Override Leaflet's light default (#d3e6e3): it shines through every antialiased tile seam as a
        WHITE hairline (issue #52) and flashes bright while tiles load. Dark, so whatever still
        peeks through reads as part of the imagery. */
-    background: #121a24;
+    background: #0c1b1e;
   }
 
   /* WebKitGTK only: stretch every 256px tile by half a px so neighbors overlap — OS-level
@@ -2608,12 +2608,12 @@
   }
   /* Provider credit in the app's dark theme (every platform) instead of Leaflet's white box. */
   :global(.leaflet-control-attribution) {
-    background: rgba(18, 26, 36, 0.85);
-    color: #8493a8;
+    background: rgba(12, 27, 30, 0.85);
+    color: #7d9d98;
     font-size: 10px;
   }
   :global(.leaflet-control-attribution a) {
-    color: #38bdf8;
+    color: #2dd4bf;
   }
   /* Phone (Dev-Docs archive/PHONE_UI.md D5/D11): no zoom buttons (pinch), the corner cluster sits
      at the very bottom-right of the map area, leaning on the widget column and riding along when
@@ -2661,10 +2661,10 @@
     box-sizing: border-box;
     width: 38px;
     height: 38px;
-    background: rgba(18, 26, 36, 0.9);
-    border: 2px solid rgba(56, 189, 248, 0.5);
+    background: rgba(12, 27, 30, 0.9);
+    border: 2px solid rgba(45, 212, 191, 0.5);
     border-radius: 6px;
-    color: #38bdf8;
+    color: #2dd4bf;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -2676,7 +2676,7 @@
 
   .map-control-btn:hover {
     background: var(--btn-active-bg);
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
 
   .map-zoom-btn {
@@ -2692,23 +2692,23 @@
   }
 
   .map-heading-btn.mode-free {
-    background: rgba(18, 26, 36, 0.45);
-    border-color: rgba(56, 189, 248, 0.45);
-    color: rgba(199, 223, 232, 0.95);
+    background: rgba(12, 27, 30, 0.45);
+    border-color: rgba(45, 212, 191, 0.45);
+    color: rgba(199, 229, 232, 0.95);
     backdrop-filter: var(--glass-blur, blur(6px));
   }
 
   .map-heading-btn.mode-follow,
   .map-heading-btn.mode-heading {
-    background: rgba(18, 26, 36, 0.92);
-    border-color: rgba(56, 189, 248, 0.7);
-    color: #38bdf8;
+    background: rgba(12, 27, 30, 0.92);
+    border-color: rgba(45, 212, 191, 0.7);
+    color: #2dd4bf;
     backdrop-filter: var(--glass-blur, blur(6px));
   }
 
   .map-heading-btn.mode-free:hover {
-    background: rgba(56, 189, 248, 0.12);
-    border-color: rgba(56, 189, 248, 0.75);
+    background: rgba(45, 212, 191, 0.12);
+    border-color: rgba(45, 212, 191, 0.75);
   }
 
   .heading-icon {
@@ -2746,13 +2746,13 @@
 
   /* Guided "fly here" popup (vehicle control) — dark theme to match the app. */
   :global(.guided-popup-wrap .leaflet-popup-content-wrapper) {
-    background: rgba(18, 26, 36, 0.97);
-    color: #e3eaf3;
-    border: 1px solid #38bdf8;
+    background: rgba(12, 27, 30, 0.97);
+    color: #e2f0ee;
+    border: 1px solid #2dd4bf;
     border-radius: 6px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   }
-  :global(.guided-popup-wrap .leaflet-popup-tip) { background: rgba(18, 26, 36, 0.97); }
+  :global(.guided-popup-wrap .leaflet-popup-tip) { background: rgba(12, 27, 30, 0.97); }
 
   /* Foreign-vehicle (radar) contact icons */
   :global(.radar-divicon) {
@@ -2782,7 +2782,7 @@
   :global(.radar-divicon .radar-icon-label.badge) {
     font-size: 15px;
     font-weight: 700;
-    background: rgba(15, 21, 30, 0.55);
+    background: rgba(10, 22, 24, 0.55);
     padding: 0 5px;
     border-radius: 4px;
     transform: translate(-50%, 3px);
@@ -2848,8 +2848,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: rgba(17, 24, 34, 0.62);
-    border: 2px solid rgba(56, 189, 248, 0.85);
+    background: rgba(17, 33, 34, 0.62);
+    border: 2px solid rgba(45, 212, 191, 0.85);
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.45);
   }
   /* Manual: signal that it's draggable. */

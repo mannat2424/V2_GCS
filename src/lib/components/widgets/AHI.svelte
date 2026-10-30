@@ -104,20 +104,20 @@
         <rect x="-200" y={-400 + pitchPx} width="600" height="500" fill="url(#vayu-ahi-sky)" />
         <rect x="-200" y={100 + pitchPx} width="600" height="500" fill="url(#vayu-ahi-gnd)" />
         <!-- Horizon: a soft cyan glow under a crisp line -->
-        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx} stroke="#67e8f9" stroke-width="6" opacity="0.18" />
-        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx} stroke="#a5f3fc" stroke-width="1.6" />
+        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx} stroke="#5eead4" stroke-width="6" opacity="0.18" />
+        <line x1="-200" y1={100 + pitchPx} x2="400" y2={100 + pitchPx} stroke="#99f6e4" stroke-width="1.6" />
 
         <!-- Pitch ladder: solid above the horizon, dashed below -->
         {#each pitchMarks as pm}
           {@const y = 100 - pm.deg * PITCH_SCALE + pitchPx}
           <line x1={100 - pm.hw} y1={y} x2={100 + pm.hw} y2={y}
-                stroke="#e0f2fe" stroke-width={pm.label ? 1.3 : 0.9}
+                stroke="#d5f5ef" stroke-width={pm.label ? 1.3 : 0.9}
                 stroke-dasharray={pm.deg < 0 ? '4 3' : undefined}
                 opacity={pm.label ? 0.85 : 0.45} />
           {#if pm.label}
-            <text x={100 + pm.hw + 5} y={y + 4} fill="#e0f2fe" font-size="11.5" opacity="0.8"
+            <text x={100 + pm.hw + 5} y={y + 4} fill="#d5f5ef" font-size="11.5" opacity="0.8"
                   font-family="Bahnschrift, 'DIN Alternate', 'Segoe UI', sans-serif">{Math.abs(pm.deg)}</text>
-            <text x={100 - pm.hw - 5} y={y + 4} fill="#e0f2fe" font-size="11.5" opacity="0.8" text-anchor="end"
+            <text x={100 - pm.hw - 5} y={y + 4} fill="#d5f5ef" font-size="11.5" opacity="0.8" text-anchor="end"
                   font-family="Bahnschrift, 'DIN Alternate', 'Segoe UI', sans-serif">{Math.abs(pm.deg)}</text>
           {/if}
         {/each}
@@ -127,21 +127,21 @@
 
     <!-- Roll arc + ticks (fixed) -->
     <path d="M {100 + 78 * Math.cos((-150) * Math.PI / 180)} {100 + 78 * Math.sin((-150) * Math.PI / 180)} A 78 78 0 0 1 {100 + 78 * Math.cos((-30) * Math.PI / 180)} {100 + 78 * Math.sin((-30) * Math.PI / 180)}"
-          fill="none" stroke="#e0f2fe" stroke-width="1.2" opacity="0.45" />
+          fill="none" stroke="#d5f5ef" stroke-width="1.2" opacity="0.45" />
     {#each rollTicks as rt}
       {@const rad = (rt.angle - 90) * Math.PI / 180}
       <line x1={100 + 78 * Math.cos(rad)} y1={100 + 78 * Math.sin(rad)}
             x2={100 + (78 - rt.len) * Math.cos(rad)} y2={100 + (78 - rt.len) * Math.sin(rad)}
-            stroke="#e0f2fe" stroke-width="1.6" opacity="0.6" />
+            stroke="#d5f5ef" stroke-width="1.6" opacity="0.6" />
     {/each}
     <!-- Zero-bank index (fixed) + bank pointer (rotates) -->
-    <polygon points="100,24 95,15 105,15" fill="#e0f2fe" />
+    <polygon points="100,24 95,15 105,15" fill="#d5f5ef" />
     <g transform="rotate({rollDeg}, 100, 100)">
-      <polygon points="100,25 95,34 105,34" fill="#22d3ee" />
+      <polygon points="100,25 95,34 105,34" fill="#3fe0c5" />
     </g>
 
     <!-- Aircraft symbol: amber chevron with a dark outline -->
-    <path d="M58 100 H84 L100 112 L116 100 H142" fill="none" stroke="#0b1017" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M58 100 H84 L100 112 L116 100 H142" fill="none" stroke="#071315" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
     <path d="M58 100 H84 L100 112 L116 100 H142" fill="none" stroke="#fbbf24" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" />
     <circle cx="100" cy="100" r="2.6" fill="#fbbf24" />
 
@@ -157,14 +157,14 @@
 
     <!-- Digital pitch / bank chips -->
     <g font-family="Bahnschrift, 'DIN Alternate', 'Segoe UI', sans-serif" font-size="12" font-weight="600">
-      <rect x="16" y="168" width="52" height="18" rx="6" fill="#05090e" fill-opacity="0.72" stroke="#38bdf8" stroke-opacity="0.35" />
-      <text x="42" y="181" text-anchor="middle" fill="#e0f2fe" style="font-variant-numeric: tabular-nums">P {pitchLabel}</text>
-      <rect x="132" y="168" width="52" height="18" rx="6" fill="#05090e" fill-opacity="0.72" stroke="#38bdf8" stroke-opacity="0.35" />
-      <text x="158" y="181" text-anchor="middle" fill="#e0f2fe" style="font-variant-numeric: tabular-nums">{bankLabel}</text>
+      <rect x="16" y="168" width="52" height="18" rx="6" fill="#030b0c" fill-opacity="0.72" stroke="#2dd4bf" stroke-opacity="0.35" />
+      <text x="42" y="181" text-anchor="middle" fill="#d5f5ef" style="font-variant-numeric: tabular-nums">P {pitchLabel}</text>
+      <rect x="132" y="168" width="52" height="18" rx="6" fill="#030b0c" fill-opacity="0.72" stroke="#2dd4bf" stroke-opacity="0.35" />
+      <text x="158" y="181" text-anchor="middle" fill="#d5f5ef" style="font-variant-numeric: tabular-nums">{bankLabel}</text>
     </g>
 
     <!-- Frame -->
-    <rect x="7" y="7" width="186" height="186" rx="38" fill="none" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="2" />
+    <rect x="7" y="7" width="186" height="186" rx="38" fill="none" stroke="#2dd4bf" stroke-opacity="0.35" stroke-width="2" />
   </svg>
 </div>
 
@@ -179,7 +179,7 @@
     height: 100%;
     display: block;
     border-radius: 21%;
-    background: #070b11;
+    background: #040c0d;
     box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.5);
   }
 </style>

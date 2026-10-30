@@ -98,9 +98,9 @@
     transform-origin: top left;
     min-width: 168px;
     padding: 4px;
-    background: rgba(12, 17, 24, 0.75);
+    background: rgba(8, 20, 22, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border: 1px solid rgba(45, 212, 191, 0.35);
     border-radius: 8px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
     user-select: none;
@@ -112,15 +112,15 @@
     padding: 6px 10px;
     border-radius: 5px;
     font-size: 13px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     cursor: pointer;
     white-space: nowrap;
   }
   .cm-item:hover {
-    background: rgba(56, 189, 248, 0.18);
+    background: rgba(45, 212, 191, 0.18);
   }
   .cm-item.disabled {
-    color: #68788e;
+    color: #5f7f7a;
     cursor: default;
   }
   .cm-item.disabled:hover {

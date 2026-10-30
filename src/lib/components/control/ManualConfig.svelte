@@ -191,40 +191,40 @@
 <style>
   .mc { display: flex; flex-direction: column; gap: 6px; }
   .mc-group {
-    color: #38bdf8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
-    margin: 8px 0 2px; padding-bottom: 3px; border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    color: #2dd4bf; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+    margin: 8px 0 2px; padding-bottom: 3px; border-bottom: 1px solid rgba(45, 212, 191, 0.25);
   }
   .mc-group:first-child { margin-top: 0; }
-  .mc-hint { color: #8493a8; font-size: 11px; font-style: italic; }
+  .mc-hint { color: #7d9d98; font-size: 11px; font-style: italic; }
   .mc-stick { display: flex; align-items: center; gap: 6px; }
-  .mc-name { color: #c9d3df; font-size: 11px; width: 64px; flex: none; }
+  .mc-name { color: #c4dad7; font-size: 11px; width: 64px; flex: none; }
   .mc-input {
-    flex: 1; min-width: 0; padding: 4px 6px; font-size: 12px; background: #111822; color: #e3eaf3;
-    border: 1px solid #273446; border-radius: 4px;
+    flex: 1; min-width: 0; padding: 4px 6px; font-size: 12px; background: #0b191b; color: #e2f0ee;
+    border: 1px solid #1c373b; border-radius: 4px;
   }
   .mc-learn {
     flex: none; padding: 4px 10px; font-size: 11px; border-radius: 4px; cursor: pointer;
-    background: #111822; color: #c9d3df; border: 1px solid #273446; white-space: nowrap;
+    background: #0b191b; color: #c4dad7; border: 1px solid #1c373b; white-space: nowrap;
   }
-  .mc-learn:hover { border-color: #38bdf8; color: #38bdf8; }
-  .mc-learn.armed { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: #38bdf8; }
+  .mc-learn:hover { border-color: #2dd4bf; color: #2dd4bf; }
+  .mc-learn.armed { background: rgba(45, 212, 191, 0.2); color: #2dd4bf; border-color: #2dd4bf; }
   .mc-inv {
-    flex: none; display: flex; align-items: center; gap: 4px; color: #8493a8; font-size: 10px; white-space: nowrap;
+    flex: none; display: flex; align-items: center; gap: 4px; color: #7d9d98; font-size: 10px; white-space: nowrap;
   }
-  .mc-inv input { accent-color: #38bdf8; }
-  .mc-btnlbl { flex: none; color: #8493a8; font-size: 10px; }
+  .mc-inv input { accent-color: #2dd4bf; }
+  .mc-btnlbl { flex: none; color: #7d9d98; font-size: 10px; }
   .mc-btnnum {
-    width: 48px; flex: none; padding: 4px 6px; font-size: 12px; background: #111822; color: #e3eaf3;
-    border: 1px solid #273446; border-radius: 4px; font-variant-numeric: tabular-nums;
+    width: 48px; flex: none; padding: 4px 6px; font-size: 12px; background: #0b191b; color: #e2f0ee;
+    border: 1px solid #1c373b; border-radius: 4px; font-variant-numeric: tabular-nums;
   }
   .mc-del {
     flex: none; width: 24px; height: 24px; font-size: 11px; line-height: 1; border-radius: 4px; cursor: pointer;
-    background: #111822; color: #c97070; border: 1px solid #5a3030;
+    background: #0b191b; color: #c97070; border: 1px solid #5a3030;
   }
   .mc-del:hover { background: #3a2020; color: #e08080; }
   .mc-add {
     align-self: flex-start; padding: 4px 10px; font-size: 11px; border-radius: 4px; cursor: pointer;
-    background: #111822; color: #c9d3df; border: 1px solid #273446;
+    background: #0b191b; color: #c4dad7; border: 1px solid #1c373b;
   }
-  .mc-add:hover { border-color: #38bdf8; color: #38bdf8; }
+  .mc-add:hover { border-color: #2dd4bf; color: #2dd4bf; }
 </style>

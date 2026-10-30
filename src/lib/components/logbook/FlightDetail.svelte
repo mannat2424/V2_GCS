@@ -743,7 +743,7 @@
 
 <style>
   .logbook-detail {
-    border: 1px solid #3a4a5f;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.12);
     padding: 10px;
@@ -765,16 +765,16 @@
   }
 
   .fc-label {
-    color: #8493a8;
+    color: #7d9d98;
   }
 
   .fc-value {
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-weight: 600;
   }
 
   .fc-tz {
-    color: #8493a8;
+    color: #7d9d98;
     font-weight: 400;
     font-size: 0.85em;
   }
@@ -793,9 +793,9 @@
 
   .craft-name-input {
     background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(56, 189, 248, 0.4);
+    border: 1px solid rgba(45, 212, 191, 0.4);
     border-radius: 4px;
-    color: #c3cedb;
+    color: #bfd6d2;
     font-size: 12px;
     padding: 1px 6px;
     outline: none;
@@ -804,7 +804,7 @@
   }
 
   .craft-name-input:focus {
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
 
   /* Craft-name combobox: filter input + dropdown of existing vehicle craft names. */
@@ -813,27 +813,27 @@
     position: absolute; top: 100%; left: 0; right: 0; z-index: 10;
     margin: 2px 0 0; padding: 4px; list-style: none;
     max-height: 180px; overflow-y: auto;
-    background: #0f161e; border: 1px solid #273446; border-radius: 4px;
+    background: #0f1d1e; border: 1px solid #1c373b; border-radius: 4px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
   }
   .craft-opt {
     display: flex; align-items: baseline; gap: 8px; width: 100%;
     padding: 5px 8px; border: none; border-radius: 3px; background: transparent;
-    color: #e3eaf3; font-size: 12px; text-align: left; cursor: pointer;
+    color: #e2f0ee; font-size: 12px; text-align: left; cursor: pointer;
   }
-  .craft-opt:hover { background: rgba(56, 189, 248, 0.18); }
+  .craft-opt:hover { background: rgba(45, 212, 191, 0.18); }
   .co-craft { font-weight: 600; }
-  .co-meta { color: #8493a8; font-size: 11px; }
+  .co-meta { color: #7d9d98; font-size: 11px; }
 
   /* Matches the app's dark form-control convention; color-scheme:dark keeps the native
      option popup dark too (it's rendered by the WebView outside the DOM). */
   .platform-select {
     height: 24px;
     padding: 0 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     font-family: inherit;
     outline: none;
@@ -841,16 +841,16 @@
     color-scheme: dark;
   }
   .platform-select:hover {
-    border-color: rgba(56, 189, 248, 0.6);
+    border-color: rgba(45, 212, 191, 0.6);
   }
   .platform-select:focus {
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
 
   .weather-edit-btn {
     background: none;
     border: none;
-    color: #68788e;
+    color: #5f7f7a;
     cursor: pointer;
     font-size: 13px;
     padding: 0 2px;
@@ -859,19 +859,19 @@
   }
 
   .weather-edit-btn:hover {
-    color: #38bdf8;
+    color: #2dd4bf;
   }
 
   .flight-id-tag {
     font-size: 10px;
-    color: #68788e;
+    color: #5f7f7a;
     margin-left: 2px;
   }
 
   /* Raw-log size badge + small inline delete button next to the Source line. */
   .raw-size {
     font-size: 10px;
-    color: #8493a8;
+    color: #7d9d98;
     margin-left: 8px;
   }
   .raw-del-btn {
@@ -924,15 +924,15 @@
 
   .setting-label {
     font-size: 12px;
-    color: #e3eaf3;
+    color: #e2f0ee;
   }
 
   .setting-input {
     padding: 3px 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 3px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 11px;
   }
 

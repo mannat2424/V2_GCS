@@ -283,12 +283,12 @@
     z-index: 1900;
     width: 290px;
     padding: 8px;
-    background: rgba(12, 17, 24, 0.82);
+    background: rgba(8, 20, 22, 0.82);
     backdrop-filter: var(--panel-blur, blur(10px));
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border: 1px solid rgba(45, 212, 191, 0.35);
     border-radius: 8px;
     box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
   }
   .bp-header {
@@ -296,7 +296,7 @@
     align-items: center;
     margin-bottom: 8px;
     padding-bottom: 6px;
-    border-bottom: 1px solid #273446;
+    border-bottom: 1px solid #1c373b;
   }
   /* Wider stepper fields so the value never collides with the unit (e.g. km/h),
      kept uniform across all rows for symmetry. */
@@ -307,7 +307,7 @@
   .bp-title {
     flex: 1;
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     font-size: 11px;
@@ -317,7 +317,7 @@
     height: 18px;
     border: none;
     background: transparent;
-    color: #9eacbf;
+    color: #97b3af;
     cursor: pointer;
     border-radius: 3px;
   }
@@ -333,15 +333,15 @@
   }
   .bp-label {
     width: 46px;
-    color: #8796ab;
+    color: #80a09b;
     flex-shrink: 0;
   }
   .bp-toggle {
     flex-shrink: 0;
     min-width: 46px;
-    background: #18212d;
-    color: #d4f0fd;
-    border: 1px solid rgba(56, 189, 248, 0.4);
+    background: #122326;
+    color: #ccfbf1;
+    border: 1px solid rgba(45, 212, 191, 0.4);
     border-radius: 4px;
     padding: 4px 6px;
     font-size: 11px;
@@ -364,9 +364,9 @@
   }
   .bp-ua-btn {
     flex: 1;
-    background: #111822;
-    color: #8796ab;
-    border: 1px solid #3a4a5f;
+    background: #0b191b;
+    color: #80a09b;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     padding: 3px 2px;
     font-size: 10px;
@@ -386,19 +386,19 @@
     justify-content: flex-end;
     margin-top: 8px;
     padding-top: 8px;
-    border-top: 1px solid #273446;
+    border-top: 1px solid #1c373b;
   }
   .bp-apply {
-    background: rgba(56, 189, 248, 0.18);
-    color: #d4f0fd;
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(45, 212, 191, 0.18);
+    color: #ccfbf1;
+    border: 1px solid rgba(45, 212, 191, 0.5);
     border-radius: 5px;
     padding: 5px 14px;
     font-weight: 600;
     cursor: pointer;
   }
   .bp-apply:hover {
-    background: rgba(56, 189, 248, 0.3);
+    background: rgba(45, 212, 191, 0.3);
   }
   .bp-apply:disabled {
     opacity: 0.5;

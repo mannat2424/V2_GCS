@@ -344,10 +344,10 @@
     width: 38px;
     height: 38px;
     padding: 7px;
-    background: rgba(18, 26, 36, 0.9);
-    border: 2px solid rgba(56, 189, 248, 0.5);
+    background: rgba(12, 27, 30, 0.9);
+    border: 2px solid rgba(45, 212, 191, 0.5);
     border-radius: 6px;
-    color: #38bdf8;
+    color: #2dd4bf;
     cursor: pointer;
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
@@ -356,7 +356,7 @@
   }
   .fw-toggle.open {
     background: var(--btn-active-bg);
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
   .fw-toggle svg {
     width: 100%;
@@ -387,7 +387,7 @@
     z-index: 60;
     pointer-events: none;
     box-sizing: border-box;
-    background: rgba(12, 17, 24, 0.75);
+    background: rgba(8, 20, 22, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -417,10 +417,10 @@
   }
   .fw-body.nv-active {
     background: transparent;
-    box-shadow: 0 0 0 4px rgba(12, 17, 24, 0.9);
+    box-shadow: 0 0 0 4px rgba(8, 20, 22, 0.9);
     /* The body's 1 px border is translucent white — over the clipped (transparent) backdrop it read
        as a hairline gap around the picture. Opaque here: white 0.12 over the ring's grey. */
-    border-color: #17202e;
+    border-color: #172c2e;
   }
   .native-hole {
     position: absolute;
@@ -428,7 +428,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7a8aa0;
+    color: #73938e;
     font-size: 12px;
     text-align: center;
     background: #000;
@@ -484,8 +484,8 @@
     gap: 2px;
     padding: 3px;
     border-radius: 9px;
-    background: rgba(8, 12, 18, 0.78);
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    background: rgba(5, 14, 15, 0.78);
+    border: 1px solid rgba(45, 212, 191, 0.35);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.15s ease;
@@ -504,16 +504,16 @@
     border: none;
     border-radius: 6px;
     background: transparent;
-    color: #d6dee9;
+    color: #d3e6e3;
     font: 600 12px/1 'Bahnschrift', 'Segoe UI', sans-serif;
     cursor: pointer;
   }
   .fw-tool:hover {
-    background: rgba(56, 189, 248, 0.2);
+    background: rgba(45, 212, 191, 0.2);
     color: #fff;
   }
   .fw-tool.active {
-    color: #38bdf8;
+    color: #2dd4bf;
   }
   .fw-tool svg {
     width: 15px;
@@ -537,10 +537,10 @@
     /* Tight padding, and the glyph's viewBox is cropped to its own bounds — the chain has to stay
        readable at this size, where a 24-unit box with the usual margin left it too small (Marc). */
     padding: 4px;
-    background: rgba(18, 26, 36, 0.82);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(12, 27, 30, 0.82);
+    border: 1px solid rgba(45, 212, 191, 0.5);
     border-radius: 6px;
-    color: #38bdf8;
+    color: #2dd4bf;
     cursor: pointer;
     opacity: 0;
     pointer-events: none;
@@ -566,7 +566,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7a8aa0;
+    color: #73938e;
     font-size: 12px;
     text-align: center;
     padding: 0 10px;
@@ -587,14 +587,14 @@
     pointer-events: auto;
     box-sizing: border-box;
     background: transparent;
-    border-top: 4px solid rgba(180, 188, 202, 0.4);
-    border-right: 4px solid rgba(180, 188, 202, 0.4);
+    border-top: 4px solid rgba(180, 200, 202, 0.4);
+    border-right: 4px solid rgba(180, 200, 202, 0.4);
     border-top-right-radius: 8px;
     cursor: nesw-resize;
     touch-action: none;
   }
   .fw-grip:hover {
-    border-color: rgba(180, 188, 202, 0.6);
+    border-color: rgba(180, 200, 202, 0.6);
   }
   /* Move handle — the resize corner's colour and weight as a rounded square in the bottom-left
      corner, a four-way arrow filling it; the only thing that moves the window (see the header). */
@@ -609,15 +609,15 @@
     box-sizing: border-box;
     padding: 1px;
     background: transparent;
-    border: 4px solid rgba(180, 188, 202, 0.4);
+    border: 4px solid rgba(180, 200, 202, 0.4);
     border-radius: 8px;
-    color: rgba(180, 188, 202, 0.4);
+    color: rgba(180, 200, 202, 0.4);
     cursor: grab;
     touch-action: none;
   }
   .fw-move:hover {
-    border-color: rgba(180, 188, 202, 0.6);
-    color: rgba(180, 188, 202, 0.6);
+    border-color: rgba(180, 200, 202, 0.6);
+    color: rgba(180, 200, 202, 0.6);
   }
   .fw-move:active {
     cursor: grabbing;

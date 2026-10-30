@@ -755,17 +755,17 @@
     gap: 8px;
     font-size: 14px;
     font-weight: 600;
-    color: #c9d3df;
+    color: #c4dad7;
   }
   .state-dot {
     flex: 0 0 auto;
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #8493a8;
+    background: #7d9d98;
   }
   .vp-status.live .state-dot { background: #59aa29; box-shadow: 0 0 6px rgba(89, 170, 41, 0.7); }
-  .vp-status.live .vp-state { color: #e3eaf3; }
+  .vp-status.live .vp-state { color: #e2f0ee; }
   .vp-status.starting .state-dot { background: #e0a53c; }
   .vp-status.error .state-dot { background: #d40000; }
   .vp-status.error .vp-state { color: #ff6b6b; font-weight: 500; }
@@ -798,7 +798,7 @@
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #8493a8;
+    color: #7d9d98;
   }
   /* Diagnostic pipeline readout: dot + method + a HW/SW badge. Green = hardware-composited <video>
      (getUserMedia / engine-WebRTC); amber = the software ffmpeg→MJPEG <img> fallback. */
@@ -829,28 +829,28 @@
   .field { display: flex; flex-direction: column; gap: 4px; }
   .field-row { display: flex; align-items: center; gap: 8px; }
   .rec-live { color: #ff6b6b; word-break: break-all; }
-  .label { font-size: 12px; color: #9eacbf; }
-  .label.muted { color: #4b5b71; }
+  .label { font-size: 12px; color: #97b3af; }
+  .label.muted { color: #3a5c61; }
   /* Match the framework form-control height (md button = 28px). */
   .field select {
     height: 28px;
     padding: 0 8px;
-    background: #253244;
-    color: #e3eaf3;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    color: #e2f0ee;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     font-size: 12px;
   }
   .field .text-input {
     height: 28px;
     padding: 0 8px;
-    background: #253244;
-    color: #e3eaf3;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    color: #e2f0ee;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     font-size: 12px;
   }
-  .hint { font-size: 11px; color: #68788e; margin: 0; }
+  .hint { font-size: 11px; color: #5f7f7a; margin: 0; }
   .hint.err { color: #d40000; }
 
   /* RTSP direct-connect row + saved-connection list */
@@ -859,9 +859,9 @@
   .rtsp-transport {
     height: 28px;
     padding: 0 6px;
-    background: #253244;
-    color: #e3eaf3;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    color: #e2f0ee;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     font-size: 12px;
     flex: 0 0 auto;
@@ -870,7 +870,7 @@
     height: 28px;
     min-width: 30px;
     padding: 0 6px;
-    background: #38bdf8;
+    background: #2dd4bf;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -884,12 +884,12 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    background: #121a24;
-    border: 1px solid #1c2633;
+    background: #0c1b1e;
+    border: 1px solid #16292c;
     border-radius: 4px;
     padding: 3px 4px 3px 6px;
   }
-  .rtsp-item.active { border-color: rgba(56, 189, 248, 0.75); }
+  .rtsp-item.active { border-color: rgba(45, 212, 191, 0.75); }
   .rtsp-item-main {
     flex: 1;
     min-width: 0;
@@ -899,36 +899,36 @@
     gap: 8px;
     background: none;
     border: none;
-    color: #e3eaf3;
+    color: #e2f0ee;
     cursor: pointer;
     text-align: left;
     padding: 3px 2px;
     font-size: 12px;
   }
-  .rtsp-item-main:hover .rtsp-item-name { color: #38bdf8; }
+  .rtsp-item-main:hover .rtsp-item-name { color: #2dd4bf; }
   .rtsp-item-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .rtsp-item-transport { flex: 0 0 auto; font-size: 10px; color: #8493a8; letter-spacing: 0.04em; }
+  .rtsp-item-transport { flex: 0 0 auto; font-size: 10px; color: #7d9d98; letter-spacing: 0.04em; }
   .rtsp-item-btn {
     flex: 0 0 auto;
     width: 24px;
     height: 24px;
     background: none;
     border: none;
-    color: #8493a8;
+    color: #7d9d98;
     cursor: pointer;
     border-radius: 3px;
     font-size: 12px;
   }
-  .rtsp-item-btn:hover { background: #1f2a38; color: #e3eaf3; }
+  .rtsp-item-btn:hover { background: #172d30; color: #e2f0ee; }
   .rtsp-item-btn.del:hover { background: rgba(212, 0, 0, 0.3); color: #ff4444; }
   .rtsp-edit {
     flex: 1;
     min-width: 0;
     height: 26px;
     padding: 0 6px;
-    background: #253244;
-    color: #e3eaf3;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    color: #e2f0ee;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     font-size: 12px;
   }
@@ -947,11 +947,11 @@
   .dl-bar {
     flex: 1;
     height: 6px;
-    background: #0c1117;
+    background: #0c1617;
     border-radius: 3px;
     overflow: hidden;
   }
-  .dl-fill { height: 100%; background: #38bdf8; transition: width 0.2s ease; }
+  .dl-fill { height: 100%; background: #2dd4bf; transition: width 0.2s ease; }
   .dl-pct { font-size: 11px; color: #9ad0e8; font-variant-numeric: tabular-nums; min-width: 30px; text-align: right; }
 
 </style>

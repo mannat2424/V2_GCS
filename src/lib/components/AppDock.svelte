@@ -77,8 +77,8 @@
     box-sizing: border-box;
     padding: 8px 12px 7px;
     border-radius: 22px;
-    background: linear-gradient(180deg, rgba(22, 31, 44, 0.78), rgba(9, 13, 19, 0.88));
-    border: 1px solid rgba(148, 178, 214, 0.14);
+    background: linear-gradient(180deg, rgba(16, 36, 38, 0.78), rgba(6, 16, 17, 0.88));
+    border: 1px solid rgba(130, 200, 190, 0.14);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       0 0 0 1px rgba(0, 0, 0, 0.35),
@@ -97,7 +97,7 @@
     align-self: stretch;
     width: 1px;
     margin: 6px 0 12px;
-    background: linear-gradient(180deg, transparent, rgba(148, 178, 214, 0.28), transparent);
+    background: linear-gradient(180deg, transparent, rgba(130, 200, 190, 0.28), transparent);
     flex-shrink: 0;
   }
 
@@ -131,8 +131,8 @@
     color: var(--hue);
     background:
       radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--hue) 10%, transparent), transparent 70%),
-      linear-gradient(180deg, #1a2433, #0f1620);
-    border: 1px solid rgba(148, 178, 214, 0.12);
+      linear-gradient(180deg, #132a2d, #0a181a);
+    border: 1px solid rgba(130, 200, 190, 0.12);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.07),
       0 2px 6px rgba(0, 0, 0, 0.45);
@@ -165,14 +165,14 @@
     outline: none;
   }
   .dock-item:focus-visible .dock-tile {
-    box-shadow: 0 0 0 2px #38bdf8, 0 2px 6px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 0 0 2px #2dd4bf, 0 2px 6px rgba(0, 0, 0, 0.45);
   }
 
   /* Active: the tile lights up in the app's hue. */
   .dock-item.active .dock-tile {
     background:
       radial-gradient(120% 100% at 50% 0%, color-mix(in srgb, var(--hue) 34%, transparent), transparent 75%),
-      linear-gradient(180deg, color-mix(in srgb, var(--hue) 16%, #1a2433), #0f1620);
+      linear-gradient(180deg, color-mix(in srgb, var(--hue) 16%, #132a2d), #0a181a);
     border-color: color-mix(in srgb, var(--hue) 70%, transparent);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.1),
@@ -204,7 +204,7 @@
     height: 10px;
     border-radius: 50%;
     background: #ff4d5e;
-    border: 2px solid #0b1017;
+    border: 2px solid #071315;
     box-shadow: 0 0 8px rgba(255, 77, 94, 0.8);
     animation: dock-pulse 1.6s ease-in-out infinite;
   }
@@ -220,7 +220,7 @@
     transition: background-color 0.2s, box-shadow 0.2s;
   }
   .dock-item.running .dock-dot {
-    background: color-mix(in srgb, var(--hue) 55%, #64748b);
+    background: color-mix(in srgb, var(--hue) 55%, #5d7a76);
   }
   .dock-item.active .dock-dot {
     width: 14px;
@@ -237,10 +237,10 @@
     transform: translate(-50%, 4px);
     padding: 4px 10px;
     border-radius: 8px;
-    background: rgba(9, 13, 19, 0.94);
-    border: 1px solid rgba(148, 178, 214, 0.18);
+    background: rgba(6, 16, 17, 0.94);
+    border: 1px solid rgba(130, 200, 190, 0.18);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.2px;

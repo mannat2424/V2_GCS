@@ -99,7 +99,7 @@
   .weather-editor {
     margin-top: 8px;
     padding: 10px;
-    border: 1px solid rgba(56, 189, 248, 0.25);
+    border: 1px solid rgba(45, 212, 191, 0.25);
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.03);
   }
@@ -118,15 +118,15 @@
 
   .weather-field-label {
     font-size: 10px;
-    color: #8493a8;
+    color: #7d9d98;
   }
 
   .setting-select {
     padding: 3px 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 3px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 11px;
     min-width: 70px;
   }
@@ -144,10 +144,10 @@
   .cache-clear-btn {
     font-size: 9px;
     padding: 1px 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 3px;
-    color: #c3cedb;
+    color: #bfd6d2;
     cursor: pointer;
     transition: background 0.15s;
   }

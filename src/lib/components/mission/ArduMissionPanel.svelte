@@ -537,10 +537,10 @@
   .ap-vehicle-select {
     height: 28px;
     padding: 0 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     cursor: pointer;
   }
@@ -548,43 +548,43 @@
 
   .miss-dropzone { position: relative; min-height: 100%; }
 
-  .wp-empty { padding: 16px; text-align: center; color: #7a8aa0; font-size: 13px; }
+  .wp-empty { padding: 16px; text-align: center; color: #73938e; font-size: 13px; }
   .wp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .wp-table thead { position: sticky; top: 0; z-index: 1; }
-  .wp-table th { background: #0d131b; color: #7a8aa0; font-weight: 600; font-size: 11px; text-transform: uppercase; padding: 4px 5px; text-align: left; border-bottom: 1px solid #273446; }
-  .wp-row { cursor: pointer; border-bottom: 1px solid #111822; color: #c3cedb; }
-  .wp-row:hover { background: #111822; }
+  .wp-table th { background: #091416; color: #73938e; font-weight: 600; font-size: 11px; text-transform: uppercase; padding: 4px 5px; text-align: left; border-bottom: 1px solid #1c373b; }
+  .wp-row { cursor: pointer; border-bottom: 1px solid #0b191b; color: #bfd6d2; }
+  .wp-row:hover { background: #0b191b; }
   .wp-row.selected { background: #1a3a5c; color: #fff; }
   .wp-row td { padding: 4px 5px; white-space: nowrap; }
   .col-num { width: 30px; text-align: center; }
   .col-type { width: 40px; }
   .col-alt { width: 72px; color: #8bc34a; }
-  .col-param { color: #9eacbf; }
-  .wp-num-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #38bdf8; color: #fff; font-size: 10px; font-weight: bold; }
+  .col-param { color: #97b3af; }
+  .wp-num-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #2dd4bf; color: #fff; font-size: 10px; font-weight: bold; }
   /* Modifier sub-rows: indented + smaller, like INAV modifier waypoints, but numbered. */
-  .wp-mod-row td { font-size: 11px; color: #9eacbf; }
+  .wp-mod-row td { font-size: 11px; color: #97b3af; }
   .wp-mod-row .col-num { padding-left: 14px; }
-  .wp-num-badge.mod { width: 17px; height: 17px; font-size: 9px; background: #5a6b75; }
+  .wp-num-badge.mod { width: 17px; height: 17px; font-size: 9px; background: #5a7375; }
 
   .miss-footer { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   /* No internal scroll: the PanelShell footer is pinned and the column scrolls as a last resort, so a
      full WP's params show without a spurious inner scrollbar (the detail is bounded — a handful of rows). */
-  .wp-detail { padding: 6px 8px; border: 1px solid #18212d; border-radius: 4px; background: #0d131b; }
-  .detail-header { font-weight: bold; font-size: 13px; color: #38bdf8; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #18212d; }
+  .wp-detail { padding: 6px 8px; border: 1px solid #122326; border-radius: 4px; background: #091416; }
+  .detail-header { font-weight: bold; font-size: 13px; color: #2dd4bf; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #122326; }
   .detail-row { display: flex; justify-content: space-between; padding: 1px 0; font-size: 12px; }
-  .detail-label { color: #7a8aa0; font-size: 11px; }
-  .detail-value { color: #c3cedb; font-size: 12px; }
-  .detail-hint { color: #38bdf8; font-size: 11px; text-align: center; margin-top: 4px; font-style: italic; }
+  .detail-label { color: #73938e; font-size: 11px; }
+  .detail-value { color: #bfd6d2; font-size: 12px; }
+  .detail-hint { color: #2dd4bf; font-size: 11px; text-align: center; margin-top: 4px; font-style: italic; }
   .ctrl-row { display: flex; gap: 4px; }
   .mission-status { padding: 3px 6px; font-size: 11px; color: #f39c12; text-align: center; }
   .mission-warn { padding: 3px 6px; font-size: 11px; color: #f39c12; text-align: center; }
   .mission-stats { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 4px 3px 0; font-size: 12px; color: #9ad0e8; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
   .mission-stats .stat { white-space: nowrap; cursor: default; }
-  .mission-summary { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 3px; font-size: 12px; color: #7a8aa0; flex-wrap: wrap; }
-  .dirty-badge { background: #f39c12; color: #0b1017; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: bold; }
+  .mission-summary { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 3px; font-size: 12px; color: #73938e; flex-wrap: wrap; }
+  .dirty-badge { background: #f39c12; color: #071315; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: bold; }
   .prov-badge { color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: bold; }
-  .prov-fc { background: #38bdf8; }
-  .prov-file { background: #6c7a89; }
+  .prov-fc { background: #2dd4bf; }
+  .prov-file { background: #6c8789; }
   .prov-db { background: #59aa29; }
   .wp-warn { color: #f39c12; margin-left: 3px; cursor: help; }
 </style>

@@ -560,53 +560,53 @@
 <style>
   .mmv2-toolbtns { display: flex; align-items: center; gap: 6px; width: 100%; }
   /* Matches the framework form-control height (28px md button), like AutopilotSelect's .ap-select. */
-  .fmt-filter { margin-left: auto; height: 28px; padding: 0 8px; font-size: 12px; color: #e3eaf3; background: #253244; border: 1px solid #3a4a5f; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; cursor: pointer; }
-  .fmt-filter:focus { outline: none; border-color: #38bdf8; }
+  .fmt-filter { margin-left: auto; height: 28px; padding: 0 8px; font-size: 12px; color: #e2f0ee; background: #1b3539; border: 1px solid #2b4d52; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; cursor: pointer; }
+  .fmt-filter:focus { outline: none; border-color: #2dd4bf; }
 
   .mmv2-detail-actions { display: flex; flex: 1; justify-content: flex-end; gap: 6px; flex-wrap: wrap; }
 
-  .section-heading { margin: 8px 0 6px 0; font-size: 11px; font-weight: 600; color: #38bdf8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section-heading { margin: 8px 0 6px 0; font-size: 11px; font-weight: 600; color: #2dd4bf; text-transform: uppercase; letter-spacing: 0.5px; }
 
   .mmv2-dropzone { position: relative; min-height: 100%; }
 
-  .panel-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 40px 0; color: #3a4a5f; font-size: 12px; }
+  .panel-empty { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 40px 0; color: #2b4d52; font-size: 12px; }
   .panel-empty-icon { font-size: 28px; opacity: 0.4; }
 
   .tree-node { margin-bottom: 4px; }
-  .tree-toggle { width: 100%; text-align: left; border: 1px solid #3a4a5f; border-radius: 4px; background: #151e2a; color: #d6dee9; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 5px 7px; font-size: 12px; font-weight: 600; }
-  .tree-toggle:hover { border-color: #38bdf8; }
-  .tree-caret { color: #9adcf9; font-size: 11px; line-height: 1; }
+  .tree-toggle { width: 100%; text-align: left; border: 1px solid #2b4d52; border-radius: 4px; background: #15282a; color: #d3e6e3; cursor: pointer; display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; align-items: center; gap: 6px; padding: 5px 7px; font-size: 12px; font-weight: 600; }
+  .tree-toggle:hover { border-color: #2dd4bf; }
+  .tree-caret { color: #8aeedd; font-size: 11px; line-height: 1; }
   .tree-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .tree-count { font-size: 10px; color: #8ccbe8; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 999px; padding: 1px 6px; }
+  .tree-count { font-size: 10px; color: #7fd8c8; background: rgba(45, 212, 191, 0.12); border: 1px solid rgba(45, 212, 191, 0.32); border-radius: 999px; padding: 1px 6px; }
   .tree-items { margin-top: 4px; margin-left: 12px; }
 
-  .lib-item { width: calc(100% - 12px); text-align: left; border: 1px solid #3a4a5f; border-radius: 4px; background: #16202d; color: #d6dee9; margin-bottom: 4px; padding: 6px; cursor: pointer; }
-  .lib-item:hover { border-color: #38bdf8; }
-  .lib-item.selected { border-color: #38bdf8; background: rgba(56, 189, 248, 0.18); }
+  .lib-item { width: calc(100% - 12px); text-align: left; border: 1px solid #2b4d52; border-radius: 4px; background: #162b2d; color: #d3e6e3; margin-bottom: 4px; padding: 6px; cursor: pointer; }
+  .lib-item:hover { border-color: #2dd4bf; }
+  .lib-item.selected { border-color: #2dd4bf; background: rgba(45, 212, 191, 0.18); }
   .lib-item-title { font-size: 12px; color: #fff; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .lib-item-meta { margin-top: 2px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 10px; color: #9eacbf; }
-  .fmt-badge { font-size: 9px; font-weight: 600; color: #9adcf9; background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.34); border-radius: 999px; padding: 0 6px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .lib-item-meta { margin-top: 2px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 10px; color: #97b3af; }
+  .fmt-badge { font-size: 9px; font-weight: 600; color: #8aeedd; background: rgba(45, 212, 191, 0.14); border: 1px solid rgba(45, 212, 191, 0.34); border-radius: 999px; padding: 0 6px; text-transform: uppercase; letter-spacing: 0.4px; }
 
   .mmv2-detail { display: flex; flex-direction: column; gap: 10px; overflow-anchor: none; }
   .preview-wrap { width: 100%; max-height: 300px; flex-shrink: 0; overflow: hidden; border-radius: 4px; }
   .mmv2-save-row { display: flex; }
 
   .fld { display: block; }
-  .fld-label { display: block; font-size: 11px; font-weight: 600; color: #8493a8; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
-  .fld-input { box-sizing: border-box; width: 100%; padding: 5px 7px; font-size: 12px; color: #e3eaf3; background: #0d131b; border: 1px solid #273446; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; }
-  .fld-input:focus { outline: none; border-color: #38bdf8; }
+  .fld-label { display: block; font-size: 11px; font-weight: 600; color: #7d9d98; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 3px; }
+  .fld-input { box-sizing: border-box; width: 100%; padding: 5px 7px; font-size: 12px; color: #e2f0ee; background: #091416; border: 1px solid #1c373b; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  .fld-input:focus { outline: none; border-color: #2dd4bf; }
   .fld-area { resize: vertical; }
 
   .fc-info-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 10px; font-size: 12px; }
-  .fc-label { color: #8493a8; }
-  .fc-value { color: #e3eaf3; font-weight: 600; overflow-wrap: anywhere; }
+  .fc-label { color: #7d9d98; }
+  .fc-value { color: #e2f0ee; font-weight: 600; overflow-wrap: anywhere; }
 
-  .det-flights { border-top: 1px solid #18212d; padding-top: 8px; }
-  .flight-row { width: 100%; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: #e3eaf3; padding: 4px 6px; background: none; border: none; border-radius: 4px; cursor: pointer; text-align: left; }
-  .flight-row:hover { background: rgba(56, 189, 248, 0.15); }
+  .det-flights { border-top: 1px solid #122326; padding-top: 8px; }
+  .flight-row { width: 100%; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: #e2f0ee; padding: 4px 6px; background: none; border: none; border-radius: 4px; cursor: pointer; text-align: left; }
+  .flight-row:hover { background: rgba(45, 212, 191, 0.15); }
   .flight-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .flight-meta { color: #7a8aa0; flex-shrink: 0; }
-  .flight-none { color: #68788e; font-size: 12px; padding: 4px 0; }
+  .flight-meta { color: #73938e; flex-shrink: 0; }
+  .flight-none { color: #5f7f7a; font-size: 12px; padding: 4px 0; }
 
 
   .mmv2-status { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); z-index: 1001; padding: 6px 12px; font-size: 11px; color: #f39c12; background: rgba(0, 0, 0, 0.8); border-radius: 6px; }

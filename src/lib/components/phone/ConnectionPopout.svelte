@@ -142,10 +142,10 @@
     width: 42px;
     height: 42px;
     padding: 9px;
-    background: rgba(18, 26, 36, 0.92);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(12, 27, 30, 0.92);
+    border: 1px solid rgba(45, 212, 191, 0.5);
     border-radius: 6px;
-    color: #c9d3df;
+    color: #c4dad7;
     cursor: pointer;
     backdrop-filter: var(--glass-blur, blur(6px));
     -webkit-backdrop-filter: var(--glass-blur, blur(6px));
@@ -161,9 +161,9 @@
     stroke-linejoin: round;
   }
   .cp-btn.open {
-    background: rgba(56, 189, 248, 0.22);
-    border-color: #38bdf8;
-    color: #38bdf8;
+    background: rgba(45, 212, 191, 0.22);
+    border-color: #2dd4bf;
+    color: #2dd4bf;
   }
   .cp-dot {
     position: absolute;
@@ -185,9 +185,9 @@
     right: 0;
     width: max-content;
     max-width: min(560px, calc(100vw - var(--phone-panel-w, 0px) + var(--phone-shift, 0px) - 24px));
-    background: rgba(18, 26, 36, 0.97);
-    border: 1px solid #1c2633;
-    border-top: 2px solid #38bdf8;
+    background: rgba(12, 27, 30, 0.97);
+    border: 1px solid #16292c;
+    border-top: 2px solid #2dd4bf;
     border-radius: 8px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
     z-index: 300;
@@ -204,10 +204,10 @@
     height: 28px;
     box-sizing: border-box;
     padding: 0 10px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #c9d3df;
+    color: #c4dad7;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -215,14 +215,14 @@
     flex-shrink: 0;
   }
   .relay-toggle.open {
-    background: rgba(56, 189, 248, 0.22);
-    border-color: #38bdf8;
-    color: #38bdf8;
+    background: rgba(45, 212, 191, 0.22);
+    border-color: #2dd4bf;
+    color: #2dd4bf;
   }
 
   .cp-relay {
     position: relative;
-    border-top: 1px solid #1c2633;
+    border-top: 1px solid #16292c;
   }
   /* RelayPanel is written as an absolutely positioned toolbar dropdown; flow it inside the popout. */
   .cp-relay :global(.relay-panel) {

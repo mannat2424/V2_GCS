@@ -366,7 +366,7 @@
   .widget-card {
     position: relative;
     box-sizing: border-box;
-    background: rgba(12, 17, 24, 0.75);
+    background: rgba(8, 20, 22, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
@@ -391,17 +391,17 @@
     stroke-dasharray: 4 3;
   }
   .dist-label {
-    fill: #afbccc;
+    fill: #a9c3bf;
     font-variant-numeric: tabular-nums;
   }
   .uav-ring {
-    fill: rgba(56, 189, 248, 0.25);
+    fill: rgba(45, 212, 191, 0.25);
     stroke: #ffffff;
     stroke-width: 2;
   }
   .uav-dot {
     fill: #ffffff;
-    stroke: #0b1017;
+    stroke: #071315;
     stroke-width: 1;
   }
   .mode {
@@ -411,9 +411,9 @@
     padding: 0.1em 0.55em; /* em: follows the inline font-size */
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: #38bdf8;
+    color: #2dd4bf;
     background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(56, 189, 248, 0.4);
+    border: 1px solid rgba(45, 212, 191, 0.4);
     border-radius: 6px;
     cursor: pointer;
   }
@@ -424,7 +424,7 @@
     right: 4px;
   }
   .mode:hover {
-    background: rgba(56, 189, 248, 0.18);
+    background: rgba(45, 212, 191, 0.18);
   }
   .placeholder {
     position: absolute;
@@ -432,7 +432,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7a8aa0;
+    color: #73938e;
     font-size: 12px;
     text-align: center;
     padding: 0 8px;

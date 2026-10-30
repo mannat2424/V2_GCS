@@ -115,22 +115,22 @@
     backdrop-filter: var(--panel-blur, blur(10px));
   }
   .pg-sw {
-    padding: 2px 7px; font-size: 10px; border: 1px solid #3a4a5f; border-radius: 4px;
-    background: #111822; color: #9eacbf; cursor: pointer; text-transform: uppercase;
+    padding: 2px 7px; font-size: 10px; border: 1px solid #2b4d52; border-radius: 4px;
+    background: #0b191b; color: #97b3af; cursor: pointer; text-transform: uppercase;
   }
-  .pg-sw:hover { background: rgba(56, 189, 248, 0.18); color: #e3eaf3; }
-  .pg-sw.active { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
+  .pg-sw:hover { background: rgba(45, 212, 191, 0.18); color: #e2f0ee; }
+  .pg-sw.active { border-color: #2dd4bf; color: #2dd4bf; background: rgba(45, 212, 191, 0.15); }
 
   .pg-ph {
-    border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: 4px;
-    color: #8aa; background: rgba(56, 189, 248, 0.05);
+    border: 1px dashed rgba(45, 212, 191, 0.4); border-radius: 4px;
+    color: #8aa; background: rgba(45, 212, 191, 0.05);
   }
   .pg-ph-row { padding: 6px 8px; font-size: 11px; text-align: center; }
   .pg-fill { height: 100%; padding: 8px; }
-  .pg-note { color: #38bdf8; font-size: 11px; margin-bottom: 6px; }
+  .pg-note { color: #2dd4bf; font-size: 11px; margin-bottom: 6px; }
   .pg-line {
-    padding: 5px 8px; margin-bottom: 4px; font-size: 12px; color: #b1b9c7;
-    background: #151e2a; border: 1px solid #273446; border-radius: 4px;
+    padding: 5px 8px; margin-bottom: 4px; font-size: 12px; color: #b1c5c7;
+    background: #15282a; border: 1px solid #1c373b; border-radius: 4px;
   }
   .pg-tag { font-size: 10px; color: #8aa; }
   .pg-gallery { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -139,7 +139,7 @@
   .pg-info { display: flex; flex-direction: column; gap: 6px; }
   .pg-irow {
     display: flex; justify-content: space-between; gap: 24px; white-space: nowrap;
-    font-size: 12px; padding: 4px 6px; border-radius: 4px; background: #151e2a;
+    font-size: 12px; padding: 4px 6px; border-radius: 4px; background: #15282a;
   }
-  .pg-irow span:first-child { color: #8493a8; }
+  .pg-irow span:first-child { color: #7d9d98; }
 </style>

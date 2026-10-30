@@ -80,7 +80,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: rgba(12, 17, 24, 0.75);
+    background: rgba(8, 20, 22, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--ws) * 0.08);
@@ -91,7 +91,7 @@
   .w-label {
     font-size: calc(var(--ws) * 0.13);
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -105,18 +105,18 @@
   .w-dist {
     font-size: calc(var(--ws) * 0.2);
     font-weight: 700;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-variant-numeric: tabular-nums;
   }
   .w-bearing {
     font-size: calc(var(--ws) * 0.11);
-    color: #7a8aa0;
+    color: #73938e;
     font-variant-numeric: tabular-nums;
     margin-top: calc(var(--ws) * -0.01);
   }
   .w-nodata {
     font-size: calc(var(--ws) * 0.22);
-    color: #3a4a5f;
+    color: #2b4d52;
     font-weight: 600;
   }
 </style>

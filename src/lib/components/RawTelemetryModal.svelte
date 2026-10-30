@@ -181,11 +181,11 @@
     flex-direction: column;
     width: min(1100px, 95vw);
     max-height: 88vh;
-    background: #121a24;
-    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: #0c1b1e;
+    border: 1px solid rgba(45, 212, 191, 0.45);
     border-radius: 8px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-    color: #e3eaf3;
+    color: #e2f0ee;
     overflow: hidden;
   }
 
@@ -195,29 +195,29 @@
     justify-content: space-between;
     gap: 12px;
     padding: 12px 14px 8px;
-    border-bottom: 1px solid #1c2633;
+    border-bottom: 1px solid #16292c;
   }
 
   .dialog-title {
     font-size: 15px;
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
   }
 
   .hint {
     margin-top: 2px;
     font-size: 11px;
-    color: #8493a8;
+    color: #7d9d98;
   }
 
   .close {
     flex-shrink: 0;
     width: 26px;
     height: 26px;
-    border: 1px solid #3a4a5f;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    background: #253244;
-    color: #c9d3df;
+    background: #1b3539;
+    color: #c4dad7;
     cursor: pointer;
     font-size: 12px;
   }
@@ -236,7 +236,7 @@
 
   .group {
     background: rgba(0, 0, 0, 0.25);
-    border: 1px solid #1c2633;
+    border: 1px solid #16292c;
     border-radius: 6px;
     padding: 6px 10px 8px;
   }
@@ -247,7 +247,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    color: #8493a8;
+    color: #7d9d98;
   }
 
   .row {
@@ -260,7 +260,7 @@
   }
 
   .name {
-    color: #b6c2d1;
+    color: #b0c9c5;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -275,6 +275,6 @@
 
   .unit {
     font-size: 11px;
-    color: #8493a8;
+    color: #7d9d98;
   }
 </style>

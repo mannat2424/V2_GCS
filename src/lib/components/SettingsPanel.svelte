@@ -911,13 +911,13 @@
   .settabs :global(.seg) { display: flex; width: 100%; }
 
   .s-group { padding-top: 2px; }
-  .s-group + .s-group { border-top: 1px solid #161f2c; margin-top: 10px; padding-top: 8px; }
+  .s-group + .s-group { border-top: 1px solid #162a2c; margin-top: 10px; padding-top: 8px; }
 
   .s-head {
     margin: 0 0 6px 0;
     font-size: 11px;
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -933,12 +933,12 @@
   .s-disabled { opacity: 0.4; pointer-events: none; }
   .s-indent { padding-left: 16px; }
 
-  .s-label { font-size: 12px; color: #e3eaf3; }
+  .s-label { font-size: 12px; color: #e2f0ee; }
   .s-err { font-size: 11px; color: #d40000; }
   /* Selectable so the path can be copied when nothing on the system can open it. */
   .log-path {
     font-size: 11px;
-    color: #8493a8;
+    color: #7d9d98;
     margin: -4px 0 0;
     word-break: break-all;
     user-select: text;
@@ -951,10 +951,10 @@
     align-items: center;
     height: 28px;
     padding: 0 8px;
-    background: #111822;
-    border: 1px solid #1f2a38;
+    background: #0b191b;
+    border: 1px solid #172d30;
     border-radius: 4px;
-    color: #c9d3df;
+    color: #c4dad7;
     font-size: 12px;
     white-space: nowrap;
     overflow: hidden;
@@ -962,17 +962,17 @@
   }
   .s-label-disabled { opacity: 0.45; }
   .s-loc { display: flex; align-items: center; gap: 8px; }
-  .s-loc-coords { font-size: 11px; color: #8493a8; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .s-loc-coords { font-size: 11px; color: #7d9d98; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
   /* Form controls match the md button height (28px) — consistent with the rest of the framework. */
   .s-select,
   .s-input {
     height: 28px;
     padding: 0 8px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
   }
   .s-select { min-width: 80px; }
@@ -983,22 +983,22 @@
   /* The one kept hint (Cesium token) — bumped up a touch so it's actually readable. */
   .cesium-hint {
     font-size: 11px;
-    color: #9098a6;
+    color: #90a4a6;
     line-height: 1.45;
     margin: 4px 0 0 0;
   }
-  .cesium-hint a { color: #38bdf8; }
+  .cesium-hint a { color: #2dd4bf; }
 
   .cache-bar-container { display: flex; align-items: center; gap: 6px; padding: 4px 0 2px 0; }
-  .cache-bar-track { flex: 1; height: 6px; background: #18212d; border-radius: 3px; overflow: hidden; }
-  .cache-bar-fill { height: 100%; background: #38bdf8; border-radius: 3px; transition: width 0.3s ease; }
+  .cache-bar-track { flex: 1; height: 6px; background: #122326; border-radius: 3px; overflow: hidden; }
+  .cache-bar-fill { height: 100%; background: #2dd4bf; border-radius: 3px; transition: width 0.3s ease; }
   .cache-bar-fill.cache-bar-warning { background: #e8a317; }
-  .cache-bar-label { font-size: 9px; color: #7a8aa0; white-space: nowrap; }
+  .cache-bar-label { font-size: 9px; color: #73938e; white-space: nowrap; }
   .cache-inline { display: flex; align-items: center; gap: 8px; }
 
   .widget-toggle-group { display: flex; align-items: center; gap: 8px; }
-  .widget-panel-indicator { font-size: 9px; color: #7a8aa0; min-width: 38px; text-align: right; }
+  .widget-panel-indicator { font-size: 9px; color: #73938e; min-width: 38px; text-align: right; }
   .api-status { flex-wrap: wrap; }
-  .api-status .s-hint { font-family: Consolas, 'Courier New', monospace; font-size: 0.78em; color: #8493a8; word-break: break-all; }
+  .api-status .s-hint { font-family: Consolas, 'Courier New', monospace; font-size: 0.78em; color: #7d9d98; word-break: break-all; }
   .api-status.api-error .s-hint { color: #d40000; }
 </style>

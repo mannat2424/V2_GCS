@@ -598,7 +598,7 @@
     justify-content: center;
     gap: 8px;
     padding: 32px 0;
-    color: #3a4a5f;
+    color: #2b4d52;
     font-size: 12px;
   }
 
@@ -609,7 +609,7 @@
 
   /* Technical detail under the db-newer notice (the raw open error, incl. both versions). */
   .db-newer-detail {
-    color: #68788e;
+    color: #5f7f7a;
     font-size: 10px;
     max-width: 90%;
     text-align: center;
@@ -624,7 +624,7 @@
   .logbook-search-clear {
     background: none;
     border: none;
-    color: #68788e;
+    color: #5f7f7a;
     cursor: pointer;
     font-size: 13px;
     padding: 2px 4px;
@@ -633,7 +633,7 @@
   }
 
   .logbook-search-clear:hover {
-    color: #e3eaf3;
+    color: #e2f0ee;
   }
 
   /* The toolbar slot is a flex row; stack our rows (sort · search · buttons) full-width so each
@@ -669,17 +669,17 @@
 
   .setting-label {
     font-size: 12px;
-    color: #e3eaf3;
+    color: #e2f0ee;
   }
 
   /* Form controls match the md button height (28px) so toolbars align cleanly (no vertical jog). */
   .setting-select {
     height: 28px;
     padding: 0 8px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     min-width: 70px;
   }
@@ -687,10 +687,10 @@
   .setting-input {
     height: 28px;
     padding: 0 8px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
   }
 
@@ -701,10 +701,10 @@
   .logbook-tree-toggle {
     width: 100%;
     text-align: left;
-    border: 1px solid #3a4a5f;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    background: #151e2a;
-    color: #d6dee9;
+    background: #15282a;
+    color: #d3e6e3;
     cursor: pointer;
     display: grid;
     grid-template-columns: 14px minmax(0, 1fr) auto auto;
@@ -714,7 +714,7 @@
   }
 
   .logbook-tree-toggle:hover {
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
 
   .logbook-tree-toggle-top {
@@ -727,7 +727,7 @@
     margin-left: 12px;
     width: calc(100% - 12px);
     font-size: 11px;
-    background: #131b26;
+    background: #132426;
   }
 
   .logbook-tree-children {
@@ -741,7 +741,7 @@
   }
 
   .logbook-tree-caret {
-    color: #9adcf9;
+    color: #8aeedd;
     font-size: 11px;
     line-height: 1;
   }
@@ -754,16 +754,16 @@
 
   .logbook-tree-stats {
     font-size: 10px;
-    color: #8a9aa3;
+    color: #8aa1a3;
     white-space: nowrap;
     font-variant-numeric: tabular-nums;
   }
 
   .logbook-tree-count {
     font-size: 10px;
-    color: #8ccbe8;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.32);
+    color: #7fd8c8;
+    background: rgba(45, 212, 191, 0.12);
+    border: 1px solid rgba(45, 212, 191, 0.32);
     border-radius: 999px;
     padding: 1px 6px;
   }
@@ -771,28 +771,28 @@
   .logbook-item {
     width: 100%;
     text-align: left;
-    border: 1px solid #3a4a5f;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    background: #16202d;
-    color: #d6dee9;
+    background: #162b2d;
+    color: #d3e6e3;
     margin-bottom: 4px;
     padding: 6px;
     cursor: pointer;
   }
 
   .logbook-item:hover {
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
 
   .logbook-item.selected {
-    border-color: #38bdf8;
-    background: rgba(56, 189, 248, 0.18);
+    border-color: #2dd4bf;
+    background: rgba(45, 212, 191, 0.18);
   }
 
   .logbook-item.multi-selected {
-    border-color: #38bdf8;
-    background: rgba(56, 189, 248, 0.12);
-    outline: 1px solid rgba(56, 189, 248, 0.4);
+    border-color: #2dd4bf;
+    background: rgba(45, 212, 191, 0.12);
+    outline: 1px solid rgba(45, 212, 191, 0.4);
     outline-offset: -1px;
   }
 
@@ -805,14 +805,14 @@
   .logbook-item-id {
     font-size: 10px;
     font-weight: 400;
-    color: #68788e;
+    color: #5f7f7a;
     margin-left: 4px;
   }
 
   .logbook-item-tz {
     font-size: 10px;
     font-weight: 400;
-    color: #8493a8;
+    color: #7d9d98;
     margin-left: 2px;
   }
 
@@ -822,13 +822,13 @@
     flex-wrap: wrap;
     gap: 4px 10px;
     font-size: 10px;
-    color: #9eacbf;
+    color: #97b3af;
   }
 
   .logbook-progress {
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border: 1px solid rgba(45, 212, 191, 0.35);
     border-radius: 6px;
-    background: rgba(56, 189, 248, 0.08);
+    background: rgba(45, 212, 191, 0.08);
     padding: 8px;
     margin-bottom: 10px;
   }
@@ -850,13 +850,13 @@
 
   .logbook-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #2d8ab8, #38bdf8);
+    background: linear-gradient(90deg, #2d8ab8, #2dd4bf);
     transition: width 0.2s ease;
   }
 
   .logbook-progress-message {
     margin-top: 6px;
     font-size: 11px;
-    color: #b8c7cf;
+    color: #b8cdcf;
   }
 </style>

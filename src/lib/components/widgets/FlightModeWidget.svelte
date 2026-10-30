@@ -66,7 +66,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: rgba(12, 17, 24, 0.75);
+    background: rgba(8, 20, 22, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--ws) * 0.08);
@@ -77,7 +77,7 @@
   .w-label {
     font-size: calc(var(--ws) * 0.13);
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -100,7 +100,7 @@
   .w-mod-tag {
     font-size: calc(var(--ws) * 0.09);
     font-weight: 600;
-    color: #8493a8;
+    color: #7d9d98;
     background: rgba(255, 255, 255, 0.08);
     padding: calc(var(--ws) * 0.01) calc(var(--ws) * 0.03);
     border-radius: calc(var(--ws) * 0.02);
@@ -110,7 +110,7 @@
     margin-bottom: calc(var(--ws) * 0.02);
     font-size: calc(var(--ws) * 0.15);
     font-weight: 700;
-    color: #38bdf8;
+    color: #2dd4bf;
     letter-spacing: 0.04em;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;

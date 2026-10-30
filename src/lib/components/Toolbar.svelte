@@ -404,8 +404,8 @@
     align-items: center;
     padding: 0 16px;
     height: 50px;
-    background: #121a24;
-    border-bottom: 3px solid #38bdf8;
+    background: #0c1b1e;
+    border-bottom: 3px solid #2dd4bf;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 200;
@@ -460,9 +460,9 @@
     right: 0;
     z-index: 1;
     padding: 7px 16px 8px 12px;
-    background: #121a24;
-    border-bottom: 3px solid #38bdf8;
-    border-left: 1px solid #1c2633;
+    background: #0c1b1e;
+    border-bottom: 3px solid #2dd4bf;
+    border-left: 1px solid #16292c;
     border-bottom-left-radius: 6px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.35);
   }
@@ -515,9 +515,9 @@
       padding: 0;
       font-size: 16px;
       line-height: 1;
-      color: #e3eaf3;
-      background: #1f2a38;
-      border: 1px solid #3a4a5f;
+      color: #e2f0ee;
+      background: #172d30;
+      border: 1px solid #2b4d52;
       border-radius: 6px;
       cursor: pointer;
       z-index: 1;
@@ -547,10 +547,10 @@
     gap: 6px;
     margin-left: 10px;
     font-size: 13px;
-    color: #c9d3df;
+    color: #c4dad7;
   }
   .tb-collapsed-proto {
-    color: #38bdf8;
+    color: #2dd4bf;
     font-weight: 600;
   }
   .tb-collapsed-arm {
@@ -581,10 +581,10 @@
   .sensor-bar {
     display: flex;
     gap: 1px;
-    background: #253244;
+    background: #1b3539;
     border-radius: 5px;
-    border: 1px solid #1c2633;
-    box-shadow: 0 2px 0 rgba(63, 80, 103, 0.5);
+    border: 1px solid #16292c;
+    box-shadow: 0 2px 0 rgba(63, 100, 103, 0.5);
     overflow: hidden;
   }
 
@@ -632,10 +632,10 @@
     padding: 6px 12px;
     font-size: 10px;
     font-weight: 600;
-    color: #202d3f;
+    color: #203c3f;
     text-shadow: 0 1px rgba(0, 0, 0, 1.0);
-    background: #253244 linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.45));
-    border-right: 1px solid #161f2c;
+    background: #1b3539 linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.45));
+    border-right: 1px solid #162a2c;
     text-align: center;
     min-width: 36px;
   }
@@ -691,9 +691,9 @@
     height: 30px;
     padding: 0 10px 0 11px;
     border-radius: 15px;
-    border: 1px solid rgba(148, 178, 214, 0.22);
-    background: rgba(148, 178, 214, 0.06);
-    color: #d6dee9;
+    border: 1px solid rgba(130, 200, 190, 0.22);
+    background: rgba(130, 200, 190, 0.06);
+    color: #d3e6e3;
     font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
@@ -702,8 +702,8 @@
   }
   .link-pill:hover,
   .link-pill.open {
-    background: rgba(56, 189, 248, 0.14);
-    border-color: rgba(56, 189, 248, 0.6);
+    background: rgba(45, 212, 191, 0.14);
+    border-color: rgba(45, 212, 191, 0.6);
   }
   .link-dot {
     width: 8px;
@@ -725,7 +725,7 @@
     50% { opacity: 0.35; }
   }
   .link-proto {
-    color: #7f8da2;
+    color: #78968f;
     font-weight: 500;
   }
   .link-caret {
@@ -750,9 +750,9 @@
     width: max-content;
     max-width: min(600px, calc(100vw - 24px));
     padding: 12px;
-    background: rgba(12, 18, 26, 0.98);
-    border: 1px solid rgba(148, 178, 214, 0.16);
-    border-top: 2px solid #38bdf8;
+    background: rgba(8, 21, 22, 0.98);
+    border: 1px solid rgba(130, 200, 190, 0.16);
+    border-top: 2px solid #2dd4bf;
     border-radius: 10px;
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
   }
@@ -762,17 +762,17 @@
     font-weight: 700;
     letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: #7f8da2;
+    color: #78968f;
   }
 
   .relay-toggle {
     height: 28px;
     box-sizing: border-box;
     padding: 0 10px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #c9d3df;
+    color: #c4dad7;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -780,13 +780,13 @@
     transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   }
   .relay-toggle:hover {
-    background: rgba(56, 189, 248, 0.18);
-    color: #e3eaf3;
+    background: rgba(45, 212, 191, 0.18);
+    color: #e2f0ee;
   }
   .relay-toggle.open {
-    background: rgba(56, 189, 248, 0.22);
-    border-color: #38bdf8;
-    color: #38bdf8;
+    background: rgba(45, 212, 191, 0.22);
+    border-color: #2dd4bf;
+    color: #2dd4bf;
   }
 
 </style>

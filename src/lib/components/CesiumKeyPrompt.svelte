@@ -60,19 +60,19 @@
 
 <style>
   .dialog-backdrop { position: fixed; inset: 0; z-index: 9999; background: rgba(0, 0, 0, 0.55); display: flex; align-items: center; justify-content: center; }
-  .dialog-box { background: #121a24; border: 1px solid rgba(56, 189, 248, 0.45); border-radius: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); padding: 20px 24px 16px; min-width: 360px; max-width: 480px; }
-  .dialog-title { font-size: 14px; font-weight: 700; color: #e3eaf3; margin-bottom: 10px; }
-  .ck-text { font-size: 13px; color: #bac2d0; line-height: 1.5; margin: 0 0 8px; }
-  .ck-link { display: inline-block; font-size: 12px; color: #38bdf8; margin-bottom: 12px; }
+  .dialog-box { background: #0c1b1e; border: 1px solid rgba(45, 212, 191, 0.45); border-radius: 8px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); padding: 20px 24px 16px; min-width: 360px; max-width: 480px; }
+  .dialog-title { font-size: 14px; font-weight: 700; color: #e2f0ee; margin-bottom: 10px; }
+  .ck-text { font-size: 13px; color: #baced0; line-height: 1.5; margin: 0 0 8px; }
+  .ck-link { display: inline-block; font-size: 12px; color: #2dd4bf; margin-bottom: 12px; }
   .ck-link:hover { text-decoration: underline; }
-  .ck-input { box-sizing: border-box; width: 100%; padding: 6px 8px; font-size: 13px; color: #e3eaf3; background: #0d131b; border: 1px solid #273446; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; margin-bottom: 14px; }
-  .ck-input:focus { outline: none; border-color: #38bdf8; }
+  .ck-input { box-sizing: border-box; width: 100%; padding: 6px 8px; font-size: 13px; color: #e2f0ee; background: #091416; border: 1px solid #1c373b; border-radius: 4px; font-family: 'Segoe UI', Tahoma, sans-serif; margin-bottom: 14px; }
+  .ck-input:focus { outline: none; border-color: #2dd4bf; }
 
   .dialog-buttons { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
   .ck-spacer { flex: 1 1 auto; }
-  .dialog-btn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 4px; border: 1px solid #3a4a5f; background: #253244; color: #e3eaf3; cursor: pointer; transition: background 0.15s; }
-  .dialog-btn:hover { background: #2e3d51; }
+  .dialog-btn { padding: 6px 14px; font-size: 12px; font-weight: 600; border-radius: 4px; border: 1px solid #2b4d52; background: #1b3539; color: #e2f0ee; cursor: pointer; transition: background 0.15s; }
+  .dialog-btn:hover { background: #214045; }
   .dialog-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .dialog-btn-primary { background: #0369a1; border-color: #0ea5e9; color: #fff; }
-  .dialog-btn-primary:not(:disabled):hover { background: #0284c7; }
+  .dialog-btn-primary { background: #0f766e; border-color: #14b8a6; color: #fff; }
+  .dialog-btn-primary:not(:disabled):hover { background: #0d9488; }
 </style>

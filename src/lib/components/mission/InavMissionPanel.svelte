@@ -624,54 +624,54 @@
   .gz-warn-red { background: rgba(212, 0, 0, 0.18); color: #ff6b6b; border: 1px solid rgba(212, 0, 0, 0.5); }
   .gz-warn-amber { background: rgba(245, 166, 35, 0.16); color: #f5a623; border: 1px solid rgba(245, 166, 35, 0.45); }
 
-  .mission-tabs { display: flex; border-bottom: 1px solid #273446; background: #0b1017; border-radius: 4px 4px 0 0; margin-bottom: 4px; }
-  .mission-tab { flex: 1; padding: 4px 0; border: none; background: transparent; color: #4b5b71; cursor: pointer; font-size: 11px; font-weight: 600; text-align: center; transition: all 0.15s; border-right: 1px solid #18212d; }
+  .mission-tabs { display: flex; border-bottom: 1px solid #1c373b; background: #071315; border-radius: 4px 4px 0 0; margin-bottom: 4px; }
+  .mission-tab { flex: 1; padding: 4px 0; border: none; background: transparent; color: #3a5c61; cursor: pointer; font-size: 11px; font-weight: 600; text-align: center; transition: all 0.15s; border-right: 1px solid #122326; }
   .mission-tab:last-child { border-right: none; }
-  .mission-tab:hover:not(.active) { color: #9eacbf; background: #101721; }
-  .mission-tab.active { color: #38bdf8; background: #1e2e3e; border-bottom: 2px solid #38bdf8; }
-  .mission-tab-add { min-width: 32px; flex: none; font-size: 14px; font-weight: bold; color: #3a4a5f; }
-  .mission-tab-add:hover { color: #38bdf8 !important; background: #1e2e3e; }
+  .mission-tab:hover:not(.active) { color: #97b3af; background: #0a1719; }
+  .mission-tab.active { color: #2dd4bf; background: #1e3b3e; border-bottom: 2px solid #2dd4bf; }
+  .mission-tab-add { min-width: 32px; flex: none; font-size: 14px; font-weight: bold; color: #2b4d52; }
+  .mission-tab-add:hover { color: #2dd4bf !important; background: #1e3b3e; }
 
-  .pattern-loading { padding: 12px; color: #7a8aa0; font-size: 13px; }
+  .pattern-loading { padding: 12px; color: #73938e; font-size: 13px; }
   .pattern-error { padding: 12px; background: #3a1a1a; color: #ffaaaa; font-size: 13px; border: 1px solid #5a2a2a; }
   .pattern-error button { margin-top: 8px; padding: 2px 8px; background: #5a2a2a; color: #fff; border: none; cursor: pointer; }
 
-  .wp-empty { padding: 16px; text-align: center; color: #7a8aa0; font-size: 13px; }
+  .wp-empty { padding: 16px; text-align: center; color: #73938e; font-size: 13px; }
   .wp-table { width: 100%; border-collapse: collapse; font-size: 12px; }
   .wp-table thead { position: sticky; top: 0; z-index: 1; }
-  .wp-table th { background: #0d131b; color: #7a8aa0; font-weight: 600; font-size: 11px; text-transform: uppercase; padding: 4px 5px; text-align: left; border-bottom: 1px solid #273446; }
-  .wp-row { cursor: pointer; border-bottom: 1px solid #111822; color: #c3cedb; }
-  .wp-row:hover { background: #111822; }
+  .wp-table th { background: #091416; color: #73938e; font-weight: 600; font-size: 11px; text-transform: uppercase; padding: 4px 5px; text-align: left; border-bottom: 1px solid #1c373b; }
+  .wp-row { cursor: pointer; border-bottom: 1px solid #0b191b; color: #bfd6d2; }
+  .wp-row:hover { background: #0b191b; }
   .wp-row.selected { background: #1a3a5c; color: #fff; }
-  .wp-row.modifier { color: #8796ab; font-style: italic; }
+  .wp-row.modifier { color: #80a09b; font-style: italic; }
   .wp-row.greyed { opacity: 0.35; }
   .wp-row.greyed .col-alt, .wp-row.greyed .col-type, .wp-row.greyed .wp-num-badge { filter: grayscale(100%); }
   .wp-row td { padding: 4px 5px; white-space: nowrap; }
   .col-num { width: 30px; text-align: center; }
   .col-type { width: 40px; }
   .col-alt { width: 72px; color: #8bc34a; }
-  .col-param { color: #9eacbf; }
-  .wp-num-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #38bdf8; color: #fff; font-size: 10px; font-weight: bold; }
+  .col-param { color: #97b3af; }
+  .wp-num-badge { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: #2dd4bf; color: #fff; font-size: 10px; font-weight: bold; }
   .wp-num-badge.fbh-num { background: #e67e22; }
   .mod-indent { padding-left: 8px; color: #e67e22; font-style: italic; }
 
   .miss-footer { width: 100%; display: flex; flex-direction: column; gap: 4px; }
   /* No internal scroll: the PanelShell footer is pinned and the column scrolls as a last resort, so a
      full WP's params show without a spurious inner scrollbar (the detail is bounded — a handful of rows). */
-  .wp-detail { padding: 6px 8px; border: 1px solid #18212d; border-radius: 4px; background: #0d131b; }
-  .detail-header { font-weight: bold; font-size: 13px; color: #38bdf8; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #18212d; }
-  .detail-row { display: flex; justify-content: space-between; padding: 1px 0; font-size: 12px; color: #c3cedb; }
-  .detail-label { color: #7a8aa0; font-size: 11px; }
-  .detail-value { color: #c3cedb; font-size: 12px; }
-  .detail-hint { color: #38bdf8; font-size: 11px; text-align: center; margin-top: 4px; font-style: italic; }
+  .wp-detail { padding: 6px 8px; border: 1px solid #122326; border-radius: 4px; background: #091416; }
+  .detail-header { font-weight: bold; font-size: 13px; color: #2dd4bf; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #122326; }
+  .detail-row { display: flex; justify-content: space-between; padding: 1px 0; font-size: 12px; color: #bfd6d2; }
+  .detail-label { color: #73938e; font-size: 11px; }
+  .detail-value { color: #bfd6d2; font-size: 12px; }
+  .detail-hint { color: #2dd4bf; font-size: 11px; text-align: center; margin-top: 4px; font-style: italic; }
   .ctrl-row { display: flex; gap: 4px; }
   .mission-status { padding: 3px 6px; font-size: 11px; color: #f39c12; text-align: center; }
-  .mission-summary { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 3px; font-size: 12px; color: #7a8aa0; flex-wrap: wrap; }
+  .mission-summary { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 3px; font-size: 12px; color: #73938e; flex-wrap: wrap; }
   .mission-stats { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 4px 3px 0; font-size: 12px; color: #9ad0e8; flex-wrap: wrap; font-variant-numeric: tabular-nums; }
   .mission-stats .stat { white-space: nowrap; cursor: default; }
-  .dirty-badge { background: #f39c12; color: #0b1017; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: bold; }
+  .dirty-badge { background: #f39c12; color: #071315; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: bold; }
   .prov-badge { color: #fff; padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: bold; margin-left: 4px; }
-  .prov-fc { background: #38bdf8; }
-  .prov-file { background: #6c7a89; }
+  .prov-fc { background: #2dd4bf; }
+  .prov-file { background: #6c8789; }
   .prov-db { background: #59aa29; }
 </style>

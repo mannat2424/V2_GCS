@@ -63,13 +63,13 @@
     background: none;
     border: 1px solid transparent;
     border-radius: 3px;
-    color: #8493a8;
+    color: #7d9d98;
     cursor: pointer;
     flex-shrink: 0;
   }
   .uid-copy:hover {
-    color: #38bdf8;
-    border-color: rgba(56, 189, 248, 0.4);
+    color: #2dd4bf;
+    border-color: rgba(45, 212, 191, 0.4);
   }
   .uid-copy.copied {
     color: #59aa29;

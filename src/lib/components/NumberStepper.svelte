@@ -108,7 +108,7 @@
     display: inline-flex;
     align-items: stretch;
     gap: 0;
-    border: 1px solid #3a4a5f;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
     overflow: hidden;
   }
@@ -120,14 +120,14 @@
 
   .ns-label {
     font-size: 12px;
-    color: #9eacbf;
+    color: #97b3af;
     display: block;
     margin-bottom: 3px;
   }
 
   .ns-btn {
-    background: #18212d;
-    color: #9eacbf;
+    background: #122326;
+    color: #97b3af;
     border: none;
     width: 24px;
     cursor: pointer;
@@ -144,7 +144,7 @@
   }
 
   .ns-btn:hover {
-    background: #38bdf8;
+    background: #2dd4bf;
     color: #fff;
   }
 
@@ -158,8 +158,8 @@
   }
 
   .ns-btn:disabled:hover {
-    background: #18212d;
-    color: #9eacbf;
+    background: #122326;
+    color: #97b3af;
   }
 
   /* Field wrapper: a single bordered cell. The number stays centered; the unit
@@ -167,13 +167,13 @@
   .ns-field {
     position: relative;
     display: block;
-    background: #253244;
-    border-left: 1px solid #3a4a5f;
-    border-right: 1px solid #3a4a5f;
+    background: #1b3539;
+    border-left: 1px solid #2b4d52;
+    border-right: 1px solid #2b4d52;
   }
 
   .ns-stepper:focus-within {
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
 
   .ns-input {
@@ -181,7 +181,7 @@
     padding: 3px 4px;
     background: transparent;
     border: none;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 11px;
     width: 74px;
     text-align: center;
@@ -204,7 +204,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 11px;
-    color: #7a8aa0;
+    color: #73938e;
     pointer-events: none;
     white-space: nowrap;
   }

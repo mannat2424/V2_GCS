@@ -4663,9 +4663,9 @@
     padding: 8px 16px;
     font-size: 12px;
     font-weight: 600;
-    color: #d4f0fd;
+    color: #ccfbf1;
     background: rgba(26, 107, 148, 0.92);
-    border: 1px solid #0ea5e9;
+    border: 1px solid #14b8a6;
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
     pointer-events: none;
@@ -4675,8 +4675,8 @@
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #0b1017;
-    color: #e3eaf3;
+    background-color: #071315;
+    color: #e2f0ee;
     overflow: hidden;
     /* Block accidental text selection on drag everywhere (UI is app-like, not a document) */
     user-select: none;
@@ -4991,13 +4991,13 @@
     right: 0;
     background: transparent;
     border-style: solid;
-    border-color: rgba(180, 188, 202, 0.4);
+    border-color: rgba(180, 200, 202, 0.4);
     border-left: none;
     border-bottom: none;
     cursor: nesw-resize;
   }
   .mf-grip:hover {
-    border-color: rgba(180, 188, 202, 0.6);
+    border-color: rgba(180, 200, 202, 0.6);
   }
   /* Same look as FloatingVideoWindow's .fw-move: the rounded square with the four-way arrow in
      the bottom-left corner (box, border and padding inline, scaled). */
@@ -5005,13 +5005,13 @@
     top: auto;
     background: transparent;
     border-style: solid;
-    border-color: rgba(180, 188, 202, 0.4);
-    color: rgba(180, 188, 202, 0.4);
+    border-color: rgba(180, 200, 202, 0.4);
+    color: rgba(180, 200, 202, 0.4);
     cursor: grab;
   }
   .mf-move:hover {
-    border-color: rgba(180, 188, 202, 0.6);
-    color: rgba(180, 188, 202, 0.6);
+    border-color: rgba(180, 200, 202, 0.6);
+    color: rgba(180, 200, 202, 0.6);
   }
   .mf-move:active {
     cursor: grabbing;
@@ -5032,13 +5032,13 @@
     left: 0;
     background: transparent;
     border-style: solid;
-    border-color: rgba(180, 188, 202, 0.4);
-    color: rgba(180, 188, 202, 0.4);
+    border-color: rgba(180, 200, 202, 0.4);
+    color: rgba(180, 200, 202, 0.4);
     cursor: pointer;
   }
   .mf-size:hover {
-    border-color: rgba(180, 188, 202, 0.6);
-    color: rgba(180, 188, 202, 0.6);
+    border-color: rgba(180, 200, 202, 0.6);
+    color: rgba(180, 200, 202, 0.6);
   }
   .mf-size svg {
     display: block;
@@ -5085,7 +5085,7 @@
   }
   .map-video-wrap.unobstructed .map-video-box {
     background: #000;
-    border: 1px solid rgba(56, 189, 248, 0.35);
+    border: 1px solid rgba(45, 212, 191, 0.35);
     box-sizing: border-box;
     /* Drop shadow — near-black right at the frame, fading out wide and soft: lifts the
        framed video clearly off the blurred backdrop map. */
@@ -5103,7 +5103,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #7a8aa0;
+    color: #73938e;
     font-size: 12px;
     background: #000;
   }
@@ -5208,9 +5208,9 @@
     flex-direction: column;
     align-items: center;
     background:
-      radial-gradient(120% 40% at 50% 0%, rgba(56, 189, 248, 0.06), transparent 70%),
-      linear-gradient(180deg, #0d141e, #090d14);
-    border-right: 1px solid #1c2633;
+      radial-gradient(120% 40% at 50% 0%, rgba(45, 212, 191, 0.06), transparent 70%),
+      linear-gradient(180deg, #09171a, #061113);
+    border-right: 1px solid #16292c;
     box-shadow: 4px 0 18px rgba(0, 0, 0, 0.35);
     overflow-y: auto;
     overflow-x: hidden;
@@ -5251,8 +5251,8 @@
   }
   .cs-resize:hover .cs-resize-line,
   .cs-resize.dragging .cs-resize-line {
-    background: #38bdf8;
-    box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    background: #2dd4bf;
+    box-shadow: 0 0 10px rgba(45, 212, 191, 0.7);
   }
   .cs-toggle {
     position: relative;
@@ -5260,9 +5260,9 @@
     height: 44px;
     padding: 0 4px;
     border-radius: 11px;
-    border: 1px solid rgba(148, 178, 214, 0.22);
-    background: rgba(12, 18, 26, 0.92);
-    color: #9eacbf;
+    border: 1px solid rgba(130, 200, 190, 0.22);
+    background: rgba(8, 21, 22, 0.92);
+    color: #97b3af;
     cursor: pointer;
     opacity: 0;
     transition: opacity 0.15s, background-color 0.15s, color 0.15s;
@@ -5272,8 +5272,8 @@
     opacity: 1;
   }
   .cs-toggle:hover {
-    background: #38bdf8;
-    color: #05090e;
+    background: #2dd4bf;
+    color: #030b0c;
   }
   .cs-toggle svg,
   .cs-expand svg {
@@ -5296,11 +5296,11 @@
     gap: 8px;
     width: 30px;
     padding: 10px 0 12px;
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    border: 1px solid rgba(45, 212, 191, 0.3);
     border-left: none;
     border-radius: 0 10px 10px 0;
-    background: rgba(12, 18, 26, 0.92);
-    color: #7dd3fc;
+    background: rgba(8, 21, 22, 0.92);
+    color: #5eead4;
     cursor: pointer;
     box-shadow: 4px 0 14px rgba(0, 0, 0, 0.4);
   }
@@ -5316,7 +5316,7 @@
     text-transform: uppercase;
   }
   .cs-expand:hover {
-    background: rgba(56, 189, 248, 0.16);
+    background: rgba(45, 212, 191, 0.16);
   }
   :global(html.is-mobile) .cs-expand {
     top: calc(var(--toolbar-h, 53px) + 12px);
@@ -5330,7 +5330,7 @@
     font-weight: 700;
     letter-spacing: 1.6px;
     text-transform: uppercase;
-    color: #5f6f86;
+    color: #58766f;
   }
   .cs-panels {
     display: flex;
@@ -5356,8 +5356,8 @@
     padding: 24px 24px calc(var(--app-dock-h, 0px) + 24px);
     box-sizing: border-box;
     background:
-      radial-gradient(ellipse at 50% 35%, rgba(56, 189, 248, 0.12), transparent 60%),
-      linear-gradient(180deg, #0f1621, #080c12);
+      radial-gradient(ellipse at 50% 35%, rgba(45, 212, 191, 0.12), transparent 60%),
+      linear-gradient(180deg, #0a191b, #050d0e);
   }
   :global(html.is-mobile) .start-page {
     top: calc(var(--toolbar-h, 53px) + var(--tabbar-h, 0px));
@@ -5365,11 +5365,11 @@
   .sp-title {
     font-size: 22px;
     font-weight: 600;
-    color: #e6eefc;
+    color: #e0f2ee;
   }
   .sp-hint {
     font-size: 13px;
-    color: #8493a8;
+    color: #7d9d98;
     margin-bottom: 18px;
   }
   .sp-grid {
@@ -5388,7 +5388,7 @@
     border: none;
     border-radius: 12px;
     background: none;
-    color: #ced6e4;
+    color: #cee2e4;
     font-size: 12px;
     cursor: pointer;
   }
@@ -5407,8 +5407,8 @@
     font-weight: 700;
     background:
       radial-gradient(120% 90% at 50% 0%, color-mix(in srgb, var(--hue) 12%, transparent), transparent 70%),
-      linear-gradient(180deg, #1a2433, #0f1620);
-    border: 1px solid rgba(148, 178, 214, 0.12);
+      linear-gradient(180deg, #132a2d, #0a181a);
+    border: 1px solid rgba(130, 200, 190, 0.12);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 6px 16px rgba(0, 0, 0, 0.45);
     transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
@@ -5468,8 +5468,8 @@
     bottom: 24px;
     pointer-events: auto;
     background:
-      radial-gradient(ellipse at 50% 0%, rgba(56, 189, 248, 0.08), transparent 55%),
-      linear-gradient(180deg, #0e141d, #090d13);
+      radial-gradient(ellipse at 50% 0%, rgba(45, 212, 191, 0.08), transparent 55%),
+      linear-gradient(180deg, #091719, #061112);
   }
   .panels-layer > .page-ground.side {
     right: auto;
@@ -5509,7 +5509,7 @@
      The video pane is the main video zone with an inline left/right; the divider sits on the seam
      above both panes (map z0 in the unzoomed layer, this chrome z1). */
   .map-video-wrap.split-pane {
-    background: #0b0c0e;
+    background: #0b0e0e;
   }
   .split-divider {
     position: absolute;
@@ -5534,14 +5534,14 @@
     left: 50%;
     width: 3px;
     transform: translateX(-50%);
-    background: rgba(9, 13, 18, 0.95);
-    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.25), 0 0 10px rgba(0, 0, 0, 0.6);
+    background: rgba(9, 17, 18, 0.95);
+    box-shadow: 0 0 0 1px rgba(45, 212, 191, 0.25), 0 0 10px rgba(0, 0, 0, 0.6);
     transition: background-color 0.15s, box-shadow 0.15s;
   }
   .split-divider:hover .split-line,
   .split-divider.dragging .split-line {
-    background: #38bdf8;
-    box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+    background: #2dd4bf;
+    box-shadow: 0 0 12px rgba(45, 212, 191, 0.7);
   }
   .split-swap {
     position: relative;
@@ -5551,15 +5551,15 @@
     border-radius: 50%;
     padding: 7px;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(13, 19, 26, 0.85);
+    background: rgba(8, 21, 23, 0.85);
     backdrop-filter: var(--glass-blur, blur(8px));
-    color: #dce4f2;
+    color: #d5ebe7;
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
     transition: background-color 0.15s, transform 0.15s;
   }
   .split-swap:hover {
-    background: #38bdf8;
+    background: #2dd4bf;
     transform: scale(1.08);
   }
   .split-swap svg {

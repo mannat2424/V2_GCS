@@ -246,7 +246,7 @@
     margin: 0 0 8px 0;
     font-size: 11px;
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
@@ -258,7 +258,7 @@
     justify-content: center;
     gap: 8px;
     padding: 32px 24px;
-    color: #3a4a5f;
+    color: #2b4d52;
     font-size: 12px;
   }
 
@@ -276,11 +276,11 @@
   }
 
   .fc-label {
-    color: #8493a8;
+    color: #7d9d98;
   }
 
   .fc-value {
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-weight: 600;
   }
 
@@ -294,10 +294,10 @@
   .type-select {
     height: 24px;
     padding: 0 6px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
     font-family: inherit;
     outline: none;
@@ -305,10 +305,10 @@
     color-scheme: dark;
   }
   .type-select:hover {
-    border-color: rgba(56, 189, 248, 0.6);
+    border-color: rgba(45, 212, 191, 0.6);
   }
   .type-select:focus {
-    border-color: #38bdf8;
+    border-color: #2dd4bf;
   }
   .type-select:disabled {
     opacity: 0.6;
@@ -317,23 +317,23 @@
   .type-detected {
     font-size: 10px;
     font-weight: 400;
-    color: #8493a8;
+    color: #7d9d98;
   }
 
   .lib-btn {
     width: 100%;
     padding: 5px 10px;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.5);
+    background: rgba(45, 212, 191, 0.12);
+    border: 1px solid rgba(45, 212, 191, 0.5);
     border-radius: 4px;
-    color: #38bdf8;
+    color: #2dd4bf;
     font-size: 11px;
     font-weight: 600;
     font-family: inherit;
     cursor: pointer;
   }
   .lib-btn:hover:not(:disabled) {
-    background: rgba(56, 189, 248, 0.22);
+    background: rgba(45, 212, 191, 0.22);
   }
   .lib-btn:disabled {
     opacity: 0.6;
@@ -368,9 +368,9 @@
   }
 
   .feature-badge.unavailable {
-    background: rgba(54, 70, 90, 0.2);
-    color: #3a4a5f;
-    border: 1px solid #273446;
+    background: rgba(54, 87, 90, 0.2);
+    color: #2b4d52;
+    border: 1px solid #1c373b;
     text-decoration: line-through;
   }
 </style>

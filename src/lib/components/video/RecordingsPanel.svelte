@@ -75,12 +75,12 @@
   }
 
   .rec-header {
-    color: #8493a8;
+    color: #7d9d98;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 10px;
     letter-spacing: 0.03em;
-    border-bottom: 1px solid #1c2633;
+    border-bottom: 1px solid #16292c;
   }
 
   .rec-row {
@@ -88,7 +88,7 @@
   }
 
   .rec-row:hover {
-    background: rgba(56, 189, 248, 0.08);
+    background: rgba(45, 212, 191, 0.08);
   }
 
   .rec-name {
@@ -99,13 +99,13 @@
 
   .rec-size,
   .rec-date {
-    color: #8493a8;
+    color: #7d9d98;
     white-space: nowrap;
   }
 
   .hint {
     font-size: 12px;
-    color: #8493a8;
+    color: #7d9d98;
     margin: 6px 2px;
   }
 

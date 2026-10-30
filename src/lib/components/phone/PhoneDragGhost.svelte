@@ -31,8 +31,8 @@
     z-index: 180; /* over the panels (150 / 160) and the Debug button (170), under the dialogs */
     pointer-events: none;
     opacity: 0.9;
-    border: 1px solid rgba(56, 189, 248, 0.8);
-    background: rgba(12, 17, 24, 0.6);
+    border: 1px solid rgba(45, 212, 191, 0.8);
+    background: rgba(8, 20, 22, 0.6);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
     display: flex;
     align-items: center;

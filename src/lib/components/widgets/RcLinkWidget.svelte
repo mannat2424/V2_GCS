@@ -69,7 +69,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    background: rgba(12, 17, 24, 0.75);
+    background: rgba(8, 20, 22, 0.75);
     backdrop-filter: var(--glass-blur, blur(6px));
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: calc(var(--ws) * 0.08);
@@ -80,7 +80,7 @@
   .w-label {
     font-size: calc(var(--ws) * 0.13);
     font-weight: 600;
-    color: #38bdf8;
+    color: #2dd4bf;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -94,7 +94,7 @@
   .w-sub {
     font-size: calc(var(--ws) * 0.1);
     font-weight: 600;
-    color: #9fb3bd;
+    color: #9fbbbd;
     text-transform: uppercase;
     letter-spacing: 0.04em;
   }
@@ -109,7 +109,7 @@
   .w-meta {
     font-size: calc(var(--ws) * 0.1);
     font-weight: 600;
-    color: #ced6e4;
+    color: #cee2e4;
     text-align: center;
     line-height: 1.15;
     width: 100%;

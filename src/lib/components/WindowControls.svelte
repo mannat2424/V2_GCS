@@ -95,7 +95,7 @@
     padding: 0;
     border: none;
     background: transparent;
-    color: #b6c2d1;
+    color: #b0c9c5;
     cursor: pointer;
     transition: background 0.12s ease, color 0.12s ease;
   }

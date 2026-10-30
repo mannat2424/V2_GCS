@@ -39,7 +39,7 @@
     align-items: center;
     gap: 10px;
     padding: 7px 12px;
-    background: rgba(8, 12, 18, 0.82);
+    background: rgba(5, 14, 15, 0.82);
     border: 1px solid rgba(245, 166, 35, 0.7);
     border-radius: 8px;
     pointer-events: auto;
@@ -75,8 +75,8 @@
   .rc-stop {
     flex: 0 0 auto;
     background: none;
-    border: 1px solid #4b5b71;
-    color: #c3cedb;
+    border: 1px solid #3a5c61;
+    color: #bfd6d2;
     border-radius: 4px;
     padding: 3px 8px;
     font-size: 11px;

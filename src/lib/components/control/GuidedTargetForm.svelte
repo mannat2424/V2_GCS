@@ -79,7 +79,7 @@
   }
   .gtf-coords {
     font-size: 11px;
-    color: #8493a8;
+    color: #7d9d98;
   }
   .gtf-fields {
     display: flex;
@@ -91,13 +91,13 @@
   .gtf-fly {
     width: 100%;
     height: 30px;
-    border: 1px solid #38bdf8;
+    border: 1px solid #2dd4bf;
     border-radius: 5px;
-    background: rgba(56, 189, 248, 0.18);
+    background: rgba(45, 212, 191, 0.18);
     color: #cfe8f4;
     font-weight: 700;
     font-size: 12.5px;
     cursor: pointer;
   }
-  .gtf-fly:hover { background: rgba(56, 189, 248, 0.32); }
+  .gtf-fly:hover { background: rgba(45, 212, 191, 0.32); }
 </style>

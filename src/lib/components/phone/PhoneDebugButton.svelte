@@ -27,10 +27,10 @@
   .debug-btn {
     height: 26px;
     padding: 0 8px;
-    background: rgba(18, 26, 36, 0.92);
-    border: 1px solid #3a4a5f;
+    background: rgba(12, 27, 30, 0.92);
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #8493a8;
+    color: #7d9d98;
     font-size: 10px;
     cursor: pointer;
     backdrop-filter: var(--glass-blur, blur(6px));
@@ -38,7 +38,7 @@
     pointer-events: auto;
   }
   .debug-btn.open {
-    border-color: #38bdf8;
-    color: #38bdf8;
+    border-color: #2dd4bf;
+    color: #2dd4bf;
   }
 </style>

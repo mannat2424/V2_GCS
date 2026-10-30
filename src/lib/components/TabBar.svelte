@@ -110,8 +110,8 @@
     gap: 0;
     padding: 0 8px;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #080c12, #0b1118);
-    border-bottom: 1px solid #1c2633;
+    background: linear-gradient(180deg, #050d0e, #071416);
+    border-bottom: 1px solid #16292c;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
     min-width: 0;
   }
@@ -155,7 +155,7 @@
     width: 1px;
     height: 18px;
     margin: 0 6px;
-    background: rgba(148, 178, 214, 0.18);
+    background: rgba(130, 200, 190, 0.18);
     flex-shrink: 0;
   }
 
@@ -171,7 +171,7 @@
     padding: 0 6px 0 10px;
     margin-right: 2px;
     border-radius: 8px 8px 0 0;
-    color: #7f8da2;
+    color: #78968f;
     font-size: 12.5px;
     letter-spacing: 0.15px;
     cursor: pointer;
@@ -185,17 +185,17 @@
     padding-right: 11px;
   }
   .tb-tab:hover {
-    background: rgba(148, 178, 214, 0.07);
-    color: #d6dee9;
+    background: rgba(130, 200, 190, 0.07);
+    color: #d3e6e3;
   }
   .tb-tab:focus-visible {
-    box-shadow: inset 0 0 0 1px #38bdf8;
+    box-shadow: inset 0 0 0 1px #2dd4bf;
   }
   /* Active: the tab "opens into" the content below — lighter ground, a top edge in the app's hue
      that fades out sideways, and it covers the strip's bottom border. */
   .tb-tab.active {
-    background: linear-gradient(180deg, color-mix(in srgb, var(--hue) 9%, #141c27), #121a24);
-    color: #f1f5f9;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--hue) 9%, #0e1f21), #0c1b1e);
+    color: #eefaf7;
   }
   .tb-tab.active::before {
     content: '';
@@ -215,7 +215,7 @@
     right: 0;
     bottom: -1px;
     height: 1px;
-    background: #121a24;
+    background: #0c1b1e;
   }
   /* Thin separators between inactive neighbours, like Chrome. */
   .tb-tab:not(.active) + .tb-tab:not(.active)::before {
@@ -225,7 +225,7 @@
     top: 7px;
     bottom: 7px;
     width: 1px;
-    background: rgba(148, 178, 214, 0.12);
+    background: rgba(130, 200, 190, 0.12);
   }
 
   .tb-icon {
@@ -259,7 +259,7 @@
     height: 7px;
     border-radius: 50%;
     background: #ff4d5e;
-    border: 1.5px solid #0b1118;
+    border: 1.5px solid #071416;
     box-shadow: 0 0 6px rgba(255, 77, 94, 0.8);
   }
 
@@ -284,7 +284,7 @@
   }
   .tb-close:hover {
     opacity: 1;
-    background: rgba(148, 178, 214, 0.16);
+    background: rgba(130, 200, 190, 0.16);
   }
   .tb-close svg {
     display: block;

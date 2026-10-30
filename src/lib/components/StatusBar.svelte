@@ -79,10 +79,10 @@
     align-items: center;
     padding: 0 10px;
     height: 24px;
-    background: #121a24;
-    border-top: 1px solid #1c2633;
+    background: #0c1b1e;
+    border-top: 1px solid #16292c;
     font-size: 11px;
-    color: #8493a8;
+    color: #7d9d98;
     z-index: 200;
   }
 
@@ -147,13 +147,13 @@
   }
 
   .status-sep {
-    color: #3a4a5f;
+    color: #2b4d52;
   }
 
   .debug-btn {
     background: none;
     border: 1px solid transparent;
-    color: #4b5b71;
+    color: #3a5c61;
     font-size: 11px;
     cursor: pointer;
     padding: 0 6px;

@@ -387,13 +387,13 @@
   .edit-frame {
     position: absolute;
     inset: 2px;
-    border: 1px dashed rgba(56, 189, 248, 0.7);
+    border: 1px dashed rgba(45, 212, 191, 0.7);
     pointer-events: none;
   }
   .tile.hover .edit-frame {
     border-style: solid;
-    border-color: rgba(56, 189, 248, 0.95);
-    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(45, 212, 191, 0.95);
+    background: rgba(45, 212, 191, 0.12);
   }
   .wide-btn {
     position: absolute;
@@ -406,10 +406,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(56, 189, 248, 0.6);
+    border: 1px solid rgba(45, 212, 191, 0.6);
     border-radius: 6px;
-    background: rgba(12, 17, 24, 0.85);
-    color: #38bdf8;
+    background: rgba(8, 20, 22, 0.85);
+    color: #2dd4bf;
     cursor: pointer;
     touch-action: manipulation;
   }

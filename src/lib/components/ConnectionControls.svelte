@@ -274,10 +274,10 @@
     height: 28px;
     box-sizing: border-box;
     padding: 0 8px;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #e3eaf3;
+    color: #e2f0ee;
     font-size: 12px;
   }
 
@@ -302,18 +302,18 @@
     width: 28px;
     box-sizing: border-box;
     padding: 0;
-    background: #253244;
-    border: 1px solid #3a4a5f;
+    background: #1b3539;
+    border: 1px solid #2b4d52;
     border-radius: 4px;
-    color: #c9d3df;
+    color: #c4dad7;
     font-size: 13px;
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s;
   }
   .bt-edit:hover {
-    background: rgba(56, 189, 248, 0.18);
-    color: #38bdf8;
-    border-color: #38bdf8;
+    background: rgba(45, 212, 191, 0.18);
+    color: #2dd4bf;
+    border-color: #2dd4bf;
   }
 
   /* Drop the native number spinner — the up/down arrows are clutter in the toolbar. */
@@ -328,6 +328,6 @@
   }
 
   .tb-input::placeholder {
-    color: #68788e;
+    color: #5f7f7a;
   }
 </style>
